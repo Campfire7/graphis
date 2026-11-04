@@ -8,7 +8,7 @@ enum Fassung {
     static let kennung = "local.graphis"
     static let ordnerName = name
 
-    /// PLATZHALTER für die Seite, über die man das Projekt unterstützen kann. bauen.sh warnt, solange hier
-    /// example.org steht. Die App öffnet sie nur nach einem Klick, im Browser.
-    static let unterstuetzen = URL(string: "https://example.org/graphis-unterstuetzen")!
+    /// Abschnitt Unterstützen im README auf der Projektseite, dort stehen die Spendenadressen. Die App öffnet ihn nur
+    /// nach einem Klick, im Browser.
+    static let unterstuetzen = URL(string: "https://github.com/Campfire7/graphis#unterst%C3%BCtzen")!
 }

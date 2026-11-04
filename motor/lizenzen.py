@@ -3,8 +3,12 @@
 Aufruf: python3.12 -I -B lizenzen.py MOTOR PYTHON_LIZENZEN > THIRD_PARTY_NOTICES.txt
 MOTOR ist Contents/Resources/Motor, PYTHON_LIZENZEN der ausgepackte Teil (PYTHON.json, licenses/) des vollen
 python-build-standalone-Archivs desselben Stands. Paketlizenzen stammen aus den dist-info-Ordnern der Wheels.
+Die Bibliotheken, die in die Rust-Teile der Pakete eingebaut sind, stehen in rust-lizenzen.json. Passt die Datei
+nicht mehr zu den Programmdateien im Motor, bricht das Skript ab, bevor es etwas schreibt. Erneuern mit
+rust_lizenzen.py, siehe README unter Bauen.
 """
 
+import csv
 import json
 import sys
 from email.parser import Parser
@@ -13,6 +17,7 @@ from pathlib import Path
 MOTOR = Path(sys.argv[1])
 PBS = Path(sys.argv[2]) / "python"
 SITE = MOTOR / "python/lib/python3.12/site-packages"
+RUST = Path(__file__).with_name("rust-lizenzen.json")
 LIZENZDATEIEN = ("LICEN", "COPYING", "NOTICE", "AUTHORS")
 STRICH = "=" * 100
 
@@ -45,7 +50,69 @@ def abschnitt(titel: str) -> None:
     print(f"\n{STRICH}\n{titel}\n{STRICH}\n")
 
 
+def rust_pakete() -> dict[str, tuple[str, Path, dict[Path, str]]]:
+    """Wheels mit Programmteilen aus Rust: Name -> (Version, dist-info, Programmdatei -> Prüfsumme laut RECORD).
+    Die Prüfsumme aus RECORD stammt aus dem Wheel und bleibt gleich, wenn bauen.sh die Datei signiert.
+    Gleich wie in rust_lizenzen.py."""
+    pakete = {}
+    for dist in sorted(SITE.glob("*.dist-info")):
+        meta = Parser().parsestr((dist / "METADATA").read_text(errors="replace"))
+        zeilen = sorted(z for z in csv.reader((dist / "RECORD").read_text().splitlines()) if z)
+        rust = {SITE / z[0]: z[1] for z in zeilen if Path(z[0]).suffix in (".so", ".dylib")
+                and (SITE / z[0]).is_file() and b"/rustc/" in (SITE / z[0]).read_bytes()}
+        if rust:
+            pakete[meta["Name"]] = (meta["Version"], dist, rust)
+    return pakete
+
+
+def stueckliste(dist: Path) -> set[str]:
+    """Bibliotheken von crates.io laut Stückliste im Wheel, ohne die eigenen des Pakets. Leer ohne Stückliste."""
+    return {f"{teil['name']} {teil['version']}" for liste in sorted(dist.glob("sboms/*.json"))
+            for teil in json.loads(liste.read_text()).get("components", [])
+            if "download_url=file://" not in teil.get("purl", "")}
+
+
+def rust_daten() -> dict:
+    """rust-lizenzen.json, aber nur, wenn sie zu den Rust-Programmdateien (SHA-256 laut RECORD) und zur Stückliste
+    im Wheel passt und für jede Bibliothek einen Text hat."""
+    daten = json.loads(RUST.read_text())
+    gefunden = rust_pakete()
+    falsch = [f"{name} {version}" for name, (version, dist, programme) in sorted(gefunden.items())
+              if name not in daten["pakete"] or daten["pakete"][name]["version"] != version
+              or daten["pakete"][name]["programme"] != {str(p.relative_to(SITE)): s for p, s in programme.items()}
+              or not stueckliste(dist) <= set(daten["pakete"][name]["crates"])]
+    falsch += [f"{name} (nicht mehr im Motor)" for name in sorted(daten["pakete"]) if name not in gefunden]
+    falsch += [crate for paket in daten["pakete"].values() for crate in paket["crates"]
+               if not daten["crates"].get(crate, {}).get("texte")]
+    if falsch:
+        sys.exit(f"motor/rust-lizenzen.json passt nicht zu {', '.join(falsch)}. Neu erzeugen, siehe README unter Bauen.")
+    return daten
+
+
+def rust_bibliotheken(daten: dict) -> None:
+    pakete = sorted(daten["pakete"].items(), key=lambda p: p[0].lower())
+    abschnitt("Rust-Bibliotheken in " + ", ".join(f"{name} {paket['version']}" for name, paket in pakete))
+    print("Diese Pakete enthalten Programmteile aus Rust, in die Bibliotheken von crates.io und die Rust-Standardbibliothek")
+    print("fest eingebaut sind.")
+    print("Die Liste stammt aus motor/rust-lizenzen.json. Gleiche Lizenztexte stehen unten nur einmal.\n")
+    for name, paket in pakete:
+        print(f"{name} {paket['version']} ({len(paket['crates'])} Bibliotheken, laut {paket['quelle']}):")
+        for crate in paket["crates"]:
+            print(f"  {crate} – {daten['crates'][crate]['lizenz']}")
+        print()
+    # Jeder Text einmal, mit allen Dateien, in denen er vorkommt.
+    fundorte: dict[str, list[str]] = {}
+    for crate, info in sorted(daten["crates"].items()):
+        for datei, schluessel in sorted(info["texte"].items()):
+            fundorte.setdefault(schluessel, []).append(f"{crate}: {datei}")
+    for nummer, (schluessel, orte) in enumerate(sorted(fundorte.items(), key=lambda e: e[1][0]), 1):
+        abschnitt(f"Rust-Lizenztext {nummer} von {len(fundorte)}")
+        print("Steht in:\n" + "\n".join(f"  {ort}" for ort in orte) + "\n")
+        print(daten["texte"][schluessel])
+
+
 def main() -> None:
+    rust = rust_daten()
     print("THIRD_PARTY_NOTICES – Graphis")
     print("Automatisch erzeugt von motor/lizenzen.py aus den Dateien im App-Paket.")
     print("Der Code der App selbst steht unter der Lizenz in LICENSE.")
@@ -93,6 +160,8 @@ def main() -> None:
             print(f"--- Lizenztext aus den Paketangaben ---\n{meta['License'].strip()}\n")
         else:
             print(f"Das Wheel enthält keinen Lizenztext. Es gilt {lizenz}, Volltext von Apache-2.0 siehe {apache or 'oben'}.\n")
+
+    rust_bibliotheken(rust)
 
     abschnitt("Modelle und Module (nicht im App-Paket, Download nur auf Klick)")
     for name, ablage, stand, lizenz, hinweis in MODELLE:

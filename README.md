@@ -61,6 +61,14 @@ zsh bauen.sh
 
 Das baut `dist/Graphis.app` und `dist/Graphis-<Version>.zip`, nie in einen Programmordner. Python (python-build-standalone 3.12.16, Release 20261026) und die 42 Pakete aus `motor/anforderungen-moss.txt` sind mit SHA-256 festgelegt und landen beim ersten Bau in `.build/downloads`. Bewusst weggelassen sind torch, OpenCV und matplotlib, der Weg von MOSS-Image braucht sie nicht. Jede Mach-O-Datei wird einzeln ad hoc signiert, von innen nach aussen. Alle Dateien im Paket bekommen denselben festen Zeitpunkt, und das ZIP enthält keine erweiterten Attribute und keine Benutzernummern. `THIRD_PARTY_NOTICES.txt` entsteht dabei neu aus dem, was tatsächlich im Paket liegt. Eine andere Version setzt `GRAPHIS_VERSION=1.1 zsh bauen.sh`.
 
+Vier Pakete (hf-xet, hf-transfer, safetensors, tokenizers) enthalten Programmteile aus Rust, in die weitere Bibliotheken und die Rust-Standardbibliothek fest eingebaut sind. Deren Liste und Lizenztexte stehen in `motor/rust-lizenzen.json`, jede Bibliothek mit SHA-256 von crates.io geprüft. Ändert sich eine dieser Programmdateien, bricht der Bau ab, bis die Datei erneuert ist. Das geht mit einem frisch zusammengestellten Motor und braucht Internet und cargo:
+
+```bash
+ARBEIT="$(mktemp -d)" && zsh motor/bereitstellen.sh "$ARBEIT/Motor" "$PWD/.build/downloads" \
+  && /usr/bin/python3 -I -B motor/rust_lizenzen.py "$ARBEIT/Motor" .build/downloads motor/rust-lizenzen.json
+[ -n "$ARBEIT" ] && rm -rf "$ARBEIT"
+```
+
 Aufbau des Projekts:
 
 | Ordner | Inhalt |
@@ -92,13 +100,20 @@ Echte Bilder entstehen nur in der App selbst.
 ## Lizenzen
 
 - Der Code von Graphis steht unter der MIT-Lizenz, siehe `LICENSE`.
-- Python und die mitgelieferten Pakete stehen unter ihren eigenen Lizenzen, siehe `THIRD_PARTY_NOTICES.txt`. Die Datei liegt auch im App-Paket.
+- Python und die mitgelieferten Pakete stehen unter ihren eigenen Lizenzen, siehe `THIRD_PARTY_NOTICES.txt`. Das gilt auch für die Rust-Bibliotheken, die in einige Pakete fest eingebaut sind. Die Datei liegt auch im App-Paket.
 - Modell und Module liegen nicht im ZIP. Die App lädt sie erst auf deinen Klick von Hugging Face, alle zu einem festen Stand und laut Modellkarte unter Apache 2.0. Die Liste steht ebenfalls in `THIRD_PARTY_NOTICES.txt`.
 - Für Module, die du selbst hinzufügst, gilt deren eigene Lizenz. Prüfe sie vor der Nutzung.
 
 ## Unterstützen
 
-Graphis ist freie Software. Ein Weg, die Entwicklung zu unterstützen, folgt hier. *(Platzhalter)*
+Graphis ist freie Software und kostet nichts. Wenn du die Entwicklung unterstützen möchtest, freut sich das Projekt über eine Spende:
+
+| Währung | Adresse |
+|---|---|
+| Bitcoin | `bc1qkgj6wl5sv3yel0v34mexalcesms580367slk9h` |
+| Monero | `4AbFvwrC5oEDfZQZoXBMBKia3njagBYeTTbx9sXj7mRCYFxNxnSCDFmVtqRkHvSbUZ8u1xiQDghKv5d7iCd8heu9JcLDc1H` |
+
+Bei Bitcoin sind alle Zahlungen öffentlich einsehbar, Monero hält Absender und Betrag privat.
 
 ## Verantwortung
 

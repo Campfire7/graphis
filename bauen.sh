@@ -99,6 +99,6 @@ mv "$APP" "$DIST/$NAME.app"
 (cd "$DIST" && zip -q -r -X -y "$NAME-$VERSION.zip" "$NAME.app")
 echo "Gebaut: dist/$NAME.app (macOS ab $MINOS)"
 echo "Paket: dist/$NAME-$VERSION.zip"
-if grep -q "example.org" App/Fassung.swift; then
-  echo "Hinweis: Die Adresse für Projekt unterstützen ist noch ein Platzhalter (App/Fassung.swift)." >&2
+if grep -q "(Platzhalter)" README.md; then
+  echo "Hinweis: Im README fehlen noch die Spendenadressen (Abschnitt Unterstützen)." >&2
 fi
