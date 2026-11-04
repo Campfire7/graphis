@@ -163,21 +163,26 @@ final class Vorgaben: ObservableObject {
         if neu != referenzen { referenzen = neu }
         var teile = [String]()
         if zuViele > 0 {
-            teile.append(zuViele == urls.count
-                ? "Es geht nur ein Referenzbild. Ersetze es mit Anderes Bild, oder entferne es zuerst."
-                : "Es geht nur ein Referenzbild, \(zuViele == 1 ? "1 weiteres Bild ist" : "\(zuViele) weitere Bilder sind") nicht dazugekommen.")
+            if zuViele == urls.count {
+                teile.append(String(localized: "Only one reference image is possible. Replace it with Other Image, or remove it first."))
+            } else {
+                teile.append(zuViele == 1
+                    ? String(localized: "Only one reference image is possible, 1 more image was not added.")
+                    : String(localized: "Only one reference image is possible, \(zuViele) more images were not added."))
+            }
         }
         if unlesbar > 0 {
-            teile.append(unlesbar == 1 ? "Eine Datei ist kein lesbares Bild." : "\(unlesbar) Dateien sind keine lesbaren Bilder.")
+            teile.append(unlesbar == 1 ? String(localized: "One file is not a readable image.")
+                : String(localized: "\(unlesbar) files are not readable images."))
         }
-        if doppelt > 0 { teile.append("Dieses Bild ist schon das Referenzbild.") }
+        if doppelt > 0 { teile.append(String(localized: "This image is already the reference image.")) }
         referenzMeldung = teile.isEmpty ? nil : teile.joined(separator: " ")
     }
 
     /// Setzt das Referenzbild, auf dem MOSS aufbaut. Ein vorhandenes wird ersetzt.
     func vorlageSetzen(_ url: URL) {
         guard url.isFileURL, Vorschau.masse(url) != nil else {
-            referenzMeldung = "Diese Datei ist kein lesbares Bild."
+            referenzMeldung = String(localized: "This file is not a readable image.")
             return
         }
         referenzMeldung = nil
@@ -218,7 +223,7 @@ final class Vorgaben: ObservableObject {
         anzahl = zahlen.count
         // Eine feste Serie zählt von der ersten Zufallszahl hoch, freie Zufallszahlen lassen sich so nicht nachstellen.
         if zahlen != zahlen.indices.map({ zahlen[0] + $0 }) {
-            luecken.append("Diese Bilder hatten freie Zufallszahlen. Exakt gleich wird nur das erste, die weiteren werden neu.")
+            luecken.append(String(localized: "These images had random seeds. Only the first one comes out exactly the same, the others will be new."))
         }
         referenzen = []
         referenzMeldung = nil
@@ -248,7 +253,7 @@ final class Vorgaben: ObservableObject {
             vorlageMasse = (mitVorlage.breite, mitVorlage.hoehe)
         }
         if bilder.contains(where: { $0.auftrag == nil }) {
-            luecken.append("Das Bild stammt aus einer früheren Version und lässt sich vermutlich nicht exakt nachbilden.")
+            luecken.append(String(localized: "The image comes from an earlier version and probably cannot be recreated exactly."))
         }
     }
 
@@ -258,16 +263,16 @@ final class Vorgaben: ObservableObject {
         for name in bilder.compactMap(\.referenzNamen.first) where !namen.contains(name) { namen.append(name) }
         guard let name = namen.first else {
             if bilder.contains(where: { $0.referenzen > 0 }) {
-                luecken.append("Das Referenzbild dieses Bildes liegt nicht mehr vor.")
+                luecken.append(String(localized: "The reference image of this image is no longer available."))
             }
             return
         }
         guard namen.count == 1 else {
-            luecken.append("Die Bilder dieser Generierung hatten verschiedene Referenzbilder. Wähle das Referenzbild neu.")
+            luecken.append(String(localized: "The images of this generation had different reference images. Choose the reference image again."))
             return
         }
         guard let kopie = Pfade.referenzKopie(name), FileManager.default.fileExists(atPath: kopie.path) else {
-            luecken.append("Das Referenzbild dieses Bildes liegt nicht mehr vor.")
+            luecken.append(String(localized: "The reference image of this image is no longer available."))
             return
         }
         referenzen = [kopie]
@@ -297,10 +302,12 @@ final class Vorgaben: ObservableObject {
         // Gewählte Module, die gerade nicht im Ordner liegen, bleiben gewählt.
         modulAktiv = modulAktiv.subtracting(module.map(\.datei)).union(aktive)
         if ergebnis.modulDaten == nil && !namen.isEmpty {
-            luecken.append("Die Modulstärken dieses Bildes sind nicht gespeichert, es gelten die aktuellen.")
+            luecken.append(String(localized: "The module strengths of this image are not saved, the current ones apply."))
         }
         if !fehlend.isEmpty {
-            luecken.append("Diese Module fehlen jetzt: \(fehlend.joined(separator: ", ")).")
+            // Gespeichert sind die festen Namen. Module aus dem Katalog erscheinen mit ihrem Titel in der Sprache des Mac.
+            let titel = fehlend.map { name in Katalog.alle.first { $0.name == name }?.anzeigeName ?? name }
+            luecken.append(String(localized: "These modules are missing now: \(titel.joined(separator: ", "))."))
         }
     }
 

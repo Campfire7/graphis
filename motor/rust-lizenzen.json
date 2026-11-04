@@ -1,6 +1,6 @@
 {
  "crates": {
-  "Rust-Standardbibliothek, Compiler-Stand 59807616e1fa": {
+  "Rust standard library, compiler 59807616e1fa": {
    "lizenz": "MIT OR Apache-2.0",
    "sha256": "",
    "texte": {
@@ -9,7 +9,7 @@
     "https://github.com/rust-lang/rust/blob/59807616e1fa2540724bfbac14d7976d7e4a3860/LICENSE-MIT": "ed52e551bb774274"
    }
   },
-  "Rust-Standardbibliothek, Compiler-Stand 88d9e12ae178": {
+  "Rust standard library, compiler 88d9e12ae178": {
    "lizenz": "MIT OR Apache-2.0",
    "sha256": "",
    "texte": {
@@ -18,7 +18,7 @@
     "https://github.com/rust-lang/rust/blob/88d9e12ae178fab0fb5cc050a94da85685d449ea/LICENSE-MIT": "ed52e551bb774274"
    }
   },
-  "Rust-Standardbibliothek, Compiler-Stand 90b35a6239c3": {
+  "Rust standard library, compiler 90b35a6239c3": {
    "lizenz": "MIT OR Apache-2.0",
    "sha256": "",
    "texte": {
@@ -27,7 +27,7 @@
     "https://github.com/rust-lang/rust/blob/90b35a6239c3d8bdabc530a6a0816f7ff89a0aaf/LICENSE-MIT": "30fefc3a7d6a0041"
    }
   },
-  "Rust-Standardbibliothek, Compiler-Stand b940084d7eb6": {
+  "Rust standard library, compiler b940084d7eb6": {
    "lizenz": "MIT OR Apache-2.0",
    "sha256": "",
    "texte": {
@@ -2769,7 +2769,7 @@
    }
   },
   "ring 0.17.8": {
-   "lizenz": "eigene Lizenz, siehe LICENSE",
+   "lizenz": "custom license, see LICENSE",
    "sha256": "c17fa4cb658e3583423e915b9f3acc01cceaee1860e33d59ebae66adc3a2dc0d",
    "texte": {
     "LICENSE": "11a32ee45447fe37",
@@ -4242,12 +4242,12 @@
     "zerovec 0.11.5",
     "zerovec-derive 0.11.2",
     "zmij 1.0.21",
-    "Rust-Standardbibliothek, Compiler-Stand 88d9e12ae178"
+    "Rust standard library, compiler 88d9e12ae178"
    ],
    "programme": {
     "hf_xet/hf_xet.abi3.so": "sha256=oB_rUBXybBzgm3ZW3YVJEcOkbPyBmWqMucnUtQmfan4"
    },
-   "quelle": "Stückliste im Wheel, Standardbibliothek aus der Programmdatei",
+   "quelle": "the SBOM in the wheel, standard library from the binary",
    "version": "1.8.0"
   },
   "hf_transfer": {
@@ -4395,12 +4395,12 @@
     "zeroize 1.8.1",
     "zerovec 0.10.4",
     "zerovec-derive 0.10.3",
-    "Rust-Standardbibliothek, Compiler-Stand 90b35a6239c3"
+    "Rust standard library, compiler 90b35a6239c3"
    ],
    "programme": {
     "hf_transfer/hf_transfer.abi3.so": "sha256=1lMInLimxumx9BE41VWCkYtAubBsEaBlB1W9uLLCyG8"
    },
-   "quelle": "Cargo.lock aus dem Quellpaket, aufgelöst für aarch64-apple-darwin, Standardbibliothek aus der Programmdatei",
+   "quelle": "Cargo.lock from the source package, resolved for aarch64-apple-darwin, standard library from the binary",
    "version": "0.1.9"
   },
   "safetensors": {
@@ -4448,12 +4448,12 @@
     "tempfile 3.27.0",
     "unicode-ident 1.0.24",
     "zmij 1.0.21",
-    "Rust-Standardbibliothek, Compiler-Stand 59807616e1fa"
+    "Rust standard library, compiler 59807616e1fa"
    ],
    "programme": {
     "safetensors/_safetensors_rust.abi3.so": "sha256=vC_iv9ImSvYcEv3qbTK0QxjEcBrOD2l7TzURDLCh5K8"
    },
-   "quelle": "Stückliste im Wheel, Standardbibliothek aus der Programmdatei",
+   "quelle": "the SBOM in the wheel, standard library from the binary",
    "version": "0.8.0"
   },
   "tokenizers": {
@@ -4588,12 +4588,12 @@
     "version_check 0.9.5",
     "zerocopy 0.8.56",
     "zmij 1.0.23",
-    "Rust-Standardbibliothek, Compiler-Stand b940084d7eb6"
+    "Rust standard library, compiler b940084d7eb6"
    ],
    "programme": {
     "tokenizers/tokenizers.abi3.so": "sha256=g8WPnsSTf4ZSHHa6UiIhXT53B6JYGNXqaWBOIw_UqWw"
    },
-   "quelle": "Stückliste im Wheel, Standardbibliothek aus der Programmdatei",
+   "quelle": "the SBOM in the wheel, standard library from the binary",
    "version": "0.23.3"
   }
  },

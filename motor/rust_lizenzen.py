@@ -72,7 +72,7 @@ def rust_pakete() -> dict[str, tuple[str, Path, dict[Path, str]]]:
 def lizenz(teil: dict) -> str:
     angaben = [a.get("expression") or a.get("license", {}).get("id") or a.get("license", {}).get("name", "")
                for a in teil.get("licenses", [])]
-    return " AND ".join(a for a in angaben if a) or "nicht angegeben"
+    return " AND ".join(a for a in angaben if a) or "not specified"
 
 
 def stueckliste(dist: Path):
@@ -139,7 +139,7 @@ def aus_quellpaket(name: str, version: str) -> dict[str, str]:
         offen += [d["pkg"] for d in knoten[kennung]["deps"]
                   if any(a["kind"] in (None, "build") for a in d["dep_kinds"])]
     return {f"{p['name']} {p['version']}": p.get("license") or
-            (f"eigene Lizenz, siehe {p['license_file']}" if p.get("license_file") else "nicht angegeben")
+            (f"custom license, see {p['license_file']}" if p.get("license_file") else "not specified")
             for p in (pakete[k] for k in gesehen) if p.get("source") == CRATES_IO}
 
 
@@ -177,7 +177,7 @@ def lizenztexte(crate: str) -> dict:
                                f"{repository.replace('github.com', 'raw.githubusercontent.com')}/{stand}/{datei}", summe)
                 dateien[f"{repository}/blob/{stand}/{datei}"] = ablage.read_text(errors="replace")
     texte = {d: t.replace("\r\n", "\n").strip() for d, t in dateien.items()}
-    return {"sha256": sha256, "lizenz": angabe.group(1) if angabe else "nicht angegeben",
+    return {"sha256": sha256, "lizenz": angabe.group(1) if angabe else "not specified",
             "dateien": {d: t for d, t in texte.items() if t}}
 
 
@@ -195,9 +195,9 @@ def main() -> None:
     pakete, alle, staende = {}, {}, set()
     for name, (version, dist, programme) in sorted(rust_pakete().items(), key=lambda p: p[0].lower()):
         crates = stueckliste(dist)
-        quelle = "Stückliste im Wheel"
+        quelle = "the SBOM in the wheel"
         if crates is None:
-            crates, quelle = aus_quellpaket(name, version), f"Cargo.lock aus dem Quellpaket, aufgelöst für {ZIEL}"
+            crates, quelle = aus_quellpaket(name, version), f"Cargo.lock from the source package, resolved for {ZIEL}"
         inhalt = b"".join(p.read_bytes() for p in programme)
         # Was die Standardbibliothek mitbringt, steht in keiner Stückliste, nur in der Programmdatei.
         for treffer in PFAD_STD.findall(inhalt):
@@ -210,8 +210,8 @@ def main() -> None:
             sys.exit(f"{name}: Bibliotheken in der Programmdatei, aber nicht in der Liste: {', '.join(fehlt)}")
         compiler = sorted({s.decode() for s in re.findall(rb"/rustc/([0-9a-f]{40})/", inhalt)})
         staende.update(compiler)
-        std = {f"Rust-Standardbibliothek, Compiler-Stand {s[:12]}": "MIT OR Apache-2.0" for s in compiler}
-        pakete[name] = {"version": version, "quelle": f"{quelle}, Standardbibliothek aus der Programmdatei",
+        std = {f"Rust standard library, compiler {s[:12]}": "MIT OR Apache-2.0" for s in compiler}
+        pakete[name] = {"version": version, "quelle": f"{quelle}, standard library from the binary",
                         "programme": {str(p.relative_to(SITE)): summe for p, summe in programme.items()},
                         "crates": sorted(crates) + sorted(std)}
         alle.update(crates)
@@ -221,8 +221,8 @@ def main() -> None:
     with ThreadPoolExecutor(8) as pool:
         # Gemeinsame Dateien aus Repositories zuerst einzeln, damit keine zwei Läufe dieselbe Datei laden.
         for stand in sorted(staende):
-            alle[f"Rust-Standardbibliothek, Compiler-Stand {stand[:12]}"] = "MIT OR Apache-2.0"
-        gelesen = {f"Rust-Standardbibliothek, Compiler-Stand {s[:12]}": standardbibliothek(s) for s in sorted(staende)}
+            alle[f"Rust standard library, compiler {stand[:12]}"] = "MIT OR Apache-2.0"
+        gelesen = {f"Rust standard library, compiler {s[:12]}": standardbibliothek(s) for s in sorted(staende)}
         for repository, (stand, liste) in AUS_REPOSITORY.items():
             for datei, summe in liste.items():
                 laden(LAGER / "rust-quellen" / repository.split("/", 3)[3] / stand / datei,

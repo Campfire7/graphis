@@ -69,7 +69,7 @@ enum EinrichtungPruefung {
         einrichtung.laden()
         await fertig(einrichtung)
         if case .fehler(let text, false) = einrichtung.zustand {
-            bericht.pruefen("Volle Platte vor dem Laden", text.contains("fehlen noch") && seit(stand).isEmpty, text)
+            bericht.pruefen("Volle Platte vor dem Laden", text.contains("more free space") && seit(stand).isEmpty, text)
         } else {
             bericht.pruefen("Volle Platte vor dem Laden", false, "\(einrichtung.zustand)")
         }
@@ -191,7 +191,7 @@ enum EinrichtungPruefung {
         einrichtung.laden(trotzUnbekanntemPlatz: true)
         await fertig(einrichtung)
         anfragen = seit(stand)
-        bericht.pruefen("Falscher Hash wird verworfen", falsch.fehlerText.contains("stimmt nicht") && danach.vorhanden > 0
+        bericht.pruefen("Falscher Hash wird verworfen", falsch.fehlerText.contains("does not match") && danach.vorhanden > 0
                         && einrichtung.bereit && alleAmZiel()
                         && anfragen.count == 1 + basis.dateien.drop { $0.pfad != name }.dropFirst().count,
                         "\(falsch), danach \(danach), \(anfragen.count) Anfragen")
@@ -201,7 +201,7 @@ enum EinrichtungPruefung {
         einrichtung = Modellinstallation(manifest: art("zu-gross", nur: name))
         einrichtung.laden(trotzUnbekanntemPlatz: true)
         await fertig(einrichtung)
-        bericht.pruefen("Zu grosse Datei", einrichtung.zustand.fehlerText.contains("grösser")
+        bericht.pruefen("Zu grosse Datei", einrichtung.zustand.fehlerText.contains("larger")
                         && !dateien.fileExists(atPath: Pfade.ordner(.moss).path), "\(einrichtung.zustand)")
 
         // 16: Platz geht unterwegs aus: anhalten mit Meldung, später an derselben Stelle weiter.
@@ -223,7 +223,7 @@ enum EinrichtungPruefung {
         einrichtung.freierPlatz = { _ in 1 << 40 }
         einrichtung.laden()
         await fertig(einrichtung)
-        bericht.pruefen("Platz geht unterwegs aus", knapp.fehlerText.contains("Platz") && einrichtung.bereit && alleAmZiel(),
+        bericht.pruefen("Platz geht unterwegs aus", knapp.fehlerText.contains("space") && einrichtung.bereit && alleAmZiel(),
                         "\(knapp), Teil danach \(teil)")
 
         // 17: Ohne Prüfvermerk liegen alle Dateien vollständig da: Die Reparatur verlangt dafür keinen Platz und lädt nichts.
@@ -251,7 +251,7 @@ enum EinrichtungPruefung {
         einrichtung.freierPlatz = { _ in 1 << 40 }
         einrichtung.laden()
         await fertig(einrichtung)
-        bericht.pruefen("Reserve gilt auch unterwegs", unterReserve.fehlerText.contains("Platz") && einrichtung.bereit && alleAmZiel(),
+        bericht.pruefen("Reserve gilt auch unterwegs", unterReserve.fehlerText.contains("space") && einrichtung.bereit && alleAmZiel(),
                         "\(unterReserve)")
 
         // 19: Eine Modelldatei ändert sich nach der Prüfung: Auffrischen nimmt die Bereitschaft zurück, ohne zu hashen.

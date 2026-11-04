@@ -37,7 +37,7 @@ struct FensterBefehle: Commands {
 
     var body: some Commands {
         CommandGroup(before: .windowList) {
-            Button("Hauptfenster öffnen") { fensterOeffnen(id: "main") }
+            Button("Open Main Window") { fensterOeffnen(id: "main") }
         }
     }
 }

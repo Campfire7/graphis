@@ -1,13 +1,13 @@
 THIRD_PARTY_NOTICES – Graphis
-Automatisch erzeugt von motor/lizenzen.py aus den Dateien im App-Paket.
-Der Code der App selbst steht unter der Lizenz in LICENSE.
+Generated automatically by motor/lizenzen.py from the files in the app bundle.
+The app's own code is under the license in LICENSE.
 
 ====================================================================================================
 Python 3.12.16 (python-build-standalone, aarch64-apple-darwin)
 ====================================================================================================
 
-Lizenz: Python-2.0 AND CNRI-Python
-Eingebaute Bibliotheken:
+License: Python-2.0 AND CNRI-Python
+Built-in libraries:
   LICENSE.bzip2.txt: _bz2 (bzip2-1.0.6)
   LICENSE.expat.txt: pyexpat (MIT)
   LICENSE.libedit.txt: readline (BSD-3-Clause)
@@ -1300,7 +1300,7 @@ Copyright (C) 1995-2017 Jean-loup Gailly and Mark Adler
 annotated-doc 0.0.5 – MIT
 ====================================================================================================
 
-Quelle: https://github.com/fastapi/annotated-doc
+Source: https://github.com/fastapi/annotated-doc
 
 --- licenses/LICENSE ---
 The MIT License (MIT)
@@ -1330,7 +1330,7 @@ THE SOFTWARE.
 anyio 4.16.0 – MIT
 ====================================================================================================
 
-Quelle: https://anyio.readthedocs.io/en/latest/
+Source: https://anyio.readthedocs.io/en/latest/
 
 --- licenses/LICENSE ---
 The MIT License (MIT)
@@ -1359,7 +1359,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 certifi 2026.10.23 – Mozilla Public License 2.0 (MPL 2.0)
 ====================================================================================================
 
-Quelle: https://github.com/certifi/python-certifi
+Source: https://github.com/certifi/python-certifi
 
 --- licenses/LICENSE ---
 This package contains a modified version of ca-bundle.crt:
@@ -1388,7 +1388,7 @@ one at http://mozilla.org/MPL/2.0/.
 charset-normalizer 3.5.2 – MIT
 ====================================================================================================
 
-Quelle: https://github.com/jawah/charset_normalizer/blob/master/CHANGELOG.md
+Source: https://github.com/jawah/charset_normalizer/blob/master/CHANGELOG.md
 
 --- licenses/LICENSE ---
 MIT License
@@ -1418,7 +1418,7 @@ SOFTWARE.
 click 8.5.0 – BSD-3-Clause
 ====================================================================================================
 
-Quelle: https://click.palletsprojects.com/page/changes/
+Source: https://click.palletsprojects.com/page/changes/
 
 --- licenses/LICENSE.txt ---
 Copyright 2014 Pallets
@@ -1455,7 +1455,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 filelock 4.2.6 – MIT
 ====================================================================================================
 
-Quelle: https://py-filelock.readthedocs.io/en/latest/changelog.html
+Source: https://py-filelock.readthedocs.io/en/latest/changelog.html
 
 --- licenses/LICENSE ---
 MIT License
@@ -1485,7 +1485,7 @@ SOFTWARE.
 fsspec 2026.9.0 – BSD-3-Clause
 ====================================================================================================
 
-Quelle: https://filesystem-spec.readthedocs.io/en/latest/changelog.html
+Source: https://filesystem-spec.readthedocs.io/en/latest/changelog.html
 
 --- licenses/LICENSE ---
 BSD 3-Clause License
@@ -1523,7 +1523,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 h11 0.16.0 – MIT License
 ====================================================================================================
 
-Quelle: https://github.com/python-hyper/h11
+Source: https://github.com/python-hyper/h11
 
 --- licenses/LICENSE.txt ---
 The MIT License (MIT)
@@ -1551,10 +1551,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 ====================================================================================================
-hf_transfer 0.1.9 – nicht angegeben
+hf_transfer 0.1.9 – not specified
 ====================================================================================================
 
-Quelle: https://github.com/huggingface/hf_transfer/issues
+Source: https://github.com/huggingface/hf_transfer/issues
 
 --- licenses/LICENSE ---
 Apache License
@@ -1764,7 +1764,7 @@ Apache License
 hf-xet 1.8.0 – Apache-2.0
 ====================================================================================================
 
-Quelle: https://huggingface.co/docs/hub/xet/index
+Source: https://huggingface.co/docs/hub/xet/index
 
 --- licenses/LICENSE ---
 Apache License
@@ -1974,7 +1974,7 @@ Apache License
 httpcore 1.0.9 – BSD-3-Clause
 ====================================================================================================
 
-Quelle: https://www.encode.io/httpcore
+Source: https://www.encode.io/httpcore
 
 --- licenses/LICENSE.md ---
 Copyright © 2020, [Encode OSS Ltd](https://www.encode.io/).
@@ -2010,7 +2010,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 httpx 0.28.1 – BSD License
 ====================================================================================================
 
-Quelle: https://github.com/encode/httpx/blob/master/CHANGELOG.md
+Source: https://github.com/encode/httpx/blob/master/CHANGELOG.md
 
 --- licenses/LICENSE.md ---
 Copyright © 2019, [Encode OSS Ltd](https://www.encode.io/).
@@ -2031,7 +2031,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 huggingface_hub 1.33.0 – Apache Software License
 ====================================================================================================
 
-Quelle: https://github.com/huggingface/huggingface_hub
+Source: https://github.com/huggingface/huggingface_hub
 
 --- licenses/LICENSE ---
 Apache License
@@ -2241,7 +2241,7 @@ Apache License
 idna 3.20 – BSD-3-Clause
 ====================================================================================================
 
-Quelle: https://github.com/kjd/idna/blob/master/HISTORY.md
+Source: https://github.com/kjd/idna/blob/master/HISTORY.md
 
 --- licenses/LICENSE.md ---
 BSD 3-Clause License
@@ -2281,7 +2281,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 Jinja2 3.1.6 – BSD License
 ====================================================================================================
 
-Quelle: https://jinja.palletsprojects.com/changes/
+Source: https://jinja.palletsprojects.com/changes/
 
 --- licenses/LICENSE.txt ---
 Copyright 2007 Pallets
@@ -2318,7 +2318,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 markdown-it-py 4.2.0 – MIT License
 ====================================================================================================
 
-Quelle: https://markdown-it-py.readthedocs.io
+Source: https://markdown-it-py.readthedocs.io
 
 --- licenses/LICENSE ---
 MIT License
@@ -2372,7 +2372,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 MarkupSafe 3.0.4 – BSD-3-Clause
 ====================================================================================================
 
-Quelle: https://palletsprojects.com/donate
+Source: https://palletsprojects.com/donate
 
 --- licenses/LICENSE.txt ---
 Copyright 2010 Pallets
@@ -2409,7 +2409,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 mdurl 0.1.2 – MIT License
 ====================================================================================================
 
-Quelle: https://github.com/executablebooks/mdurl
+Source: https://github.com/executablebooks/mdurl
 
 --- LICENSE ---
 Copyright (c) 2015 Vitaly Puzrin, Alex Kocharin.
@@ -2464,9 +2464,9 @@ IN THE SOFTWARE.
 mflux 0.24.0 – MIT License
 ====================================================================================================
 
-Quelle: https://github.com/mflux-community/mflux
+Source: https://github.com/mflux-community/mflux
 
---- Lizenztext aus den Paketangaben ---
+--- License text from the package metadata ---
 MIT License
          
          Copyright (c) 2026 Filip Strand
@@ -2494,7 +2494,7 @@ MIT License
 mlx 0.32.4 – MIT
 ====================================================================================================
 
-Quelle: https://github.com/ml-explore/mlx
+Source: https://github.com/ml-explore/mlx
 
 --- licenses/LICENSE ---
 MIT License
@@ -2524,7 +2524,7 @@ SOFTWARE.
 mlx-metal 0.32.4 – MIT
 ====================================================================================================
 
-Quelle: https://github.com/ml-explore/mlx
+Source: https://github.com/ml-explore/mlx
 
 --- licenses/LICENSE ---
 MIT License
@@ -2554,7 +2554,7 @@ SOFTWARE.
 numpy 2.5.4 – BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0
 ====================================================================================================
 
-Quelle: https://numpy.org
+Source: https://numpy.org
 
 --- licenses/LICENSE.txt ---
 Copyright (c) 2005-2025, NumPy Developers.
@@ -4371,7 +4371,7 @@ See <http://creativecommons.org/publicdomain/zero/1.0/>.
 packaging 26.3 – Apache-2.0 OR BSD-2-Clause
 ====================================================================================================
 
-Quelle: https://packaging.pypa.io/
+Source: https://packaging.pypa.io/
 
 --- licenses/LICENSE ---
 This software is made available under the terms of *either* of the licenses
@@ -4586,7 +4586,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 piexif 1.1.3 – MIT License
 ====================================================================================================
 
-Quelle: https://github.com/hMatoba/Piexif
+Source: https://github.com/hMatoba/Piexif
 
 --- LICENSE.txt ---
 The MIT License (MIT)
@@ -4616,7 +4616,7 @@ SOFTWARE.
 pillow 13.0.0 – MIT-CMU
 ====================================================================================================
 
-Quelle: https://pillow.readthedocs.io/en/stable/releasenotes/index.html
+Source: https://pillow.readthedocs.io/en/stable/releasenotes/index.html
 
 --- licenses/LICENSE ---
 The Python Imaging Library (PIL) is
@@ -6199,7 +6199,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 platformdirs 4.14.3 – MIT
 ====================================================================================================
 
-Quelle: https://platformdirs.readthedocs.io/en/latest/changelog.html
+Source: https://platformdirs.readthedocs.io/en/latest/changelog.html
 
 --- licenses/LICENSE ---
 MIT License
@@ -6229,7 +6229,7 @@ SOFTWARE.
 protobuf 7.36.2 – 3-Clause BSD License
 ====================================================================================================
 
-Quelle: https://developers.google.com/protocol-buffers/
+Source: https://developers.google.com/protocol-buffers/
 
 --- LICENSE ---
 Copyright 2008 Google Inc.  All rights reserved.
@@ -6270,7 +6270,7 @@ support library is itself covered by the above license.
 Pygments 2.21.0 – BSD-2-Clause
 ====================================================================================================
 
-Quelle: https://pygments.org
+Source: https://pygments.org
 
 --- licenses/AUTHORS ---
 Pygments is written and maintained by Georg Brandl <georg@python.org>.
@@ -6602,7 +6602,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 PyYAML 6.0.3 – MIT License
 ====================================================================================================
 
-Quelle: https://pyyaml.org/
+Source: https://pyyaml.org/
 
 --- licenses/LICENSE ---
 Copyright (c) 2017-2021 Ingy döt Net
@@ -6631,7 +6631,7 @@ SOFTWARE.
 regex 2026.9.29 – Apache-2.0 AND CNRI-Python
 ====================================================================================================
 
-Quelle: https://github.com/mrabarnett/mrab-regex
+Source: https://github.com/mrabarnett/mrab-regex
 
 --- licenses/LICENSE.txt ---
 This work was derived from the 're' module of CPython 2.6 and CPython 3.1,
@@ -6848,7 +6848,7 @@ All additions and alterations are licensed under the Apache 2.0 License.
 requests 2.34.2 – Apache Software License
 ====================================================================================================
 
-Quelle: https://requests.readthedocs.io
+Source: https://requests.readthedocs.io
 
 --- licenses/LICENSE ---
 Apache License
@@ -7035,7 +7035,7 @@ Copyright 2019 Kenneth Reitz
 rich 15.0.0 – MIT License
 ====================================================================================================
 
-Quelle: https://rich.readthedocs.io/en/latest/
+Source: https://rich.readthedocs.io/en/latest/
 
 --- licenses/LICENSE ---
 Copyright (c) 2020 Will McGugan
@@ -7063,7 +7063,7 @@ SOFTWARE.
 safetensors 0.8.0 – Apache Software License
 ====================================================================================================
 
-Quelle: https://github.com/huggingface/safetensors
+Source: https://github.com/huggingface/safetensors
 
 --- licenses/LICENSE ---
 Apache License
@@ -7273,16 +7273,16 @@ Apache License
 sentencepiece 0.2.2 – Apache-2.0
 ====================================================================================================
 
-Quelle: https://github.com/google/sentencepiece
+Source: https://github.com/google/sentencepiece
 
-Das Wheel enthält keinen Lizenztext. Es gilt Apache-2.0, Volltext von Apache-2.0 siehe hf_transfer: licenses/LICENSE.
+The wheel contains no license text. Apache-2.0 applies; for the full Apache-2.0 text see hf_transfer: licenses/LICENSE.
 
 
 ====================================================================================================
 shellingham 1.5.4 – ISC License (ISCL)
 ====================================================================================================
 
-Quelle: https://github.com/sarugaku/shellingham
+Source: https://github.com/sarugaku/shellingham
 
 --- LICENSE ---
 Copyright (c) 2018, Tzu-ping Chung <uranusjr@gmail.com>
@@ -7304,16 +7304,16 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 tokenizers 0.23.3 – Apache Software License
 ====================================================================================================
 
-Quelle: https://github.com/huggingface/tokenizers
+Source: https://github.com/huggingface/tokenizers
 
-Das Wheel enthält keinen Lizenztext. Es gilt Apache Software License, Volltext von Apache-2.0 siehe hf_transfer: licenses/LICENSE.
+The wheel contains no license text. Apache Software License applies; for the full Apache-2.0 text see hf_transfer: licenses/LICENSE.
 
 
 ====================================================================================================
 toml 0.10.2 – MIT License
 ====================================================================================================
 
-Quelle: https://github.com/uiri/toml
+Source: https://github.com/uiri/toml
 
 --- LICENSE ---
 The MIT License
@@ -7349,7 +7349,7 @@ THE SOFTWARE.
 tqdm 4.70.1 – MPL-2.0 AND MIT
 ====================================================================================================
 
-Quelle: https://tqdm.github.io
+Source: https://tqdm.github.io
 
 --- licenses/LICENCE ---
 `tqdm` is a product of collaborative work.
@@ -7407,7 +7407,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 transformers 5.22.1 – Apache 2.0 License
 ====================================================================================================
 
-Quelle: https://github.com/huggingface/transformers
+Source: https://github.com/huggingface/transformers
 
 --- licenses/LICENSE ---
 Copyright 2018- The Hugging Face team. All rights reserved.
@@ -7619,7 +7619,7 @@ Copyright 2018- The Hugging Face team. All rights reserved.
 typer 0.27.3 – MIT
 ====================================================================================================
 
-Quelle: https://github.com/fastapi/typer
+Source: https://github.com/fastapi/typer
 
 --- licenses/LICENSE ---
 The MIT License (MIT)
@@ -7649,7 +7649,7 @@ THE SOFTWARE.
 typing_extensions 4.16.0 – PSF-2.0
 ====================================================================================================
 
-Quelle: https://github.com/python/typing_extensions/issues
+Source: https://github.com/python/typing_extensions/issues
 
 --- licenses/LICENSE ---
 A. HISTORY OF THE SOFTWARE
@@ -7937,7 +7937,7 @@ PERFORMANCE OF THIS SOFTWARE.
 urllib3 2.8.0 – MIT
 ====================================================================================================
 
-Quelle: https://github.com/urllib3/urllib3/blob/main/CHANGES.rst
+Source: https://github.com/urllib3/urllib3/blob/main/CHANGES.rst
 
 --- licenses/LICENSE.txt ---
 MIT License
@@ -7964,14 +7964,13 @@ SOFTWARE.
 
 
 ====================================================================================================
-Rust-Bibliotheken in hf-xet 1.8.0, hf_transfer 0.1.9, safetensors 0.8.0, tokenizers 0.23.3
+Rust libraries in hf-xet 1.8.0, hf_transfer 0.1.9, safetensors 0.8.0, tokenizers 0.23.3
 ====================================================================================================
 
-Diese Pakete enthalten Programmteile aus Rust, in die Bibliotheken von crates.io und die Rust-Standardbibliothek
-fest eingebaut sind.
-Die Liste stammt aus motor/rust-lizenzen.json. Gleiche Lizenztexte stehen unten nur einmal.
+These packages contain Rust code with libraries from crates.io and the Rust standard library statically
+linked in. The list comes from motor/rust-lizenzen.json. Identical license texts appear only once below.
 
-hf-xet 1.8.0 (244 Bibliotheken, laut Stückliste im Wheel, Standardbibliothek aus der Programmdatei):
+hf-xet 1.8.0 (244 libraries, from the SBOM in the wheel, standard library from the binary):
   addr2line 0.25.1 – Apache-2.0 OR MIT
   aho-corasick 1.1.4 – Unlicense OR MIT
   anyhow 1.0.103 – MIT OR Apache-2.0
@@ -8215,9 +8214,9 @@ hf-xet 1.8.0 (244 Bibliotheken, laut Stückliste im Wheel, Standardbibliothek au
   zerovec 0.11.5 – Unicode-3.0
   zerovec-derive 0.11.2 – Unicode-3.0
   zmij 1.0.21 – MIT
-  Rust-Standardbibliothek, Compiler-Stand 88d9e12ae178 – MIT OR Apache-2.0
+  Rust standard library, compiler 88d9e12ae178 – MIT OR Apache-2.0
 
-hf_transfer 0.1.9 (144 Bibliotheken, laut Cargo.lock aus dem Quellpaket, aufgelöst für aarch64-apple-darwin, Standardbibliothek aus der Programmdatei):
+hf_transfer 0.1.9 (144 libraries, from Cargo.lock from the source package, resolved for aarch64-apple-darwin, standard library from the binary):
   addr2line 0.22.0 – Apache-2.0 OR MIT
   atomic-waker 1.1.2 – Apache-2.0 OR MIT
   autocfg 1.4.0 – Apache-2.0 OR MIT
@@ -8307,7 +8306,7 @@ hf_transfer 0.1.9 (144 Bibliotheken, laut Cargo.lock aus dem Quellpaket, aufgel�
   rand_chacha 0.3.1 – MIT OR Apache-2.0
   rand_core 0.6.4 – MIT OR Apache-2.0
   reqwest 0.12.9 – MIT OR Apache-2.0
-  ring 0.17.8 – eigene Lizenz, siehe LICENSE
+  ring 0.17.8 – custom license, see LICENSE
   rustc-demangle 0.1.24 – MIT/Apache-2.0
   rustix 0.38.42 – Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT
   rustls 0.23.20 – Apache-2.0 OR ISC OR MIT
@@ -8361,9 +8360,9 @@ hf_transfer 0.1.9 (144 Bibliotheken, laut Cargo.lock aus dem Quellpaket, aufgel�
   zeroize 1.8.1 – Apache-2.0 OR MIT
   zerovec 0.10.4 – Unicode-3.0
   zerovec-derive 0.10.3 – Unicode-3.0
-  Rust-Standardbibliothek, Compiler-Stand 90b35a6239c3 – MIT OR Apache-2.0
+  Rust standard library, compiler 90b35a6239c3 – MIT OR Apache-2.0
 
-safetensors 0.8.0 (44 Bibliotheken, laut Stückliste im Wheel, Standardbibliothek aus der Programmdatei):
+safetensors 0.8.0 (44 libraries, from the SBOM in the wheel, standard library from the binary):
   addr2line 0.25.1 – Apache-2.0 OR MIT
   allocator-api2 0.2.21 – MIT OR Apache-2.0
   bitflags 2.13.0 – MIT OR Apache-2.0
@@ -8407,9 +8406,9 @@ safetensors 0.8.0 (44 Bibliotheken, laut Stückliste im Wheel, Standardbibliothe
   tempfile 3.27.0 – MIT OR Apache-2.0
   unicode-ident 1.0.24 – (MIT OR Apache-2.0) AND Unicode-3.0
   zmij 1.0.21 – MIT
-  Rust-Standardbibliothek, Compiler-Stand 59807616e1fa – MIT OR Apache-2.0
+  Rust standard library, compiler 59807616e1fa – MIT OR Apache-2.0
 
-tokenizers 0.23.3 (131 Bibliotheken, laut Stückliste im Wheel, Standardbibliothek aus der Programmdatei):
+tokenizers 0.23.3 (131 libraries, from the SBOM in the wheel, standard library from the binary):
   addr2line 0.27.1 – Apache-2.0 OR MIT
   ahash 0.8.12 – MIT OR Apache-2.0
   aho-corasick 1.1.5 – Unlicense OR MIT
@@ -8540,17 +8539,17 @@ tokenizers 0.23.3 (131 Bibliotheken, laut Stückliste im Wheel, Standardbiblioth
   version_check 0.9.5 – MIT OR Apache-2.0
   zerocopy 0.8.56 – BSD-2-Clause OR Apache-2.0 OR MIT
   zmij 1.0.23 – MIT
-  Rust-Standardbibliothek, Compiler-Stand b940084d7eb6 – MIT OR Apache-2.0
+  Rust standard library, compiler b940084d7eb6 – MIT OR Apache-2.0
 
 
 ====================================================================================================
-Rust-Lizenztext 1 von 255
+Rust license text 1 of 255
 ====================================================================================================
 
-Steht in:
-  Rust-Standardbibliothek, Compiler-Stand 59807616e1fa: https://github.com/rust-lang/rust/blob/59807616e1fa2540724bfbac14d7976d7e4a3860/COPYRIGHT
-  Rust-Standardbibliothek, Compiler-Stand 88d9e12ae178: https://github.com/rust-lang/rust/blob/88d9e12ae178fab0fb5cc050a94da85685d449ea/COPYRIGHT
-  Rust-Standardbibliothek, Compiler-Stand b940084d7eb6: https://github.com/rust-lang/rust/blob/b940084d7eb6a299eb4bfeb8e34901bc051e7ac4/COPYRIGHT
+Found in:
+  Rust standard library, compiler 59807616e1fa: https://github.com/rust-lang/rust/blob/59807616e1fa2540724bfbac14d7976d7e4a3860/COPYRIGHT
+  Rust standard library, compiler 88d9e12ae178: https://github.com/rust-lang/rust/blob/88d9e12ae178fab0fb5cc050a94da85685d449ea/COPYRIGHT
+  Rust standard library, compiler b940084d7eb6: https://github.com/rust-lang/rust/blob/b940084d7eb6a299eb4bfeb8e34901bc051e7ac4/COPYRIGHT
 
 Short version for non-lawyers:
 
@@ -8588,14 +8587,14 @@ covers the subset of source code used in the Rust Standard Library, as opposed
 to the toolchain as a whole.
 
 ====================================================================================================
-Rust-Lizenztext 2 von 255
+Rust license text 2 of 255
 ====================================================================================================
 
-Steht in:
-  Rust-Standardbibliothek, Compiler-Stand 59807616e1fa: https://github.com/rust-lang/rust/blob/59807616e1fa2540724bfbac14d7976d7e4a3860/LICENSE-APACHE
-  Rust-Standardbibliothek, Compiler-Stand 88d9e12ae178: https://github.com/rust-lang/rust/blob/88d9e12ae178fab0fb5cc050a94da85685d449ea/LICENSE-APACHE
-  Rust-Standardbibliothek, Compiler-Stand 90b35a6239c3: https://github.com/rust-lang/rust/blob/90b35a6239c3d8bdabc530a6a0816f7ff89a0aaf/LICENSE-APACHE
-  Rust-Standardbibliothek, Compiler-Stand b940084d7eb6: https://github.com/rust-lang/rust/blob/b940084d7eb6a299eb4bfeb8e34901bc051e7ac4/LICENSE-APACHE
+Found in:
+  Rust standard library, compiler 59807616e1fa: https://github.com/rust-lang/rust/blob/59807616e1fa2540724bfbac14d7976d7e4a3860/LICENSE-APACHE
+  Rust standard library, compiler 88d9e12ae178: https://github.com/rust-lang/rust/blob/88d9e12ae178fab0fb5cc050a94da85685d449ea/LICENSE-APACHE
+  Rust standard library, compiler 90b35a6239c3: https://github.com/rust-lang/rust/blob/90b35a6239c3d8bdabc530a6a0816f7ff89a0aaf/LICENSE-APACHE
+  Rust standard library, compiler b940084d7eb6: https://github.com/rust-lang/rust/blob/b940084d7eb6a299eb4bfeb8e34901bc051e7ac4/LICENSE-APACHE
   allocator-api2 0.2.21: LICENSE-APACHE
   anyhow 1.0.103: LICENSE-APACHE
   async-trait 0.1.89: LICENSE-APACHE
@@ -8833,13 +8832,13 @@ TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 END OF TERMS AND CONDITIONS
 
 ====================================================================================================
-Rust-Lizenztext 3 von 255
+Rust license text 3 of 255
 ====================================================================================================
 
-Steht in:
-  Rust-Standardbibliothek, Compiler-Stand 59807616e1fa: https://github.com/rust-lang/rust/blob/59807616e1fa2540724bfbac14d7976d7e4a3860/LICENSE-MIT
-  Rust-Standardbibliothek, Compiler-Stand 88d9e12ae178: https://github.com/rust-lang/rust/blob/88d9e12ae178fab0fb5cc050a94da85685d449ea/LICENSE-MIT
-  Rust-Standardbibliothek, Compiler-Stand b940084d7eb6: https://github.com/rust-lang/rust/blob/b940084d7eb6a299eb4bfeb8e34901bc051e7ac4/LICENSE-MIT
+Found in:
+  Rust standard library, compiler 59807616e1fa: https://github.com/rust-lang/rust/blob/59807616e1fa2540724bfbac14d7976d7e4a3860/LICENSE-MIT
+  Rust standard library, compiler 88d9e12ae178: https://github.com/rust-lang/rust/blob/88d9e12ae178fab0fb5cc050a94da85685d449ea/LICENSE-MIT
+  Rust standard library, compiler b940084d7eb6: https://github.com/rust-lang/rust/blob/b940084d7eb6a299eb4bfeb8e34901bc051e7ac4/LICENSE-MIT
 
 Copyright (c) The Rust Project Contributors
 
@@ -8868,11 +8867,11 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 4 von 255
+Rust license text 4 of 255
 ====================================================================================================
 
-Steht in:
-  Rust-Standardbibliothek, Compiler-Stand 90b35a6239c3: https://github.com/rust-lang/rust/blob/90b35a6239c3d8bdabc530a6a0816f7ff89a0aaf/COPYRIGHT
+Found in:
+  Rust standard library, compiler 90b35a6239c3: https://github.com/rust-lang/rust/blob/90b35a6239c3d8bdabc530a6a0816f7ff89a0aaf/COPYRIGHT
 
 Short version for non-lawyers:
 
@@ -9267,11 +9266,11 @@ their own copyright notices and license terms:
     written authorization of the copyright holder.
 
 ====================================================================================================
-Rust-Lizenztext 5 von 255
+Rust license text 5 of 255
 ====================================================================================================
 
-Steht in:
-  Rust-Standardbibliothek, Compiler-Stand 90b35a6239c3: https://github.com/rust-lang/rust/blob/90b35a6239c3d8bdabc530a6a0816f7ff89a0aaf/LICENSE-MIT
+Found in:
+  Rust standard library, compiler 90b35a6239c3: https://github.com/rust-lang/rust/blob/90b35a6239c3d8bdabc530a6a0816f7ff89a0aaf/LICENSE-MIT
   allocator-api2 0.2.21: LICENSE-MIT
   anyhow 1.0.103: LICENSE-MIT
   async-trait 0.1.89: LICENSE-MIT
@@ -9360,10 +9359,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 6 von 255
+Rust license text 6 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   addr2line 0.22.0: LICENSE-APACHE
   addr2line 0.25.1: LICENSE-APACHE
   addr2line 0.27.1: LICENSE-APACHE
@@ -9703,10 +9702,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 7 von 255
+Rust license text 7 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   addr2line 0.22.0: LICENSE-MIT
   addr2line 0.25.1: LICENSE-MIT
   addr2line 0.27.1: LICENSE-MIT
@@ -9738,10 +9737,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 8 von 255
+Rust license text 8 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   ahash 0.8.12: LICENSE-MIT
 
 Copyright (c) 2018 Tom Kaitchuck
@@ -9771,10 +9770,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 9 von 255
+Rust license text 9 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   aho-corasick 1.1.4: COPYING
   aho-corasick 1.1.5: COPYING
   byteorder 1.5.0: COPYING
@@ -9790,10 +9789,10 @@ This project is dual-licensed under the Unlicense and MIT licenses.
 You may use this code under the terms of either license.
 
 ====================================================================================================
-Rust-Lizenztext 10 von 255
+Rust license text 10 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   aho-corasick 1.1.4: LICENSE-MIT
   aho-corasick 1.1.5: LICENSE-MIT
   byteorder 1.5.0: LICENSE-MIT
@@ -9827,10 +9826,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 11 von 255
+Rust license text 11 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   aho-corasick 1.1.4: UNLICENSE
   aho-corasick 1.1.5: UNLICENSE
   byteorder 1.5.0: UNLICENSE
@@ -9868,10 +9867,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 
 ====================================================================================================
-Rust-Lizenztext 12 von 255
+Rust license text 12 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   anstream 1.0.0: LICENSE-APACHE
   anstyle 1.0.14: LICENSE-APACHE
   anstyle-parse 1.0.0: LICENSE-APACHE
@@ -10098,10 +10097,10 @@ Apache License
    limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 13 von 255
+Rust license text 13 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   anstream 1.0.0: LICENSE-MIT
   anstyle 1.0.14: LICENSE-MIT
   anstyle-parse 1.0.0: LICENSE-MIT
@@ -10132,10 +10131,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 14 von 255
+Rust license text 14 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   approx 0.5.1: LICENSE
   crc-fast 1.10.0: LICENSE-Apache
   encoding_rs 0.8.35: LICENSE-APACHE
@@ -10360,10 +10359,10 @@ Apache License
    limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 15 von 255
+Rust license text 15 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   arrayref 0.3.9: LICENSE
 
 Copyright (c) 2015 David Roundy <roundyd@physics.oregonstate.edu>
@@ -10394,10 +10393,10 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ====================================================================================================
-Rust-Lizenztext 16 von 255
+Rust license text 16 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   arrayvec 0.7.6: LICENSE-MIT
 
 Copyright (c) Ulrik Sverdrup "bluss" 2015-2023
@@ -10427,10 +10426,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 17 von 255
+Rust license text 17 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   atomic-waker 1.1.2: LICENSE-THIRD-PARTY
 
 ===============================================================================
@@ -10480,10 +10479,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 18 von 255
+Rust license text 18 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   autocfg 1.4.0: LICENSE-MIT
   autocfg 1.5.0: LICENSE-MIT
   autocfg 1.5.1: LICENSE-MIT
@@ -10516,10 +10515,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 19 von 255
+Rust license text 19 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   aws-lc-rs 1.18.1: LICENSE
 
 SPDX-License-Identifier: ISC AND (Apache-2.0 OR ISC)
@@ -10726,10 +10725,10 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 20 von 255
+Rust license text 20 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   aws-lc-sys 0.45.0: LICENSE
   aws-lc-sys 0.45.0: aws-lc/LICENSE
 
@@ -11051,10 +11050,10 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 21 von 255
+Rust license text 21 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   aws-lc-sys 0.45.0: aws-lc/third_party/fiat/LICENSE
   ring 0.17.8: third_party/fiat/LICENSE
 
@@ -11082,10 +11081,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 22 von 255
+Rust license text 22 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   base64 0.13.1: LICENSE-MIT
   base64 0.22.1: LICENSE-MIT
 
@@ -11112,10 +11111,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 23 von 255
+Rust license text 23 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   bitflags 1.3.2: LICENSE-MIT
   bitflags 2.11.0: LICENSE-MIT
   bitflags 2.13.0: LICENSE-MIT
@@ -11161,10 +11160,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 24 von 255
+Rust license text 24 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   blake3 1.8.3: LICENSE_A2
 
 Apache License
@@ -11370,10 +11369,10 @@ Apache License
    limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 25 von 255
+Rust license text 25 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   blake3 1.8.3: LICENSE_A2LLVM
 
 Apache License
@@ -11596,10 +11595,10 @@ the License, but only in their entirety and only with respect to the Combined
 Software.
 
 ====================================================================================================
-Rust-Lizenztext 26 von 255
+Rust license text 26 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   blake3 1.8.3: LICENSE_CC0
   constant_time_eq 0.4.2: LICENSE-CC0
   dunce 1.0.5: LICENSE
@@ -11728,10 +11727,10 @@ express Statement of Purpose.
     this CC0 or use of the Work.
 
 ====================================================================================================
-Rust-Lizenztext 27 von 255
+Rust license text 27 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   block-buffer 0.12.1: LICENSE-APACHE
   chacha20 0.10.2: LICENSE-APACHE
   const-oid 0.10.2: LICENSE-APACHE
@@ -11946,10 +11945,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 28 von 255
+Rust license text 28 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   block-buffer 0.12.1: LICENSE-MIT
 
 Copyright (c) 2018-2025 The RustCrypto Project Developers
@@ -11979,10 +11978,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 29 von 255
+Rust license text 29 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   block2 0.6.2: https://github.com/madsmtm/objc2/blob/8a5abacd90d5403fc0463459a35826f892b9142e/LICENSE-APACHE.txt
   dispatch2 0.3.1: https://github.com/madsmtm/objc2/blob/8a5abacd90d5403fc0463459a35826f892b9142e/LICENSE-APACHE.txt
   objc2 0.6.4: https://github.com/madsmtm/objc2/blob/8a5abacd90d5403fc0463459a35826f892b9142e/LICENSE-APACHE.txt
@@ -12174,10 +12173,10 @@ Apache License
 Copyright 2026 Mads Marquart
 
 ====================================================================================================
-Rust-Lizenztext 30 von 255
+Rust license text 30 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   block2 0.6.2: https://github.com/madsmtm/objc2/blob/8a5abacd90d5403fc0463459a35826f892b9142e/LICENSE-MIT.txt
   dispatch2 0.3.1: https://github.com/madsmtm/objc2/blob/8a5abacd90d5403fc0463459a35826f892b9142e/LICENSE-MIT.txt
   objc2 0.6.4: https://github.com/madsmtm/objc2/blob/8a5abacd90d5403fc0463459a35826f892b9142e/LICENSE-MIT.txt
@@ -12216,10 +12215,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 31 von 255
+Rust license text 31 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   block2 0.6.2: https://github.com/madsmtm/objc2/blob/8a5abacd90d5403fc0463459a35826f892b9142e/LICENSE-ZLIB.txt
   dispatch2 0.3.1: https://github.com/madsmtm/objc2/blob/8a5abacd90d5403fc0463459a35826f892b9142e/LICENSE-ZLIB.txt
   objc2 0.6.4: https://github.com/madsmtm/objc2/blob/8a5abacd90d5403fc0463459a35826f892b9142e/LICENSE-ZLIB.txt
@@ -12244,10 +12243,10 @@ Permission is granted to anyone to use this software for any purpose, including 
 3. This notice may not be removed or altered from any source distribution.
 
 ====================================================================================================
-Rust-Lizenztext 32 von 255
+Rust license text 32 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   block2 0.6.2: https://github.com/madsmtm/objc2/blob/8a5abacd90d5403fc0463459a35826f892b9142e/LICENSE.md
   dispatch2 0.3.1: https://github.com/madsmtm/objc2/blob/8a5abacd90d5403fc0463459a35826f892b9142e/LICENSE.md
   objc2 0.6.4: https://github.com/madsmtm/objc2/blob/8a5abacd90d5403fc0463459a35826f892b9142e/LICENSE.md
@@ -12297,10 +12296,10 @@ identifiers in the crates (Xcode is required to use the crates, and when using
 Xcode you have already agreed to the Xcode license).
 
 ====================================================================================================
-Rust-Lizenztext 33 von 255
+Rust license text 33 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   bstr 1.12.1: COPYING
 
 This project is licensed under either of
@@ -12313,10 +12312,10 @@ This project is licensed under either of
 at your option.
 
 ====================================================================================================
-Rust-Lizenztext 34 von 255
+Rust license text 34 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   bstr 1.12.1: LICENSE-MIT
 
 The MIT License (MIT)
@@ -12342,10 +12341,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 35 von 255
+Rust license text 35 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   bytemuck 1.25.0: LICENSE-APACHE
 
 Apache License
@@ -12411,10 +12410,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 36 von 255
+Rust license text 36 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   bytemuck 1.25.0: LICENSE-MIT
 
 MIT License
@@ -12428,10 +12427,10 @@ The above copyright notice and this permission notice (including the next paragr
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 37 von 255
+Rust license text 37 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   bytemuck 1.25.0: LICENSE-ZLIB
   tinyvec 1.11.0: LICENSE-ZLIB.md
 
@@ -12448,10 +12447,10 @@ Permission is granted to anyone to use this software for any purpose, including 
 3. This notice may not be removed or altered from any source distribution.
 
 ====================================================================================================
-Rust-Lizenztext 38 von 255
+Rust license text 38 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   bytes 1.11.1: LICENSE
   bytes 1.9.0: LICENSE
 
@@ -12482,10 +12481,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 39 von 255
+Rust license text 39 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   castaway 0.2.4: LICENSE
 
 MIT License
@@ -12511,10 +12510,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 40 von 255
+Rust license text 40 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   cc 1.2.5: LICENSE-MIT
   cc 1.2.57: LICENSE-MIT
   cc 1.4.4: LICENSE-MIT
@@ -12563,10 +12562,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 41 von 255
+Rust license text 41 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   cfg_aliases 0.2.1: LICENSE
 
 MIT License
@@ -12580,10 +12579,10 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 42 von 255
+Rust license text 42 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   cfg_aliases 0.2.1: NOTICES.md
 
 # 3rd Party Notices
@@ -12614,10 +12613,10 @@ The `cfg_aliases!` macro uses a lot of the code from [`tectonic_cfg_support::tar
 ---
 
 ====================================================================================================
-Rust-Lizenztext 43 von 255
+Rust license text 43 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   chacha20 0.10.2: LICENSE-MIT
 
 Copyright (c) 2019-2026 The RustCrypto Project Developers
@@ -12647,10 +12646,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 44 von 255
+Rust license text 44 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   chrono 0.4.44: LICENSE.txt
 
 Rust-chrono is dual-licensed under The MIT License [1] and
@@ -12894,10 +12893,10 @@ limitations under the License.
 ~~~~
 
 ====================================================================================================
-Rust-Lizenztext 45 von 255
+Rust license text 45 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   colored 3.1.1: LICENSE
 
 Mozilla Public License Version 2.0
@@ -13275,10 +13274,10 @@ Exhibit B - "Incompatible With Secondary Licenses" Notice
   defined by the Mozilla Public License, v. 2.0.
 
 ====================================================================================================
-Rust-Lizenztext 46 von 255
+Rust license text 46 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   compact_str 0.9.1: LICENSE
 
 MIT License
@@ -13304,10 +13303,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 47 von 255
+Rust license text 47 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   console 0.16.4: LICENSE
   indicatif 0.18.6: LICENSE
 
@@ -13334,10 +13333,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 48 von 255
+Rust license text 48 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   const-oid 0.10.2: LICENSE-MIT
 
 Copyright (c) 2020-2026 The RustCrypto Project Developers
@@ -13367,10 +13366,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 49 von 255
+Rust license text 49 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   const-str 1.1.0: LICENSE
 
 MIT License
@@ -13396,10 +13395,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 50 von 255
+Rust license text 50 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   const_panic 0.2.15: LICENSE-ZLIB.md
   konst 0.4.3: LICENSE-ZLIB.md
   konst_proc_macros 0.4.1: LICENSE-ZLIB.md
@@ -13423,10 +13422,10 @@ freely, subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 
 ====================================================================================================
-Rust-Lizenztext 51 von 255
+Rust license text 51 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   constant_time_eq 0.4.2: LICENSE-MIT0
 
 Permission is hereby granted, free of charge, to any person obtaining a
@@ -13445,10 +13444,10 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 52 von 255
+Rust license text 52 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   core-foundation 0.10.1: LICENSE-MIT
   core-foundation 0.9.4: LICENSE-MIT
   core-foundation-sys 0.8.7: LICENSE-MIT
@@ -13480,10 +13479,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 53 von 255
+Rust license text 53 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   countio 0.3.0: LICENSE.txt
 
 MIT License
@@ -13509,10 +13508,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 54 von 255
+Rust license text 54 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   cpufeatures 0.3.0: LICENSE-MIT
 
 Copyright (c) 2020-2025 The RustCrypto Project Developers
@@ -13542,10 +13541,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 55 von 255
+Rust license text 55 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   crc-fast 1.10.0: LICENSE-MIT
 
 Copyright 2025 Don MacAskill
@@ -13568,10 +13567,10 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 56 von 255
+Rust license text 56 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   crc32fast 1.5.0: LICENSE-MIT
 
 MIT License
@@ -13597,10 +13596,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 57 von 255
+Rust license text 57 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   crossbeam-channel 0.5.15: LICENSE-MIT
   crossbeam-deque 0.8.7: LICENSE-MIT
   crossbeam-epoch 0.9.20: LICENSE-MIT
@@ -13636,10 +13635,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 58 von 255
+Rust license text 58 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   crossbeam-channel 0.5.15: LICENSE-THIRD-PARTY
 
 ===============================================================================
@@ -14237,10 +14236,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 59 von 255
+Rust license text 59 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   crypto-common 0.1.7: LICENSE-MIT
 
 Copyright (c) 2021 RustCrypto Developers
@@ -14270,10 +14269,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 60 von 255
+Rust license text 60 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   crypto-common 0.2.2: LICENSE-MIT
 
 Copyright (c) 2021-2026 RustCrypto Developers
@@ -14303,10 +14302,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 61 von 255
+Rust license text 61 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   ctor 1.0.3: LICENSE-MIT
   link-section 0.15.0: LICENSE-MIT
   linktime-proc-macro 0.1.0: LICENSE-MIT
@@ -14319,10 +14318,10 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 62 von 255
+Rust license text 62 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   darling 0.20.11: LICENSE
   darling_core 0.20.11: LICENSE
   darling_macro 0.20.11: LICENSE
@@ -14350,10 +14349,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 63 von 255
+Rust license text 63 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   defmt 1.1.1: LICENSE-APACHE
   defmt-macros 1.1.1: LICENSE-APACHE
   defmt-parser 1.0.0: https://github.com/knurling-rs/defmt/blob/d4e04b65a7b89d5f394397f25e259ba500ca98b6/LICENSE-APACHE
@@ -14562,10 +14561,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 64 von 255
+Rust license text 64 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   defmt 1.1.1: LICENSE-MIT
   defmt-macros 1.1.1: LICENSE-MIT
   defmt-parser 1.0.0: https://github.com/knurling-rs/defmt/blob/d4e04b65a7b89d5f394397f25e259ba500ca98b6/LICENSE-MIT
@@ -14597,10 +14596,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 65 von 255
+Rust license text 65 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   deranged 0.5.8: LICENSE-Apache
 
 Apache License
@@ -14806,10 +14805,10 @@ Apache License
    limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 66 von 255
+Rust license text 66 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   deranged 0.5.8: LICENSE-MIT
 
 Copyright (c) 2024 Jacob Pratt et al.
@@ -14833,10 +14832,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 67 von 255
+Rust license text 67 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   derive_builder 0.20.2: LICENSE-MIT
   derive_builder_core 0.20.2: LICENSE-MIT
   derive_builder_macro 0.20.2: LICENSE-MIT
@@ -14864,10 +14863,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 68 von 255
+Rust license text 68 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   digest 0.10.7: LICENSE-MIT
 
 Copyright (c) 2017 Artyom Pavlov
@@ -14897,10 +14896,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 69 von 255
+Rust license text 69 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   digest 0.11.3: LICENSE-MIT
 
 Copyright (c) 2017-2025 RustCrypto Developers
@@ -14931,10 +14930,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 70 von 255
+Rust license text 70 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   dirs 6.0.0: LICENSE-APACHE
   dirs-sys 0.5.0: LICENSE-APACHE
 
@@ -15114,10 +15113,10 @@ TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
    of your accepting any such warranty or additional liability.
 
 ====================================================================================================
-Rust-Lizenztext 71 von 255
+Rust license text 71 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   dirs 6.0.0: LICENSE-MIT
   dirs-sys 0.5.0: LICENSE-MIT
 
@@ -15142,10 +15141,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 72 von 255
+Rust license text 72 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   either 1.15.0: LICENSE-MIT
   either 1.18.0: LICENSE-MIT
   itertools 0.14.0: LICENSE-MIT
@@ -15179,10 +15178,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 73 von 255
+Rust license text 73 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   encoding_rs 0.8.35: COPYRIGHT
 
 encoding_rs is copyright Mozilla Foundation.
@@ -15204,10 +15203,10 @@ Test code within encoding_rs is dedicated to the Public Domain when so
 designated (see the individual files for PD/CC0-dedicated sections).
 
 ====================================================================================================
-Rust-Lizenztext 74 von 255
+Rust license text 74 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   encoding_rs 0.8.35: LICENSE-MIT
   utf16_iter 1.0.5: LICENSE-MIT
   utf8_iter 1.0.4: LICENSE-MIT
@@ -15240,10 +15239,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 75 von 255
+Rust license text 75 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   encoding_rs 0.8.35: LICENSE-WHATWG
 
 Copyright © WHATWG (Apple, Google, Mozilla, Microsoft).
@@ -15274,10 +15273,10 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ====================================================================================================
-Rust-Lizenztext 76 von 255
+Rust license text 76 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   equivalent 1.0.1: LICENSE-MIT
   equivalent 1.0.2: LICENSE-MIT
 
@@ -15308,10 +15307,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 77 von 255
+Rust license text 77 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   errno 0.3.10: LICENSE-MIT
   errno 0.3.14: LICENSE-MIT
 
@@ -15342,10 +15341,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 78 von 255
+Rust license text 78 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   fnv 1.0.7: LICENSE-MIT
 
 Copyright (c) 2017 Contributors
@@ -15375,10 +15374,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 79 von 255
+Rust license text 79 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   foldhash 0.2.0: LICENSE
 
 Copyright (c) 2024 Orson Peters
@@ -15402,10 +15401,10 @@ the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 
 ====================================================================================================
-Rust-Lizenztext 80 von 255
+Rust license text 80 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   foreign-types 0.3.2: LICENSE-MIT
   foreign-types-shared 0.1.1: LICENSE-MIT
 
@@ -15430,10 +15429,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 81 von 255
+Rust license text 81 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   form_urlencoded 1.2.1: LICENSE-MIT
   form_urlencoded 1.2.2: LICENSE-MIT
 
@@ -15464,10 +15463,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 82 von 255
+Rust license text 82 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   fs_extra 1.3.0: LICENSE
 
 MIT License
@@ -15493,10 +15492,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 83 von 255
+Rust license text 83 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   futures 0.3.31: LICENSE-APACHE
   futures 0.3.32: LICENSE-APACHE
   futures-channel 0.3.31: LICENSE-APACHE
@@ -15725,10 +15724,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 84 von 255
+Rust license text 84 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   futures 0.3.31: LICENSE-MIT
   futures 0.3.32: LICENSE-MIT
   futures-channel 0.3.31: LICENSE-MIT
@@ -15781,10 +15780,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 85 von 255
+Rust license text 85 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   gearhash 0.1.3: LICENSE-MIT
 
 MIT License
@@ -15810,10 +15809,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 86 von 255
+Rust license text 86 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   generic-array 0.14.7: LICENSE
 
 The MIT License (MIT)
@@ -15839,10 +15838,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 87 von 255
+Rust license text 87 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   getrandom 0.2.15: LICENSE-APACHE
   getrandom 0.2.17: LICENSE-APACHE
   getrandom 0.3.4: LICENSE-APACHE
@@ -16052,10 +16051,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 88 von 255
+Rust license text 88 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   getrandom 0.2.15: LICENSE-MIT
   getrandom 0.2.17: LICENSE-MIT
 
@@ -16087,10 +16086,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 89 von 255
+Rust license text 89 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   getrandom 0.3.4: LICENSE-MIT
 
 Copyright (c) 2018-2025 The rust-random Project Developers
@@ -16121,10 +16120,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 90 von 255
+Rust license text 90 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   getrandom 0.4.2: LICENSE-MIT
 
 Copyright (c) 2018-2026 The rust-random Project Developers
@@ -16155,10 +16154,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 91 von 255
+Rust license text 91 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   gimli 0.29.0: LICENSE-MIT
   gimli 0.32.3: LICENSE-MIT
   gimli 0.34.0: LICENSE-MIT
@@ -16194,10 +16193,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 92 von 255
+Rust license text 92 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   git-version 0.3.9: COPYING
   git-version-macro 0.3.9: COPYING
 
@@ -16225,10 +16224,10 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ====================================================================================================
-Rust-Lizenztext 93 von 255
+Rust license text 93 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   h2 0.4.7: LICENSE
 
 Copyright (c) 2017 h2 authors
@@ -16258,10 +16257,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 94 von 255
+Rust license text 94 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   hashbrown 0.15.0: LICENSE-MIT
   hashbrown 0.15.2: LICENSE-MIT
   hashbrown 0.16.1: LICENSE-MIT
@@ -16294,10 +16293,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 95 von 255
+Rust license text 95 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   heapify 0.2.0: LICENSE-MIT
 
 MIT License
@@ -16323,10 +16322,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 96 von 255
+Rust license text 96 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   http 1.2.0: LICENSE-APACHE
   http 1.4.0: LICENSE-APACHE
 
@@ -16533,10 +16532,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 97 von 255
+Rust license text 97 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   http 1.2.0: LICENSE-MIT
   http 1.4.0: LICENSE-MIT
 
@@ -16567,10 +16566,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 98 von 255
+Rust license text 98 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   http-body 1.0.1: LICENSE
 
 Copyright (c) 2019-2024 Sean McArthur & Hyper Contributors
@@ -16600,10 +16599,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 99 von 255
+Rust license text 99 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   http-body-util 0.1.2: LICENSE
 
 Copyright (c) 2019 Hyper Contributors
@@ -16633,10 +16632,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 100 von 255
+Rust license text 100 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   http-body-util 0.1.3: LICENSE
 
 Copyright (c) 2019-2025 Sean McArthur & Hyper Contributors
@@ -16666,10 +16665,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 101 von 255
+Rust license text 101 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   httparse 1.10.1: LICENSE-MIT
 
 Copyright (c) 2015-2025 Sean McArthur
@@ -16693,10 +16692,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 102 von 255
+Rust license text 102 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   httparse 1.9.5: LICENSE-MIT
 
 Copyright (c) 2015-2024 Sean McArthur
@@ -16720,10 +16719,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 103 von 255
+Rust license text 103 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   humantime 2.3.0: LICENSE-MIT
 
 Copyright (c) 2016 The humantime Developers
@@ -16754,10 +16753,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 104 von 255
+Rust license text 104 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   hybrid-array 0.4.13: LICENSE-MIT
 
 Copyright (c) 2022-2026 The RustCrypto Project Developers
@@ -16787,10 +16786,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 105 von 255
+Rust license text 105 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   hyper 1.5.2: LICENSE
 
 Copyright (c) 2014-2021 Sean McArthur
@@ -16814,10 +16813,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 106 von 255
+Rust license text 106 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   hyper 1.8.1: LICENSE
 
 Copyright (c) 2014-2025 Sean McArthur
@@ -16841,10 +16840,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 107 von 255
+Rust license text 107 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   hyper-rustls 0.27.5: LICENSE
   hyper-rustls 0.27.7: LICENSE
 
@@ -16859,10 +16858,10 @@ respectively.  You may use this software under the terms of any
 of these licenses, at your option.
 
 ====================================================================================================
-Rust-Lizenztext 108 von 255
+Rust license text 108 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   hyper-rustls 0.27.5: LICENSE-ISC
   hyper-rustls 0.27.7: LICENSE-ISC
   rustls 0.23.20: LICENSE-ISC
@@ -16886,10 +16885,10 @@ ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 THIS SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 109 von 255
+Rust license text 109 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   hyper-rustls 0.27.5: LICENSE-MIT
   hyper-rustls 0.27.7: LICENSE-MIT
   rustls 0.23.20: LICENSE-MIT
@@ -16923,10 +16922,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 110 von 255
+Rust license text 110 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   hyper-tls 0.6.0: LICENSE-MIT
 
 Copyright (c) 2017 Sean McArthur
@@ -16950,10 +16949,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 111 von 255
+Rust license text 111 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   hyper-util 0.1.10: LICENSE
 
 Copyright (c) 2023 Sean McArthur
@@ -16977,10 +16976,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 112 von 255
+Rust license text 112 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   hyper-util 0.1.20: LICENSE
 
 Copyright (c) 2023-2025 Sean McArthur
@@ -17004,10 +17003,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 113 von 255
+Rust license text 113 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   iana-time-zone 0.1.65: LICENSE-APACHE
 
 Apache License
@@ -17213,10 +17212,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 114 von 255
+Rust license text 114 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   iana-time-zone 0.1.65: LICENSE-MIT
 
 Copyright (c) 2020 Andrew D. Straw
@@ -17246,10 +17245,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 115 von 255
+Rust license text 115 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   icu_collections 1.5.0: LICENSE
   icu_collections 2.1.1: LICENSE
   icu_locale_core 2.1.1: LICENSE
@@ -17336,10 +17335,10 @@ Portions of ICU4X may have been adapted from ICU4C and/or ICU4J.
 ICU 1.8.1 to ICU 57.1 © 1995-2016 International Business Machines Corporation and others.
 
 ====================================================================================================
-Rust-Lizenztext 116 von 255
+Rust license text 116 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   ident_case 1.0.1: LICENSE
   whoami 2.1.1: LICENSE_MIT
 
@@ -17364,10 +17363,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 117 von 255
+Rust license text 117 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   idna 1.0.3: LICENSE-MIT
   percent-encoding 2.3.1: LICENSE-MIT
   url 2.5.4: LICENSE-MIT
@@ -17399,10 +17398,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 118 von 255
+Rust license text 118 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   idna 1.1.0: LICENSE-MIT
   percent-encoding 2.3.2: LICENSE-MIT
   url 2.5.8: LICENSE-MIT
@@ -17434,10 +17433,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 119 von 255
+Rust license text 119 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   idna_adapter 1.2.0: LICENSE-MIT
   idna_adapter 1.2.1: LICENSE-MIT
 
@@ -17468,10 +17467,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 120 von 255
+Rust license text 120 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   indexmap 2.7.0: LICENSE-MIT
 
 Copyright (c) 2016--2017
@@ -17501,10 +17500,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 121 von 255
+Rust license text 121 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   ipnet 2.10.1: LICENSE-APACHE
   ipnet 2.12.0: LICENSE-APACHE
 
@@ -17711,10 +17710,10 @@ Apache License
    limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 122 von 255
+Rust license text 122 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   ipnet 2.10.1: LICENSE-MIT
   ipnet 2.12.0: LICENSE-MIT
 
@@ -17727,10 +17726,10 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 123 von 255
+Rust license text 123 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   iri-string 0.7.11: LICENSE-MIT.txt
 
 Copyright 2019-2024 YOSHIOKA Takuma
@@ -17760,10 +17759,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 124 von 255
+Rust license text 124 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   lazy_static 1.5.0: LICENSE-MIT
   rayon 1.12.0: LICENSE-MIT
   rayon-core 1.13.0: LICENSE-MIT
@@ -17795,10 +17794,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 125 von 255
+Rust license text 125 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   libc 0.2.169: LICENSE-MIT
 
 Copyright (c) 2014-2020 The Rust Project Developers
@@ -17828,10 +17827,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 126 von 255
+Rust license text 126 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   libc 0.2.183: LICENSE-MIT
   libc 0.2.186: LICENSE-MIT
   libc 0.2.189: LICENSE-MIT
@@ -17863,10 +17862,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 127 von 255
+Rust license text 127 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   lru-slab 0.1.2: LICENSE-MIT
 
 Copyright (c) 2024 The lru-slab Developers
@@ -17878,10 +17877,10 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 128 von 255
+Rust license text 128 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   lru-slab 0.1.2: LICENSE-ZLIB
 
 Copyright (c) 2024 The lru-slab Developers
@@ -17905,10 +17904,10 @@ the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 
 ====================================================================================================
-Rust-Lizenztext 129 von 255
+Rust license text 129 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   lz4_flex 0.13.0: LICENSE
 
 The MIT License (MIT)
@@ -17933,10 +17932,10 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 130 von 255
+Rust license text 130 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   macro_rules_attribute 0.2.3: LICENSE-APACHE
   macro_rules_attribute-proc_macro 0.2.3: LICENSE-APACHE
 
@@ -18143,10 +18142,10 @@ Apache License
    limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 131 von 255
+Rust license text 131 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   macro_rules_attribute 0.2.3: LICENSE-MIT
   macro_rules_attribute-proc_macro 0.2.3: LICENSE-MIT
 
@@ -18173,10 +18172,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 132 von 255
+Rust license text 132 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   macro_rules_attribute 0.2.3: LICENSE-ZLIB
   macro_rules_attribute-proc_macro 0.2.3: LICENSE-ZLIB
 
@@ -18201,10 +18200,10 @@ freely, subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 
 ====================================================================================================
-Rust-Lizenztext 133 von 255
+Rust license text 133 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   matchers 0.2.0: LICENSE
 
 Copyright (c) 2019 Eliza Weisman
@@ -18228,10 +18227,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 134 von 255
+Rust license text 134 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   matrixmultiply 0.3.11: LICENSE-MIT
 
 Copyright (c) 2016 - 2023 Ulrik Sverdrup "bluss"
@@ -18263,10 +18262,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 135 von 255
+Rust license text 135 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   memmap2 0.9.10: LICENSE-APACHE
 
 Apache License
@@ -18472,10 +18471,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 136 von 255
+Rust license text 136 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   memmap2 0.9.10: LICENSE-MIT
 
 Copyright (c) 2020 Yevhenii Reizner
@@ -18506,10 +18505,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 137 von 255
+Rust license text 137 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   memoffset 0.9.1: LICENSE
 
 Copyright (c) 2017 Gilad Naaman
@@ -18533,10 +18532,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 138 von 255
+Rust license text 138 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   mime 0.3.17: LICENSE-MIT
 
 Copyright (c) 2014 Sean McArthur
@@ -18560,10 +18559,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 139 von 255
+Rust license text 139 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   minimal-lexical 0.2.1: LICENSE.md
 
 Minimal-lexical is dual licensed under the Apache 2.0 license as well as the MIT
@@ -18605,10 +18604,10 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ====================================================================================================
-Rust-Lizenztext 140 von 255
+Rust license text 140 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   mio 1.0.3: LICENSE
   mio 1.2.3: LICENSE
   mio 1.2.4: LICENSE
@@ -18634,10 +18633,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 141 von 255
+Rust license text 141 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   more-asserts 0.3.1: LICENSE-MIT
 
 Copyright (C) 2022 Thom Chiovoloni <thom@shift.click>
@@ -18667,10 +18666,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 142 von 255
+Rust license text 142 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   native-tls 0.2.12: LICENSE-MIT
 
 Copyright (c) 2016 The rust-native-tls Developers
@@ -18694,10 +18693,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 143 von 255
+Rust license text 143 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   ndarray 0.16.1: LICENSE-MIT
   ndarray 0.17.2: LICENSE-MIT
 
@@ -18730,10 +18729,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 144 von 255
+Rust license text 144 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   nom 7.1.3: LICENSE
 
 Copyright (c) 2014-2019 Geoffroy Couprie
@@ -18758,10 +18757,10 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 145 von 255
+Rust license text 145 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   nu-ansi-term 0.50.3: LICENSE
 
 The MIT License (MIT)
@@ -18788,10 +18787,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 146 von 255
+Rust license text 146 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   num-conv 0.2.0: LICENSE-Apache
 
 Apache License
@@ -18997,10 +18996,10 @@ Apache License
    limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 147 von 255
+Rust license text 147 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   num-conv 0.2.0: LICENSE-MIT
 
 Copyright (c) 2023 Jacob Pratt
@@ -19024,10 +19023,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 148 von 255
+Rust license text 148 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   numpy 0.29.0: LICENSE
 
 BSD 2-Clause License
@@ -19057,10 +19056,10 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ====================================================================================================
-Rust-Lizenztext 149 von 255
+Rust license text 149 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   object 0.36.4: LICENSE-MIT
   object 0.37.3: LICENSE-MIT
 
@@ -19091,10 +19090,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 150 von 255
+Rust license text 150 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   onig 6.5.3: LICENSE.md
 
 # Rust-Onig is Open Source!
@@ -19128,10 +19127,10 @@ under the original license.
 > SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 151 von 255
+Rust license text 151 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   onig_sys 69.9.3: LICENSE.md
 
 # Rust-Onig is Open Source!
@@ -19166,10 +19165,10 @@ information.
 > SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 152 von 255
+Rust license text 152 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   onig_sys 69.9.3: oniguruma/COPYING
 
 Oniguruma LICENSE
@@ -19200,10 +19199,10 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGE.
 
 ====================================================================================================
-Rust-Lizenztext 153 von 255
+Rust license text 153 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   openssl 0.10.68: LICENSE
 
 Copyright 2011-2017 Google Inc.
@@ -19223,10 +19222,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 154 von 255
+Rust license text 154 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   openssl-macros 0.1.1: LICENSE-MIT
 
 Copyright (c) 2022 Steven Fackler
@@ -19250,10 +19249,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 155 von 255
+Rust license text 155 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   openssl-src 300.4.1+3.4.0: openssl/LICENSE.txt
 
 Apache License
@@ -19434,10 +19433,10 @@ Apache License
    END OF TERMS AND CONDITIONS
 
 ====================================================================================================
-Rust-Lizenztext 156 von 255
+Rust license text 156 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   option-ext 0.2.0: LICENSE.txt
 
 Mozilla Public License Version 2.0
@@ -19815,10 +19814,10 @@ Exhibit B - "Incompatible With Secondary Licenses" Notice
   defined by the Mozilla Public License, v. 2.0.
 
 ====================================================================================================
-Rust-Lizenztext 157 von 255
+Rust license text 157 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   os_str_bytes 6.6.1: COPYRIGHT
 
 Copyright (c) 2019 dylni (https://github.com/dylni)
@@ -19828,10 +19827,10 @@ license <LICENSE-MIT>, at your option. All files in this project may not be
 copied, modified, or distributed except according to those terms.
 
 ====================================================================================================
-Rust-Lizenztext 158 von 255
+Rust license text 158 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   os_str_bytes 6.6.1: LICENSE-APACHE
   pin-project 1.1.11: LICENSE-APACHE
   pin-project-internal 1.1.11: LICENSE-APACHE
@@ -20021,10 +20020,10 @@ Apache License
    END OF TERMS AND CONDITIONS
 
 ====================================================================================================
-Rust-Lizenztext 159 von 255
+Rust license text 159 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   os_str_bytes 6.6.1: LICENSE-MIT
 
 MIT License
@@ -20050,10 +20049,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 160 von 255
+Rust license text 160 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   pin-utils 0.1.0: LICENSE-APACHE
 
 Apache License
@@ -20259,10 +20258,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 161 von 255
+Rust license text 161 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   pin-utils 0.1.0: LICENSE-MIT
 
 Copyright (c) 2018 The pin-utils authors
@@ -20292,10 +20291,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 162 von 255
+Rust license text 162 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   powerfmt 0.2.0: LICENSE-Apache
 
 Apache License
@@ -20501,10 +20500,10 @@ Apache License
    limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 163 von 255
+Rust license text 163 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   powerfmt 0.2.0: LICENSE-MIT
 
 Copyright (c) 2023 Jacob Pratt et al.
@@ -20528,10 +20527,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 164 von 255
+Rust license text 164 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   ppv-lite86 0.2.20: LICENSE-APACHE
   ppv-lite86 0.2.21: LICENSE-APACHE
 
@@ -20738,10 +20737,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 165 von 255
+Rust license text 165 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   ppv-lite86 0.2.20: LICENSE-MIT
   ppv-lite86 0.2.21: LICENSE-MIT
 
@@ -20772,10 +20771,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 166 von 255
+Rust license text 166 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   pyo3 0.23.3: LICENSE-APACHE
   pyo3 0.23.3: pyo3-runtime/LICENSE-APACHE
   pyo3 0.28.3: LICENSE-APACHE
@@ -20981,10 +20980,10 @@ TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 END OF TERMS AND CONDITIONS
 
 ====================================================================================================
-Rust-Lizenztext 167 von 255
+Rust license text 167 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   pyo3 0.23.3: LICENSE-MIT
   pyo3 0.23.3: pyo3-runtime/LICENSE-MIT
   pyo3 0.28.3: LICENSE-MIT
@@ -21037,10 +21036,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 168 von 255
+Rust license text 168 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   pyo3-async-runtimes 0.29.0: LICENSE
 
 Copyright (c) 2017-present PyO3 Project and Contributors.  https://github.com/PyO3
@@ -21234,10 +21233,10 @@ Copyright (c) 2017-present PyO3 Project and Contributors.  https://github.com/Py
       of your accepting any such warranty or additional liability.
 
 ====================================================================================================
-Rust-Lizenztext 169 von 255
+Rust license text 169 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   quinn 0.11.9: LICENSE-MIT
   quinn-proto 0.11.19: LICENSE-MIT
   quinn-udp 0.5.14: LICENSE-MIT
@@ -21251,10 +21250,10 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 170 von 255
+Rust license text 170 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   rand 0.10.1: COPYRIGHT
   rand 0.8.5: COPYRIGHT
   rand 0.9.5: COPYRIGHT
@@ -21278,10 +21277,10 @@ The Rand project includes code from the Rust project
 published under these same licenses.
 
 ====================================================================================================
-Rust-Lizenztext 171 von 255
+Rust license text 171 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   rand 0.10.1: LICENSE-APACHE
   rand 0.8.5: LICENSE-APACHE
   rand 0.9.5: LICENSE-APACHE
@@ -21465,10 +21464,10 @@ TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 END OF TERMS AND CONDITIONS
 
 ====================================================================================================
-Rust-Lizenztext 172 von 255
+Rust license text 172 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   rand 0.10.1: LICENSE-MIT
   rand 0.8.5: LICENSE-MIT
   rand 0.9.5: LICENSE-MIT
@@ -21505,10 +21504,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 173 von 255
+Rust license text 173 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   rand_core 0.10.1: COPYRIGHT
 
 Copyrights in the Rand project are retained by their contributors. No
@@ -21522,10 +21521,10 @@ licensed under the Apache License, Version 2.0 <LICENSE-APACHE> or
 <LICENSE-MIT> or <http://opensource.org/licenses/MIT>, at your option.
 
 ====================================================================================================
-Rust-Lizenztext 174 von 255
+Rust license text 174 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   rand_core 0.10.1: LICENSE-APACHE
   rand_core 0.6.4: LICENSE-APACHE
   rand_core 0.9.5: LICENSE-APACHE
@@ -21720,10 +21719,10 @@ APPENDIX: How to apply the Apache License to your work.
    identification within third-party archives.
 
 ====================================================================================================
-Rust-Lizenztext 175 von 255
+Rust license text 175 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   rand_core 0.10.1: LICENSE-MIT
 
 Copyright (c) 2018-2026 The Rand Project Developers
@@ -21753,10 +21752,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 176 von 255
+Rust license text 176 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   rand_pcg 0.10.2: LICENSE-MIT
 
 Copyright (c) 2014-2017 Melissa O'Neill and PCG Project contributors
@@ -21787,10 +21786,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 177 von 255
+Rust license text 177 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   redb 3.1.1: LICENSE-MIT
 
 Copyright (c) 2021 Christopher Berner
@@ -21814,10 +21813,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 178 von 255
+Rust license text 178 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   regex-syntax 0.8.10: src/unicode_tables/LICENSE-UNICODE
   regex-syntax 0.8.11: src/unicode_tables/LICENSE-UNICODE
 
@@ -21880,10 +21879,10 @@ use or other dealings in these Data Files or Software without prior
 written authorization of the copyright holder.
 
 ====================================================================================================
-Rust-Lizenztext 179 von 255
+Rust license text 179 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   reqwest 0.12.9: LICENSE-APACHE
   reqwest 0.13.2: LICENSE-APACHE
 
@@ -22090,10 +22089,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 180 von 255
+Rust license text 180 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   reqwest 0.12.9: LICENSE-MIT
 
 Copyright (c) 2016 Sean McArthur
@@ -22117,10 +22116,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 181 von 255
+Rust license text 181 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   reqwest 0.13.2: LICENSE-MIT
 
 Copyright (c) 2016-2026 Sean McArthur
@@ -22144,10 +22143,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 182 von 255
+Rust license text 182 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   reqwest-middleware 0.5.1: LICENSE-MIT
 
 MIT License
@@ -22173,10 +22172,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 183 von 255
+Rust license text 183 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   ring 0.17.14: LICENSE
 
 *ring* uses an "ISC" license, like BoringSSL used to use, for new code
@@ -22190,10 +22189,10 @@ See src/polyfill/once_cell/LICENSE-APACHE and src/polyfill/once_cell/LICENSE-MIT
 for the license to code that was sourced from the once_cell project.
 
 ====================================================================================================
-Rust-Lizenztext 184 von 255
+Rust license text 184 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   ring 0.17.14: LICENSE-BoringSSL
 
 Apache License
@@ -22469,10 +22468,10 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ====================================================================================================
-Rust-Lizenztext 185 von 255
+Rust license text 185 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   ring 0.17.14: LICENSE-other-bits
 
 Copyright 2015-2025 Brian Smith.
@@ -22490,10 +22489,10 @@ OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
 CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 186 von 255
+Rust license text 186 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   ring 0.17.14: src/polyfill/once_cell/LICENSE-MIT
 
 Permission is hereby granted, free of charge, to any
@@ -22521,10 +22520,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 187 von 255
+Rust license text 187 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   ring 0.17.14: third_party/fiat/LICENSE
 
 The Apache License, Version 2.0 (Apache-2.0)
@@ -22544,10 +22543,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 188 von 255
+Rust license text 188 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   ring 0.17.8: LICENSE
 
 Note that it is easy for this file to get out of sync with the licenses in the
@@ -22756,10 +22755,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 189 von 255
+Rust license text 189 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   rustix 0.38.42: COPYRIGHT
   rustix 1.1.4: COPYRIGHT
 
@@ -22794,10 +22793,10 @@ is licensed under:
 at your option.
 
 ====================================================================================================
-Rust-Lizenztext 190 von 255
+Rust license text 190 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   rustix 0.38.42: LICENSE-Apache-2.0_WITH_LLVM-exception
   rustix 1.1.4: LICENSE-Apache-2.0_WITH_LLVM-exception
   target-lexicon 0.12.16: LICENSE
@@ -23023,10 +23022,10 @@ the License, but only in their entirety and only with respect to the Combined
 Software.
 
 ====================================================================================================
-Rust-Lizenztext 191 von 255
+Rust license text 191 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   rustls-pemfile 2.2.0: LICENSE
 
 rustls-pemfile is distributed under the following three licenses:
@@ -23040,10 +23039,10 @@ respectively.  You may use this software under the terms of any
 of these licenses, at your option.
 
 ====================================================================================================
-Rust-Lizenztext 192 von 255
+Rust license text 192 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   rustls-pki-types 1.10.1: LICENSE-APACHE
   rustls-pki-types 1.14.0: LICENSE-APACHE
 
@@ -23250,10 +23249,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 193 von 255
+Rust license text 193 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   rustls-pki-types 1.10.1: LICENSE-MIT
   rustls-pki-types 1.14.0: LICENSE-MIT
 
@@ -23284,10 +23283,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 194 von 255
+Rust license text 194 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   rustls-platform-verifier 0.6.2: LICENSE-MIT
 
 MIT License
@@ -23313,10 +23312,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 195 von 255
+Rust license text 195 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   rustls-webpki 0.102.8: LICENSE
   rustls-webpki 0.103.16: LICENSE
 
@@ -23341,10 +23340,10 @@ The files under third-party/chromium are licensed as described in
 third-party/chromium/LICENSE.
 
 ====================================================================================================
-Rust-Lizenztext 196 von 255
+Rust license text 196 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   ryu 1.0.18: LICENSE-BOOST
   ryu 1.0.23: LICENSE-BOOST
   whoami 2.1.1: LICENSE_BOOST
@@ -23374,10 +23373,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 197 von 255
+Rust license text 197 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   safe-transmute 0.11.3: LICENSE
 
 The MIT License (MIT)
@@ -23403,10 +23402,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 198 von 255
+Rust license text 198 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   security-framework 2.11.1: LICENSE-MIT
   security-framework 3.7.0: LICENSE-MIT
   security-framework-sys 2.13.0: LICENSE-MIT
@@ -23434,10 +23433,10 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 199 von 255
+Rust license text 199 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   security-framework 2.11.1: THIRD_PARTY
   security-framework 3.7.0: THIRD_PARTY
 
@@ -23546,10 +23545,10 @@ This file contains Original Code and/or Modifications of Original Code as define
 The Original Code and all software distributed under the License are distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES, INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.  Please see the License for the specific language governing rights and limitations under the License."
 
 ====================================================================================================
-Rust-Lizenztext 200 von 255
+Rust license text 200 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   serde_urlencoded 0.7.1: LICENSE-MIT
 
 Copyright (c) 2016 Anthony Ramine
@@ -23579,10 +23578,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 201 von 255
+Rust license text 201 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   sha2 0.11.0: LICENSE-MIT
 
 Copyright (c) 2016-2026 The RustCrypto Project Developers
@@ -23615,10 +23614,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 202 von 255
+Rust license text 202 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   sharded-slab 0.1.7: LICENSE
 
 Copyright (c) 2019 Eliza Weisman
@@ -23642,10 +23641,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 203 von 255
+Rust license text 203 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   shellexpand 3.1.2: LICENSE-MIT
 
 The MIT License (MIT)
@@ -23671,10 +23670,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 204 von 255
+Rust license text 204 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   shlex 1.3.0: LICENSE-APACHE
   shlex 2.0.1: LICENSE-APACHE
 
@@ -23693,10 +23692,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 205 von 255
+Rust license text 205 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   shlex 1.3.0: LICENSE-MIT
   shlex 2.0.1: LICENSE-MIT
 
@@ -23723,10 +23722,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 206 von 255
+Rust license text 206 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   signal-hook 0.3.18: LICENSE-MIT
   signal-hook-registry 1.4.8: LICENSE-MIT
 
@@ -23757,10 +23756,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 207 von 255
+Rust license text 207 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   slab 0.4.12: LICENSE
   slab 0.4.9: LICENSE
 
@@ -23791,10 +23790,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 208 von 255
+Rust license text 208 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   smallvec 1.13.2: LICENSE-MIT
   smallvec 1.15.1: LICENSE-MIT
   smallvec 1.16.0: LICENSE-MIT
@@ -23826,10 +23825,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 209 von 255
+Rust license text 209 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   spin 0.10.0: LICENSE
   spin 0.9.8: LICENSE
   tracing-core 0.1.33: src/spin/LICENSE
@@ -23858,10 +23857,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 210 von 255
+Rust license text 210 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   stable_deref_trait 1.2.0: LICENSE-MIT
   stable_deref_trait 1.2.1: LICENSE-MIT
 
@@ -23892,10 +23891,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 211 von 255
+Rust license text 211 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   static_assertions 1.1.0: LICENSE-MIT
 
 MIT License
@@ -23921,10 +23920,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 212 von 255
+Rust license text 212 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   statrs 0.18.0: LICENSE.md
 
 MIT License
@@ -23950,10 +23949,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 213 von 255
+Rust license text 213 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   strsim 0.11.1: LICENSE
 
 The MIT License (MIT)
@@ -23981,10 +23980,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 214 von 255
+Rust license text 214 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   subtle 2.6.1: LICENSE
 
 Copyright (c) 2016-2017 Isis Agora Lovecruft, Henry de Valence. All rights reserved.
@@ -24018,10 +24017,10 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ====================================================================================================
-Rust-Lizenztext 215 von 255
+Rust license text 215 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   synstructure 0.13.1: LICENSE
   synstructure 0.13.2: LICENSE
 
@@ -24034,10 +24033,10 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 216 von 255
+Rust license text 216 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   sysinfo 0.39.6: LICENSE
 
 The MIT License (MIT)
@@ -24063,10 +24062,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 217 von 255
+Rust license text 217 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   system-configuration 0.6.1: LICENSE-MIT
   system-configuration 0.7.0: LICENSE-MIT
   system-configuration-sys 0.6.0: LICENSE-MIT
@@ -24098,10 +24097,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 218 von 255
+Rust license text 218 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   tempfile 3.14.0: LICENSE-MIT
   tempfile 3.27.0: LICENSE-MIT
 
@@ -24132,10 +24131,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 219 von 255
+Rust license text 219 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   thread_local 1.1.9: LICENSE-MIT
 
 Copyright (c) 2016 The Rust Project Developers
@@ -24165,10 +24164,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 220 von 255
+Rust license text 220 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   time 0.3.47: LICENSE-MIT
   time-core 0.1.8: LICENSE-MIT
   time-macros 0.2.27: LICENSE-MIT
@@ -24194,10 +24193,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 221 von 255
+Rust license text 221 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   tinyvec_macros 0.1.1: LICENSE-APACHE.md
 
 Apache License
@@ -24403,10 +24402,10 @@ Apache License
    limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 222 von 255
+Rust license text 222 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   tinyvec_macros 0.1.1: LICENSE-MIT.md
 
 MIT License
@@ -24432,10 +24431,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 223 von 255
+Rust license text 223 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   tinyvec_macros 0.1.1: LICENSE-ZLIB.md
 
 zlib License
@@ -24459,10 +24458,10 @@ freely, subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 
 ====================================================================================================
-Rust-Lizenztext 224 von 255
+Rust license text 224 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   tokio 1.42.0: LICENSE
   tokio 1.53.1: LICENSE
   tokio 1.53.3: LICENSE
@@ -24492,10 +24491,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 225 von 255
+Rust license text 225 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   tokio-macros 2.7.1: LICENSE
   tokio-macros 2.7.2: LICENSE
 
@@ -24523,10 +24522,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 226 von 255
+Rust license text 226 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   tokio-native-tls 0.3.1: LICENSE
   tracing 0.1.41: LICENSE
   tracing 0.1.44: LICENSE
@@ -24565,10 +24564,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 227 von 255
+Rust license text 227 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   tokio-retry 0.3.1: LICENSE
 
 MIT License
@@ -24594,10 +24593,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 228 von 255
+Rust license text 228 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   tokio-rustls 0.26.1: LICENSE-APACHE
   tokio-rustls 0.26.4: LICENSE-APACHE
 
@@ -24804,10 +24803,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 229 von 255
+Rust license text 229 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   tokio-rustls 0.26.1: LICENSE-MIT
   tokio-rustls 0.26.4: LICENSE-MIT
 
@@ -24838,10 +24837,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 230 von 255
+Rust license text 230 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   tower 0.5.3: LICENSE
   tower-layer 0.3.3: LICENSE
   tower-service 0.3.3: LICENSE
@@ -24873,10 +24872,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 231 von 255
+Rust license text 231 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   tower-http 0.6.8: LICENSE
 
 Copyright (c) 2019-2021 Tower Contributors
@@ -24906,10 +24905,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 232 von 255
+Rust license text 232 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   try-lock 0.2.5: LICENSE
 
 Copyright (c) 2018-2023 Sean McArthur
@@ -24934,10 +24933,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 233 von 255
+Rust license text 233 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   twox-hash 2.1.2: LICENSE.txt
 
 The MIT License (MIT)
@@ -24963,19 +24962,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 234 von 255
+Rust license text 234 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   typenum 1.20.1: LICENSE
 
 MIT OR Apache-2.0
 
 ====================================================================================================
-Rust-Lizenztext 235 von 255
+Rust license text 235 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   typenum 1.20.1: LICENSE-APACHE
 
 Apache License
@@ -25181,10 +25180,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 236 von 255
+Rust license text 236 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   typenum 1.20.1: LICENSE-MIT
 
 The MIT License (MIT)
@@ -25210,10 +25209,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 237 von 255
+Rust license text 237 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   typewit 1.14.2: LICENSE-ZLIB.md
 
 Copyright (c) 2023 Matias Rodriguez.
@@ -25235,10 +25234,10 @@ freely, subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 
 ====================================================================================================
-Rust-Lizenztext 238 von 255
+Rust license text 238 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   unicode-ident 1.0.14: LICENSE-UNICODE
   unicode-ident 1.0.24: LICENSE-UNICODE
 
@@ -25283,10 +25282,10 @@ dealings in these Data Files or Software without prior written
 authorization of the copyright holder.
 
 ====================================================================================================
-Rust-Lizenztext 239 von 255
+Rust license text 239 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   unicode-normalization-alignments 0.1.12: COPYRIGHT
   unicode-segmentation 1.13.3: COPYRIGHT
   unicode-width 0.2.2: COPYRIGHT
@@ -25300,10 +25299,10 @@ notice may not be copied, modified, or distributed except
 according to those terms.
 
 ====================================================================================================
-Rust-Lizenztext 240 von 255
+Rust license text 240 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   unicode_categories 0.1.1: LICENSE-MIT
 
 Copyright (c) 2015 The unicode-categories Developers
@@ -25327,10 +25326,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 241 von 255
+Rust license text 241 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   unit-prefix 0.5.2: LICENSE
 
 MIT License
@@ -25356,10 +25355,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 242 von 255
+Rust license text 242 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   untrusted 0.9.0: LICENSE.txt
 
 // Copyright 2015-2016 Brian Smith.
@@ -25377,10 +25376,10 @@ Steht in:
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 243 von 255
+Rust license text 243 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   urlencoding 2.1.3: LICENSE
 
 © 2016 Bertram Truong
@@ -25405,10 +25404,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 244 von 255
+Rust license text 244 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   utf16_iter 1.0.5: COPYRIGHT
 
 Copyright Mozilla Foundation
@@ -25455,10 +25454,10 @@ licensed under the Apache License, Version 2.0 <LICENSE-APACHE> or
 <LICENSE-MIT> or <http://opensource.org/licenses/MIT>, at your option.
 
 ====================================================================================================
-Rust-Lizenztext 245 von 255
+Rust license text 245 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   utf8_iter 1.0.4: COPYRIGHT
 
 Copyright Mozilla Foundation
@@ -25505,10 +25504,10 @@ licensed under the Apache License, Version 2.0 <LICENSE-APACHE> or
 <LICENSE-MIT> or <http://opensource.org/licenses/MIT>, at your option.
 
 ====================================================================================================
-Rust-Lizenztext 246 von 255
+Rust license text 246 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   utf8parse 0.2.2: LICENSE-MIT
 
 Copyright (c) 2016 Joe Wilm
@@ -25538,10 +25537,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 247 von 255
+Rust license text 247 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   uuid 1.22.0: LICENSE-MIT
 
 Copyright (c) 2014 The Rust Project Developers
@@ -25572,10 +25571,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 248 von 255
+Rust license text 248 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   vcpkg 0.2.15: LICENSE-MIT
 
 Copyright (c) 2017 Jim McGrath
@@ -25605,10 +25604,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 249 von 255
+Rust license text 249 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   version_check 0.9.5: LICENSE-MIT
 
 The MIT License (MIT)
@@ -25632,10 +25631,10 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 250 von 255
+Rust license text 250 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   want 0.3.1: LICENSE
 
 Copyright (c) 2018-2019 Sean McArthur
@@ -25659,10 +25658,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 251 von 255
+Rust license text 251 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   write16 1.0.0: COPYRIGHT
 
 Copyright Mozilla Foundation
@@ -25687,10 +25686,10 @@ Test code is dedicated to the Public Domain when so designated (see
 the individual files for PD/CC0-dedicated sections).
 
 ====================================================================================================
-Rust-Lizenztext 252 von 255
+Rust license text 252 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   zerocopy 0.7.35: LICENSE-APACHE
   zerocopy 0.8.56: LICENSE-APACHE
   zerocopy-derive 0.7.35: LICENSE-APACHE
@@ -25898,10 +25897,10 @@ Apache License
    limitations under the License.
 
 ====================================================================================================
-Rust-Lizenztext 253 von 255
+Rust license text 253 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   zerocopy 0.7.35: LICENSE-BSD
   zerocopy 0.8.56: LICENSE-BSD
   zerocopy-derive 0.7.35: LICENSE-BSD
@@ -25932,10 +25931,10 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ====================================================================================================
-Rust-Lizenztext 254 von 255
+Rust license text 254 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   zerocopy 0.7.35: LICENSE-MIT
   zerocopy 0.8.56: LICENSE-MIT
   zerocopy-derive 0.7.35: LICENSE-MIT
@@ -25967,10 +25966,10 @@ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 ====================================================================================================
-Rust-Lizenztext 255 von 255
+Rust license text 255 of 255
 ====================================================================================================
 
-Steht in:
+Found in:
   zeroize 1.8.1: LICENSE-MIT
   zeroize 1.8.2: LICENSE-MIT
 
@@ -25997,28 +25996,28 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ====================================================================================================
-Modelle und Module (nicht im App-Paket, Download nur auf Klick)
+Models and modules (not in the app bundle, downloaded only on click)
 ====================================================================================================
 
-MOSS-Image SFT, 8 Bit quantisiert für mflux
-  https://huggingface.co/mflux-community/moss-image-sft-mflux-q8 (Stand c7c9f94ad909beee13d70a9358ed961e86aa35c9)
-  Lizenz: Apache-2.0. Quantisierung von OpenMOSS-Team/MOSS-Image-SFT (Apache-2.0) durch mflux-community. Wird beim ersten Start nach Klick auf Laden heruntergeladen.
+MOSS-Image SFT, 8-bit quantized for mflux
+  https://huggingface.co/mflux-community/moss-image-sft-mflux-q8 (revision c7c9f94ad909beee13d70a9358ed961e86aa35c9)
+  License: Apache-2.0. Quantization of OpenMOSS-Team/MOSS-Image-SFT (Apache-2.0) by mflux-community. Downloaded on first start, only after a click.
 
-Turbo-Modul (8 Schritte, DMD-LoRA)
-  https://huggingface.co/lodestones/MOSS-Image-SFT-8-steps-dmd (Stand f95df83b5e90ae91ea412434b3f9b7f1c8c6314f)
-  Lizenz: Apache-2.0. Datei lora_latest.safetensors, unverändert gespeichert als turbo-8-schritte.safetensors.
+Turbo module (8 steps, DMD LoRA)
+  https://huggingface.co/lodestones/MOSS-Image-SFT-8-steps-dmd (revision f95df83b5e90ae91ea412434b3f9b7f1c8c6314f)
+  License: Apache-2.0. File lora_latest.safetensors, saved unchanged as turbo-8-schritte.safetensors.
 
-Katalog der Module, alle laut Modellkarte Apache-2.0 (geprüft am 3.11.2026):
-  https://huggingface.co/Danrisi/lenovo_moss (Stand 993996c9bd62a773c54f8c36b3e8da3d15dacf78)
-  https://huggingface.co/Danrisi/canon_moss (Stand d8533df2238d42b690d362a67035e86ef4d59f3f)
-  https://huggingface.co/Danrisi/grainscape_moss (Stand ed91a40844f70ba68b531c580d7a87e48372fbf9)
-  https://huggingface.co/axiomofmind/Moss-image-beauty-lora (Stand aedbb91f12ebce6d30e73ca76cccf81feff4b414)
-  https://huggingface.co/aoleg/MOSS-Sharpness-Slider (Stand 5a98472a70bbb10cec78a79274df5f86f403493d)
-  https://huggingface.co/Kandoo/MOSS-Image-Impressionism-LoRA (Stand 5941252a5095f9be551b708419f7df2078d57864)
-  https://huggingface.co/axiomofmind/Moss-image-gouache-lora (Stand 63f1d3fa77623c5198714f43f33be30632b9cb44)
-  https://huggingface.co/axiomofmind/Moss-image-psychedelic-lora (Stand 3482e5226f462b7c14319cc79167ed6d894ded71)
-  https://huggingface.co/axiomofmind/Moss-image-anime-lora (Stand 38fa56fa567b70412828ac67c050a4c2c1a5c40a)
-  https://huggingface.co/axiomofmind/Moss-image-animated-lora (Stand b2ba71a4b0e773209603d13b8fc603d4b0ea319b)
-  https://huggingface.co/nynxz/MOSS-Image (Stand 59d3547a788ca6ebc4f5005a82d461904628df26)
+Module catalog, all Apache-2.0 according to their model cards (checked on 2026-11-03):
+  https://huggingface.co/Danrisi/lenovo_moss (revision 993996c9bd62a773c54f8c36b3e8da3d15dacf78)
+  https://huggingface.co/Danrisi/canon_moss (revision d8533df2238d42b690d362a67035e86ef4d59f3f)
+  https://huggingface.co/Danrisi/grainscape_moss (revision ed91a40844f70ba68b531c580d7a87e48372fbf9)
+  https://huggingface.co/axiomofmind/Moss-image-beauty-lora (revision aedbb91f12ebce6d30e73ca76cccf81feff4b414)
+  https://huggingface.co/aoleg/MOSS-Sharpness-Slider (revision 5a98472a70bbb10cec78a79274df5f86f403493d)
+  https://huggingface.co/Kandoo/MOSS-Image-Impressionism-LoRA (revision 5941252a5095f9be551b708419f7df2078d57864)
+  https://huggingface.co/axiomofmind/Moss-image-gouache-lora (revision 63f1d3fa77623c5198714f43f33be30632b9cb44)
+  https://huggingface.co/axiomofmind/Moss-image-psychedelic-lora (revision 3482e5226f462b7c14319cc79167ed6d894ded71)
+  https://huggingface.co/axiomofmind/Moss-image-anime-lora (revision 38fa56fa567b70412828ac67c050a4c2c1a5c40a)
+  https://huggingface.co/axiomofmind/Moss-image-animated-lora (revision b2ba71a4b0e773209603d13b8fc603d4b0ea319b)
+  https://huggingface.co/nynxz/MOSS-Image (revision 59d3547a788ca6ebc4f5005a82d461904628df26)
 
-Der Volltext der Apache License 2.0 steht oben beim Paket hf_transfer.
+The full text of the Apache License 2.0 appears above with the package hf_transfer.

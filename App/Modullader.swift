@@ -1,8 +1,8 @@
 import CryptoKit
 import Foundation
 
-/// Holt Module aus dem Katalog. Neben der Einrichtung des Modells ist das die einzige Stelle, an der die App ins
-/// Netz geht, und zwar nur nach einem Klick auf Laden. Prompts und Bilder sind daran nie beteiligt.
+/// Holt Module aus dem Katalog, nur nach einem Klick auf Laden. Sonst geht die App nur für die Einrichtung des Modells
+/// ins Netz und, wenn es erlaubt ist, für die Suche nach neuen Versionen. Prompts und Bilder sind daran nie beteiligt.
 @MainActor
 final class Modullader: ObservableObject {
     static let gemeinsam = Modullader()
@@ -48,7 +48,7 @@ final class Modullader: ObservableObject {
             } catch is CancellationError {
                 staende[datei] = nil
             } catch is URLError {
-                staende[datei] = .fehler("Die Verbindung ist abgebrochen. Prüfe das Internet und versuche es nochmals.")
+                staende[datei] = .fehler(String(localized: "The connection was lost. Check your internet connection and try again."))
             } catch {
                 staende[datei] = .fehler(error.localizedDescription)
             }
@@ -102,23 +102,23 @@ private enum Ladefehler: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .server(let code) where code == 401 || code == 403:
-            "Die Quelle gibt diese Datei nicht heraus. Versuche es später nochmals."
+            String(localized: "The source does not hand out this file. Try again later.")
         case .server(404):
-            "Die Datei gibt es an dieser Adresse nicht mehr."
+            String(localized: "The file no longer exists at this address.")
         case .server(let code) where (300..<400).contains(code):
-            "Die Quelle wollte auf eine unsichere Adresse umleiten. Die App hat das blockiert."
+            String(localized: "The source tried to redirect to an unsafe address. The app blocked this.")
         case .server(let code):
-            "Der Server meldet Fehler \(code). Versuche es später nochmals."
+            String(localized: "The server reports error \(code). Try again later.")
         case .anmeldeseite:
-            "Statt der Datei kam eine Webseite zurück. Versuche es später nochmals."
+            String(localized: "A web page came back instead of the file. Try again later.")
         case .zuGross:
-            "Die Datei ist grösser als erwartet. Die App hat das Laden abgebrochen."
+            String(localized: "The file is larger than expected. The app stopped the download.")
         case .falscheDatei:
-            "Die Datei stimmt nicht mit der erwarteten überein und wurde nicht übernommen."
+            String(localized: "The file does not match the expected one and was not kept.")
         case .unpassend:
-            "Diese Datei passt zu keinem Modell der App und wurde nicht übernommen."
+            String(localized: "This file does not fit any model in the app and was not kept.")
         case .zuWenigPlatz:
-            "Auf dem Mac ist zu wenig Platz für dieses Modul."
+            String(localized: "There is not enough space on the Mac for this module.")
         }
     }
 }

@@ -1,7 +1,10 @@
 """Testserver für das Laden der Modelle. Pfad /MODUS/REST liefert die Datei DATEN/REST.
 ok: Range mit 206 oder 416, sonst 200. langsam: wie ok, aber gedrosselt. ohne-range: immer 200.
 416: jede Range mit 416. falscher-bereich: Range mit 206 ab Byte 0. zu-gross: 200 mit Zusatzbytes. umleitung: 302 auf /ok/.
-Jede Anfrage kommt als Zeile ins Protokoll: METHODE PFAD range=WERT STATUS."""
+/versionen/NAME liefert DATEN/versionen/NAME als JSON wie die Releases von GitHub, /versionen-umleitung/NAME leitet auf
+localhost statt 127.0.0.1 um, dem darf die App nicht folgen.
+Jede Anfrage kommt als Zeile ins Protokoll: METHODE PFAD range=WERT STATUS. Bei den Versionen stehen dazu die Kennung,
+die Sprache und die Cookies, die die App mitgeschickt hat."""
 import os, sys, threading, time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -17,8 +20,12 @@ class Bearbeiter(BaseHTTPRequestHandler):
         pass
 
     def notieren(self, status):
+        zusatz = ""
+        if self.path.startswith("/versionen"):
+            zusatz = "".join(f" {name}={self.headers.get(kopf, '-')!r}"
+                             for name, kopf in (("ua", "User-Agent"), ("lang", "Accept-Language"), ("cookie", "Cookie")))
         with schloss, PROTOKOLL.open("a") as datei:
-            datei.write(f"{self.command} {self.path} range={self.headers.get('Range', '-')} {status}\n")
+            datei.write(f"{self.command} {self.path} range={self.headers.get('Range', '-')} {status}{zusatz}\n")
 
     def antworten(self, status, kopf, inhalt=b"", langsam=False):
         self.notieren(status)
@@ -37,6 +44,15 @@ class Bearbeiter(BaseHTTPRequestHandler):
 
     def do_GET(self):
         teile = self.path.lstrip("/").split("/", 1)
+        if len(teile) == 2 and teile[0] == "versionen-umleitung":
+            ziel = f"http://localhost:{self.server.server_address[1]}/versionen/{teile[1]}"
+            return self.antworten(302, {"Location": ziel, "Content-Length": "0"})
+        if len(teile) == 2 and teile[0] == "versionen":
+            datei = DATEN / "versionen" / teile[1]
+            if "/" in teile[1] or not datei.is_file():
+                return self.antworten(404, {"Content-Length": "0"})
+            inhalt = datei.read_bytes()
+            return self.antworten(200, {"Content-Type": "application/json", "Content-Length": str(len(inhalt))}, inhalt)
         if len(teile) != 2 or not (DATEN / teile[1]).is_file():
             return self.antworten(404, {"Content-Length": "0"})
         modus, rest = teile

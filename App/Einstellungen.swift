@@ -4,57 +4,66 @@ import SwiftUI
 struct Einstellungsfenster: View {
     var body: some View {
         TabView {
-            AllgemeinTab().tabItem { Label("Allgemein", systemImage: "gear") }
-            ModelleTab().tabItem { Label("Modelle", systemImage: "slider.horizontal.3") }
-            ZeitTab().tabItem { Label("Zeitschätzung", systemImage: "timer") }
-            DatenschutzTab().tabItem { Label("Datenschutz", systemImage: "hand.raised") }
+            AllgemeinTab().tabItem { Label("General", systemImage: "gear") }
+            ModelleTab().tabItem { Label("Models", systemImage: "slider.horizontal.3") }
+            ZeitTab().tabItem { Label("Time Estimate", systemImage: "timer") }
+            DatenschutzTab().tabItem { Label("Privacy", systemImage: "hand.raised") }
         }
         .frame(minWidth: 560, idealWidth: 600, minHeight: 480, idealHeight: 540)
     }
 }
 
 private struct AllgemeinTab: View {
+    @ObservedObject private var versionen = Versionspruefung.gemeinsam
+
+    /// Der Schalter gilt auch als Antwort auf die Frage beim Start.
+    private var versionenSuchen: Binding<Bool> {
+        Binding(get: { versionen.erlaubt == true }, set: { versionen.erlauben($0) })
+    }
+
     var body: some View {
         Form {
-            Section("Bilder") {
-                LabeledContent("Speicherort") {
-                    Text(Pfade.bilder.path).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
+            Section("Images") {
+                LabeledContent("Location") {
+                    Text(verbatim: Pfade.bilder.path).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
                 }
             }
             ModellAbschnitt()
-            Section("Technik") {
+            Section("Technology") {
                 Label {
-                    Text("Bilder entstehen 100 % lokal, ohne Internet")
+                    Text("Images are made 100 % locally, without internet")
                 } icon: {
                     Image(systemName: "lock.shield.fill").foregroundStyle(.green)
                 }
                 .foregroundStyle(.secondary)
-                Label("Für Apple Silicon optimiert", systemImage: "apple.logo")
+                Label("Optimized for Apple Silicon", systemImage: "apple.logo")
                     .foregroundStyle(.secondary)
             }
-            Section("Projekt") {
+            Section("New Versions") {
+                Toggle("Check for new versions automatically", isOn: versionenSuchen)
+                Text("At startup, at most once a day, \(Fassung.name) asks GitHub whether a new version is out, and then shows a note at the bottom right of the window. The app never downloads or installs anything by itself.")
+                    .font(.caption).foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Section("Project") {
                 // Öffnet nur nach einem Klick den Browser. Die App selbst schickt dabei nichts.
-                Button("Projekt unterstützen") { NSWorkspace.shared.open(Fassung.unterstuetzen) }
-                Text("\(Fassung.name) ist freie Software. Wenn die App dir nützt, kannst du die Entwicklung unterstützen. Der Knopf öffnet die Seite im Browser.")
+                Button("Support the Project") { NSWorkspace.shared.open(Fassung.unterstuetzen) }
+                Text("\(Fassung.name) is free software. If the app is useful to you, you can support its development. The button opens the page in the browser.")
                     .font(.caption).foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 if let hinweise = Bundle.main.url(forResource: "THIRD_PARTY_NOTICES", withExtension: "txt") {
-                    Button("Lizenzen anzeigen") { NSWorkspace.shared.open(hinweise) }
+                    Button("Show Licenses") { NSWorkspace.shared.open(hinweise) }
                 }
             }
             Section {
                 HStack {
                     Spacer()
-                    Text("\(Fassung.name) \(version)").font(.caption).foregroundStyle(.secondary)
+                    Text(verbatim: "\(Fassung.name) \(Fassung.version)").font(.caption).foregroundStyle(.secondary)
                     Spacer()
                 }
             }
         }
         .formStyle(.grouped)
-    }
-
-    private var version: String {
-        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
     }
 }
 
@@ -64,26 +73,27 @@ private struct ModellAbschnitt: View {
 
     private var stand: String {
         switch installation.zustand {
-        case .bereit: "Eingerichtet und geprüft"
-        case .laedt: "Wird geladen"
-        case .prueft(let datei, let von): "Wird geprüft, Datei \(datei) von \(von)"
-        case .ungeprueft: "Noch nicht geprüft"
-        case .beschaedigt(let anzahl): anzahl == 1 ? "1 Datei fehlt oder ist beschädigt" : "\(anzahl) Dateien fehlen oder sind beschädigt"
-        case .fehlt(let vorhanden): vorhanden > 0 ? "Teilweise geladen" : "Noch nicht geladen"
-        case .fehler: "Laden unterbrochen"
+        case .bereit: String(localized: "Set up and checked")
+        case .laedt: String(localized: "Downloading")
+        case .prueft(let datei, let von): String(localized: "Checking, file \(datei) of \(von)")
+        case .ungeprueft: String(localized: "Not checked yet")
+        case .beschaedigt(let anzahl): anzahl == 1 ? String(localized: "1 file is missing or damaged")
+            : String(localized: "\(anzahl) files are missing or damaged")
+        case .fehlt(let vorhanden): vorhanden > 0 ? String(localized: "Partly downloaded") : String(localized: "Not downloaded yet")
+        case .fehler: String(localized: "Download interrupted")
         }
     }
 
     var body: some View {
-        Section("Modell") {
-            LabeledContent("MOSS-Image", value: stand)
-            LabeledContent("Speicherort") {
-                Text(Pfade.ordner(.moss).path).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
+        Section("Model") {
+            LabeledContent(ModellID.moss.name, value: stand)
+            LabeledContent("Location") {
+                Text(verbatim: Pfade.ordner(.moss).path).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
             }
             if FileManager.default.fileExists(atPath: Pfade.ordner(.moss).path) {
-                Button("Modelldateien prüfen") { installation.pruefen(erzwingen: true) }
+                Button("Check Model Files") { installation.pruefen(erzwingen: true) }
                     .disabled(installation.beschaeftigt)
-                Text("Hasht alle Dateien neu, das dauert rund eine Minute. Fehlerhafte lassen sich danach unter Neues Bild reparieren.")
+                Text("Checks all files again, which takes about a minute. Faulty ones can then be repaired under New Image.")
                     .font(.caption).foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -102,7 +112,7 @@ private struct ModelleTab: View {
                 }
             }
             Section {
-                Button("Standardwerte wiederherstellen") { vorgaben.stufeAnwenden(vorgaben.stufe) }
+                Button("Restore Defaults") { vorgaben.stufeAnwenden(vorgaben.stufe) }
             }
         }
         .formStyle(.grouped)
@@ -117,30 +127,30 @@ private struct ZeitTab: View {
     var body: some View {
         Form {
             Section {
-                Text("Die App misst jedes Bild und verbessert damit die nächste Schätzung. Gespeichert werden nur Zeiten, keine Prompts oder Bilder.")
+                Text("The app measures every image and uses it to improve the next estimate. Only times are saved, no prompts or images.")
                     .font(.callout).foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            Section("Gemessene Werte") {
+            Section("Measured Values") {
                 ForEach(zeilen) { zeile in
                     LabeledContent(zeile.titel) {
-                        Text(zeile.wert).font(.caption).foregroundStyle(.secondary).monospacedDigit()
+                        Text(verbatim: zeile.wert).font(.caption).foregroundStyle(.secondary).monospacedDigit()
                     }
                 }
             }
             Section {
-                Button("Messwerte zurücksetzen", role: .destructive) { bestaetigen = true }
+                Button("Reset Measurements", role: .destructive) { bestaetigen = true }
             }
         }
         .formStyle(.grouped)
         .onAppear { zeilen = generator.schaetzer.uebersicht() }
-        .confirmationDialog("Alle Messwerte zurücksetzen?", isPresented: $bestaetigen) {
-            Button("Zurücksetzen", role: .destructive) {
+        .confirmationDialog("Reset all measurements?", isPresented: $bestaetigen) {
+            Button("Reset", role: .destructive) {
                 generator.schaetzer.zuruecksetzen()
                 zeilen = generator.schaetzer.uebersicht()
             }
         } message: {
-            Text("Die Schätzung beginnt dann wieder bei den ersten Werten.")
+            Text("The estimate then starts again from the initial values.")
         }
     }
 }
@@ -149,21 +159,22 @@ private struct DatenschutzTab: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text("Datenschutz").font(.title3.weight(.semibold))
-                abschnitt("lock.shield.fill", .green, "Alles bleibt auf diesem Mac",
-                          "Prompts und erzeugte Bilder werden nur hier verarbeitet. Die Berechnung läuft immer ohne Internet und nie in einer Cloud.")
-                abschnitt("network.slash", .blue, "Keine Daten nach aussen",
-                          "Die App geht nur ins Netz, wenn du auf Laden klickst: beim ersten Start für das Modell, unter Module für ein Modul. Dann holt sie genau diese Dateien von Hugging Face. Projekt unterstützen öffnet nur den Browser. Prompts und Bilder sind nie beteiligt. Statistik oder Protokolle gibt es nicht.")
-                abschnitt("person.crop.circle.badge.xmark", .orange, "Kein Konto",
-                          "Für deine Bilder brauchst du weder Konto noch Anmeldung.")
-                abschnitt("doc.on.doc", .teal, "Deine Dateien",
-                          "Bilder, ihre Einstellungen und die Warteschlange liegen im Ordner Downloads/\(Fassung.ordnerName), die Kopie eines Referenzbildes dort im versteckten Ordner .referenzen. Diese Kopien bleiben dort, auch wenn du ein Bild in den Papierkorb legst. Das Modell liegt unter Library/Application Support/\(Fassung.ordnerName).")
+                Text("Privacy").font(.title3.weight(.semibold))
+                abschnitt("lock.shield.fill", .green, "Everything stays on this Mac",
+                          "Prompts and created images are only processed here. The calculation always runs without internet and never in a cloud.")
+                abschnitt("network.slash", .blue, "No data goes out",
+                          "The app only goes online when you click Download: on first start for the model, under Modules for a module. It then fetches exactly these files from Hugging Face. If you allowed the search for new versions, it also asks GitHub at startup, at most once a day, for the latest version. Nothing about you goes along, and like any website, GitHub only sees your IP address. Donate and Support the Project only open the browser. Prompts and images are never involved. There are no statistics or logs.")
+                abschnitt("person.crop.circle.badge.xmark", .orange, "No account",
+                          "You need neither an account nor a sign-in for your images.")
+                abschnitt("doc.on.doc", .teal, "Your files",
+                          "Images, their settings and the queue are in the folder Downloads/\(Fassung.ordnerName), the copy of a reference image there in the hidden folder .referenzen. These copies stay there, even if you move an image to the Trash. The model is in Library/Application Support/\(Fassung.ordnerName).")
             }
             .padding(20)
         }
     }
 
-    private func abschnitt(_ symbol: String, _ farbe: Color, _ titel: String, _ text: String) -> some View {
+    private func abschnitt(_ symbol: String, _ farbe: Color, _ titel: LocalizedStringKey,
+                           _ text: LocalizedStringKey) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             Label {
                 Text(titel).font(.callout.weight(.semibold))

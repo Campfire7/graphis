@@ -102,7 +102,7 @@ final class Generator: ObservableObject {
         guard !auftraege.isEmpty else { return }
         try? FileManager.default.createDirectory(at: Pfade.bilder, withIntermediateDirectories: true)
         guard FileManager.default.isWritableFile(atPath: Pfade.bilder.path) else {
-            fehler = "\(Fassung.name) darf nicht in den Downloads-Ordner schreiben. Erlaube das in den Systemeinstellungen unter Datenschutz & Sicherheit, Dateien und Ordner."
+            fehler = String(localized: "\(Fassung.name) is not allowed to write to the Downloads folder. Allow this in System Settings under Privacy & Security, Files and Folders.")
             return
         }
         guard vorbereitung != nil || auftraege.contains(where: { !$0.referenzen.isEmpty }) else {
@@ -123,8 +123,8 @@ final class Generator: ObservableObject {
                 }
                 einreihen(bereit, laengeSeite: laengeSeite)
             case .fehlgeschlagen(let nummer, let von):
-                fehler = von == 1 ? "Das Referenzbild liess sich nicht lesen. Liegt es noch am selben Ort?"
-                    : "Referenzbild \(nummer) liess sich nicht lesen. Liegt es noch am selben Ort?"
+                fehler = von == 1 ? String(localized: "The reference image could not be read. Is it still in the same place?")
+                    : String(localized: "Reference image \(nummer) could not be read. Is it still in the same place?")
             }
         }
         vorbereitung = aufgabe
@@ -208,7 +208,7 @@ final class Generator: ObservableObject {
     private func stapelStarten(_ stapel: Stapel) {
         if wachhalter == nil {
             wachhalter = ProcessInfo.processInfo.beginActivity(
-                options: [.userInitiated, .idleSystemSleepDisabled], reason: "Bilder werden berechnet")
+                options: [.userInitiated, .idleSystemSleepDisabled], reason: String(localized: "Creating images"))
         }
         laeuft = true
         offen = stapel
@@ -268,7 +268,7 @@ final class Generator: ObservableObject {
                 try JSONEncoder().encode(alles).write(to: Pfade.warteDatei, options: .atomic)
             }
         } catch {
-            fehler = "Die Warteschlange liess sich nicht speichern, ist die Festplatte voll? Bei einem Absturz wäre sie verloren."
+            fehler = String(localized: "The queue could not be saved, is the disk full? It would be lost in a crash.")
         }
     }
 
@@ -284,7 +284,7 @@ final class Generator: ObservableObject {
         guard let gespeichert = try? JSONDecoder().decode([Nachsichtig<GespeicherterStapel>].self, from: daten) else {
             // Eine unlesbare Datei wird nie überschrieben, sondern beiseitegelegt.
             try? FileManager.default.moveItem(at: Pfade.warteDatei, to: sicherung("unlesbar"))
-            fehler = "Die gespeicherte Warteschlange liess sich nicht lesen. Sie liegt als Sicherung im Bildordner."
+            fehler = String(localized: "The saved queue could not be read. It is in the image folder as a backup.")
             return
         }
         guard !gespeichert.isEmpty else { return }
@@ -296,10 +296,12 @@ final class Generator: ObservableObject {
             do {
                 try FileManager.default.moveItem(at: Pfade.warteDatei, to: sicherung("nicht-lesbar"))
             } catch {
-                fehler = "Einträge der gespeicherten Warteschlange lassen sich nicht lesen, und die Datei liess sich nicht als Sicherung beiseitelegen. Sie bleibt unverändert."
+                fehler = String(localized: "Entries of the saved queue cannot be read, and the file could not be set aside as a backup. It stays unchanged.")
                 return
             }
-            fehler = "\(ausgelassen == 1 ? "1 Eintrag" : "\(ausgelassen) Einträge") der gespeicherten Warteschlange \(ausgelassen == 1 ? "liess" : "liessen") sich nicht lesen und \(ausgelassen == 1 ? "ist" : "sind") entfernt. Die ganze Warteschlange liegt als Sicherung im Bildordner."
+            fehler = ausgelassen == 1
+                ? String(localized: "1 entry of the saved queue could not be read and was removed. The whole queue is in the image folder as a backup.")
+                : String(localized: "\(ausgelassen) entries of the saved queue could not be read and were removed. The whole queue is in the image folder as a backup.")
         }
         // Stürzt die App direkt nach dem Speichern eines Bildes ab, zählt es trotzdem als erledigt.
         let fertig = Set(ergebnisse.compactMap(\.auftrag))
@@ -379,7 +381,7 @@ final class Generator: ObservableObject {
             if abgebrochen { return false }
             aktuelleSchaetzung = schaetzer.schaetzung(auftrag)
             spaetereSchaetzung = auftraege[(index + 1)...].map(schaetzer.schaetzung).reduce(0, +)
-            let stand = auftraege.count > 1 ? "Bild \(index + 1) von \(auftraege.count): " : ""
+            let stand = auftraege.count > 1 ? String(localized: "Image \(index + 1) of \(auftraege.count): ") : ""
             do {
                 try await rechnen(auftrag, ordner: ordner, stand: stand)
                 if abgebrochen { return false }
@@ -404,22 +406,26 @@ final class Generator: ObservableObject {
 
     /// Übersetzt die häufigen Fälle, die rohe Ausgabe bleibt unter Technische Angaben.
     private static func verstaendlich(_ ausgabe: String, mitModulen: Bool) -> String {
-        // Das Zusatzprogramm für MOSS mit Referenzbild meldet sich mit eigenen, verständlichen Sätzen.
+        // Das Zusatzprogramm für MOSS mit Referenzbild meldet sich mit eigenen Sätzen auf Deutsch. Der bekannte Fall
+        // kommt in der Sprache des Mac, alle anderen heissen, dass Motor und App nicht zusammenpassen.
         if let meldung = ausgabe.split(whereSeparator: \.isNewline).first(where: { $0.hasPrefix("Rechenmotor: ") }) {
-            return String(meldung.dropFirst("Rechenmotor: ".count))
+            if meldung.dropFirst("Rechenmotor: ".count) == "Das Referenzbild fehlt." {
+                return String(localized: "The reference image is missing.")
+            }
+            return String(localized: "The engine in the app bundle is missing or damaged. Download the app again.")
         }
         let text = ausgabe.lowercased()
         if text.contains("no lora layers were applied") {
-            return "Ein aktives Modul passt nicht zu MOSS. Überspringe dieses Bild, schalte das Modul aus und starte das Bild neu."
+            return String(localized: "An active module does not fit MOSS. Skip this image, turn the module off and start the image again.")
         }
         if text.contains("no space left") {
-            return "Auf dem Mac ist zu wenig Platz. Gib Speicher frei, dann klicke auf Nochmals versuchen."
+            return String(localized: "There is not enough space on the Mac. Free up some space, then click Try Again.")
         }
         if text.contains("out of memory") || text.contains("insufficient memory") || text.contains("failed to allocate") {
-            return "Der Arbeitsspeicher hat nicht gereicht. Schliesse grosse Programme oder wähle weniger Pixel, dann klicke auf Nochmals versuchen."
+            return String(localized: "There was not enough memory. Close large apps or choose fewer pixels, then click Try Again.")
         }
-        let tipp = mitModulen ? " Hilft das nicht, schalte die Module aus." : ""
-        return "Das Bild konnte nicht erzeugt werden. Klicke auf Nochmals versuchen.\(tipp)"
+        let grund = String(localized: "The image could not be created. Click Try Again.")
+        return mitModulen ? grund + " " + String(localized: "If that does not help, turn off the modules.") : grund
     }
 
     private func rechnen(_ auftrag: Auftrag, ordner: URL, stand: String) async throws {
@@ -436,7 +442,7 @@ final class Generator: ObservableObject {
         // Dateiangaben frisch lesen: Wurde eine Modelldatei seit der Prüfung verändert, rechnet die App nicht damit.
         Modellinstallation.gemeinsam.auffrischen()
         guard Modellinstallation.gemeinsam.bereit else {
-            throw Self.fehlschlag("MOSS-Image ist nicht vollständig eingerichtet oder hat sich verändert. Prüfe oder lade es unter Neues Bild, dann klicke auf Weiterrechnen.", details: "")
+            throw Self.fehlschlag(String(localized: "MOSS-Image is not fully set up or has changed. Check or download it under New Image, then click Continue."), details: "")
         }
         let module = auftrag.module
         let negativ = auftrag.negativ
@@ -461,7 +467,7 @@ final class Generator: ObservableObject {
         // MOSS baut auf genau einem Referenzbild auf, auch wenn eine gespeicherte Angabe mehr nennt.
         let bilder = Array(auftrag.referenzen.prefix(Vorgaben.hoechstensReferenzen))
         if bilder.contains(where: { !FileManager.default.fileExists(atPath: $0.path) }) {
-            throw Self.fehlschlag("Das Referenzbild liegt nicht mehr im Bildordner.", details: "")
+            throw Self.fehlschlag(String(localized: "The reference image is no longer in the image folder."), details: "")
         }
         if let vorlage = bilder.first {
             argumente += ["--image", vorlage.path, String(auftrag.referenzStaerke ?? 0.625)]
@@ -497,11 +503,11 @@ final class Generator: ObservableObject {
         ersterSchritt = nil
         schritt = 0
         schritte = auftrag.rechenSchritte
-        statusText = "\(stand)\(auftrag.modell.name) wird geladen"
+        statusText = stand + String(localized: "Loading \(auftrag.modell.name)")
         do {
             try neuerProzess.run()
         } catch {
-            throw Self.fehlschlag("Der Rechenmotor im App-Paket fehlt oder ist beschädigt. Lade die App neu herunter.",
+            throw Self.fehlschlag(String(localized: "The engine in the app bundle is missing or damaged. Download the app again."),
                                   details: error.localizedDescription)
         }
         prozess = neuerProzess
@@ -525,7 +531,7 @@ final class Generator: ObservableObject {
                     if let beginn = ersterSchritt, aktuell > 1 {
                         schrittzeitGesamt = sekunden(seit: beginn) / Double(aktuell - 1)
                     }
-                    statusText = "\(stand)\(auftrag.modell.name), Schritt \(aktuell) von \(gesamt)"
+                    statusText = stand + String(localized: "\(auftrag.modell.name), step \(aktuell) of \(gesamt)")
                 }
             } else if abgeschlossen {
                 if let treffer = zeile.firstMatch(of: Self.modulMuster),
@@ -567,14 +573,16 @@ final class Generator: ObservableObject {
             throw Self.fehlschlag(Self.verstaendlich(meldung, mitModulen: !module.isEmpty),
                                   details: String(meldung.suffix(400)))
         }
-        let hinweis = teilweise == 0 ? nil
-            : "\(teilweise == 1 ? "1 Modul wirkte" : "\(teilweise) Module wirkten") nur teilweise, das Dateiformat passt nicht ganz."
+        // Der Hinweis wird mit dem Bild gespeichert, in der Sprache, die der Mac beim Rechnen hatte.
+        let hinweis = teilweise == 0 ? nil : teilweise == 1
+            ? String(localized: "1 module only partly worked, the file format does not quite fit.")
+            : String(localized: "\(teilweise) modules only partly worked, the file format does not quite fit.")
 
         let dauer = sekunden(seit: startzeit)
         let geschaetzt = aktuelleSchaetzung
         schaetzer.lernen(auftrag, gesamt: dauer, schrittzeit: schrittzeitGesamt, geschaetzt: geschaetzt)
         erledigt += dauer
-        letzteAbweichung = "\(auftrag.modell.name): geschätzt \(dauerText(geschaetzt)), gedauert \(dauerText(dauer))"
+        letzteAbweichung = String(localized: "\(auftrag.modell.name): estimated \(dauerText(geschaetzt)), took \(dauerText(dauer))")
         // Gespeichert wird, was wirklich gerechnet wurde, damit Angaben und Übernahme stimmen.
         let ergebnis = Ergebnis(
             datei: name, gruppe: auftrag.gruppe, prompt: auftrag.prompt, negativ: negativ,
@@ -589,7 +597,7 @@ final class Generator: ObservableObject {
             let daten = try JSONEncoder().encode(ergebnis)
             try daten.write(to: ausgabe.deletingPathExtension().appendingPathExtension("json"), options: .atomic)
         } catch {
-            fehler = "Das Bild ist gespeichert, seine Angaben aber nicht. Es fehlt nach einem Neustart im Verlauf."
+            fehler = String(localized: "The image is saved, but its details are not. It will be missing from the history after a restart.")
         }
         ergebnisse.insert(ergebnis, at: 0)
     }

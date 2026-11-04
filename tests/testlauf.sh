@@ -4,13 +4,17 @@
 # Rechenmotors aufgerufen wird. Jede Art läuft in einem eigenen, frischen Ordner im Ordner für temporäre Dateien.
 #   zsh tests/testlauf.sh            alle Arten
 #   zsh tests/testlauf.sh module     nur die genannten Arten
+# Die Art texte prüft ohne Prüfprogramm, ob jeder übersetzbare Text der App einen deutschen Eintrag hat.
+# Nur von Hand: zsh tests/testlauf.sh ansichten zeichnet die Oberfläche auf Englisch und Deutsch als PNG.
+# Nur von Hand: GRAPHIS_SCREENSHOT_BILD=<bild.png> zsh tests/testlauf.sh screenshots zeichnet die Bildschirmfotos
+# für das README auf Englisch, mit diesem Bild als fertigem Ergebnis.
 # Exitstatus 0 nur, wenn jede Prüfung ok ist. Mit GRAPHIS_TEST_BEHALTEN=1 bleibt der Arbeitsordner auch dann liegen.
 cd "$(dirname "$0")/.."
 PY="${PYTHON:-/usr/bin/python3}"
 ARBEIT="$(mktemp -d "${${TMPDIR:-/tmp}%/}/graphis-test.XXXXXX")" || exit 2
 BIN="$ARBEIT/graphis-test"
 ARTEN=("$@")
-[ ${#ARTEN} = 0 ] && ARTEN=(einrichtung neustart warteschlange referenzen module daten)
+[ ${#ARTEN} = 0 ] && ARTEN=(texte einrichtung neustart warteschlange referenzen module daten updates)
 echo "Arbeitsordner: $ARBEIT"
 
 # Das Prüfprogramm: alle Quellen der App ausser GraphisApp.swift, dazu tests/*.swift. Nur hier gilt TESTLAUF.
@@ -45,10 +49,12 @@ testordner() {
 
 # Startet das Prüfprogramm mit allen Angaben für den Testordner $1, weitere Argumente gehen an das Programm.
 # Nur im Hintergrund aufrufen: exec ersetzt dort die Hilfsshell, so ist $! die Nummer des Prüfprogramms selbst.
+# PROGRAMM setzt eine Kopie des Prüfprogramms ein, etwa mit Sprachordnern.
 pruefprogramm() {
   local test="$1"; shift
   GRAPHIS_TESTORDNER="$test" GRAPHIS_TESTCLI="$test/schein/schein.sh" GRAPHIS_TESTMANIFEST="$ARBEIT/manifest.json" \
-    GRAPHIS_TESTSERVERLOG="$ARBEIT/server.log" exec "$BIN" "$@"
+    GRAPHIS_TESTSERVERLOG="$ARBEIT/server.log" \
+    GRAPHIS_TESTVERSIONEN="http://127.0.0.1:$(cat "$ARBEIT/port.txt")/versionen/neuer.json" exec "${PROGRAMM:-$BIN}" "$@"
 }
 
 # Wartet höchstens $2 Sekunden auf den Prozess $1. Liefert dessen Exitstatus, 124 nach dem Zeitlimit.
@@ -71,6 +77,14 @@ warten() {
 }
 
 GESAMT=0; FEHLER=0; STATUS=0
+# zaehlen ART ERGEBNIS: zählt die Zeilen ok und FEHLER der Ausgabe einer Art.
+zaehlen() {
+  local art=$1 ergebnis=$2
+  local anzahl=$(grep -cE '^(ok|FEHLER) ' "$ARBEIT/$art.txt") falsch=$(grep -c '^FEHLER ' "$ARBEIT/$art.txt")
+  GESAMT=$((GESAMT + anzahl)); FEHLER=$((FEHLER + falsch))
+  [ $ergebnis = 0 ] && [ $falsch = 0 ] && [ $anzahl -gt 0 ] || STATUS=1
+}
+
 # lauf ART FRIST [ORDNER]: eine Art in ihrem Testordner, mit Zeitlimit und Auswertung.
 lauf() {
   local art=$1 frist=$2 test="${3:-$ARBEIT/$1}" ergebnis
@@ -81,9 +95,27 @@ lauf() {
   ergebnis=$?
   cat "$ARBEIT/$art.txt"
   [ $ergebnis = 124 ] && echo "FEHLER $art hat das Zeitlimit von $frist s überschritten"
-  local anzahl=$(grep -cE '^(ok|FEHLER) ' "$ARBEIT/$art.txt") falsch=$(grep -c '^FEHLER ' "$ARBEIT/$art.txt")
-  GESAMT=$((GESAMT + anzahl)); FEHLER=$((FEHLER + falsch))
-  [ $ergebnis = 0 ] && [ $falsch = 0 ] && [ $anzahl -gt 0 ] || STATUS=1
+  zaehlen $art $ergebnis
+}
+
+# Der Compiler legt jeden übersetzbaren Text der App ab, werkzeug/texte_pruefen.py vergleicht sie mit App/de.lproj.
+# Übersetzt wird in einen eigenen Ordner, so entsteht nichts im Projekt.
+texte() {
+  local ergebnis quellen=(App/*.swift)
+  echo; echo "== texte"
+  mkdir -p "$ARBEIT/texte-bau"
+  if swiftc -c -Onone -parse-as-library -swift-version 5 -target arm64-apple-macos26.2 -module-name Graphis \
+      -emit-localized-strings -emit-localized-strings-path "$ARBEIT/texte-daten" -working-directory "$ARBEIT/texte-bau" \
+      ${quellen:A} > "$ARBEIT/texte-bau.txt" 2>&1; then
+    "$PY" -I -B werkzeug/texte_pruefen.py "$ARBEIT/texte-daten" App/de.lproj/Localizable.strings \
+      App/en.lproj/Localizable.strings > "$ARBEIT/texte.txt" 2>&1
+    ergebnis=$?
+  else
+    echo "FEHLER Die Quellen der App liessen sich für die Prüfung der Texte nicht übersetzen" > "$ARBEIT/texte.txt"
+    ergebnis=1
+  fi
+  cat "$ARBEIT/texte.txt"
+  zaehlen texte $ergebnis
 }
 
 for art in $ARTEN; do
@@ -104,7 +136,52 @@ for art in $ARTEN; do
     einrichtung) lauf einrichtung 300 ;;
     warteschlange) lauf warteschlange 180 ;;
     referenzen|module) lauf $art 120 ;;
-    daten) lauf daten 60 ;;
+    daten|updates) lauf $art 60 ;;
+    texte) texte ;;
+    ansichten)
+      # Eine Kopie des Prüfprogramms mit den Sprachordnern der App, nur für diese Art. Alle anderen Arten sehen
+      # Englisch, die Sprache des Codes. Die Bilder kommen in einen eigenen Ordner, der bleibt.
+      AUSGABE="$(mktemp -d "${${TMPDIR:-/tmp}%/}/graphis-ansichten.XXXXXX")"
+      mkdir -p "$ARBEIT/ansichten-programm"
+      cp "$BIN" "$ARBEIT/ansichten-programm/"
+      for sprache in App/*.lproj; do cp -R "$sprache" "$ARBEIT/ansichten-programm/"; done
+      for sprache in en de; do
+        test="$ARBEIT/ansichten-$sprache"
+        testordner "$test"
+        echo; echo "== ansichten $sprache"
+        PROGRAMM="$ARBEIT/ansichten-programm/${BIN:t}" pruefprogramm "$test" ansichten -AppleLanguages "($sprache)" \
+          > "$ARBEIT/ansichten-$sprache.txt" 2>&1 &
+        warten $! 120
+        ergebnis=$?
+        cat "$ARBEIT/ansichten-$sprache.txt"
+        zaehlen ansichten-$sprache $ergebnis
+        cp "$test"/*.png(N) "$AUSGABE/"
+      done
+      echo "Bilder: $AUSGABE" ;;
+    screenshots)
+      # Wie ansichten, aber nur Englisch, mit eingerichtetem Modell vom Testserver und einem fertigen Bild. Der leere
+      # Motor in der Kopie erfüllt nur die Prüfung, ob er im Paket liegt, rechnen tut das Scheinprogramm.
+      AUSGABE="$(mktemp -d "${${TMPDIR:-/tmp}%/}/graphis-screenshots.XXXXXX")"
+      mkdir -p "$ARBEIT/screenshots-programm/Motor"
+      cp "$BIN" "$ARBEIT/screenshots-programm/"
+      : > "$ARBEIT/screenshots-programm/Motor/motor_start.py"
+      for sprache in App/*.lproj; do cp -R "$sprache" "$ARBEIT/screenshots-programm/"; done
+      test="$ARBEIT/screenshots"
+      testordner "$test"
+      if [ -n "$GRAPHIS_SCREENSHOT_BILD" ]; then
+        cp "$GRAPHIS_SCREENSHOT_BILD" "$test/quelle.png"
+      else
+        echo "Hinweis: GRAPHIS_SCREENSHOT_BILD fehlt, die Ergebnisansicht bleibt ohne Bild."
+      fi
+      echo; echo "== screenshots"
+      PROGRAMM="$ARBEIT/screenshots-programm/${BIN:t}" pruefprogramm "$test" screenshots -AppleLanguages "(en)" \
+        > "$ARBEIT/screenshots.txt" 2>&1 &
+      warten $! 150
+      ergebnis=$?
+      cat "$ARBEIT/screenshots.txt"
+      zaehlen screenshots $ergebnis
+      cp "$test"/screenshot-*.png(N) "$AUSGABE/"
+      echo "Bilder: $AUSGABE" ;;
     *) echo "FEHLER Unbekannte Art: $art"; STATUS=1 ;;
   esac
 done

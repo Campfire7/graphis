@@ -7,7 +7,7 @@ enum ModellID: String, CaseIterable, Codable, Identifiable {
 
     var id: String { rawValue }
     var name: String { "MOSS-Image" }
-    var hinweis: String { "Beste Ergebnisse, mit Modulen erweiterbar" }
+    var hinweis: String { String(localized: "Best results, extendable with modules") }
     /// Der Name, unter dem mflux das Modell kennt.
     var basisModell: String { "moss-image" }
     var ordnerName: String { "moss-image-q8" }
@@ -17,8 +17,8 @@ enum ModellID: String, CaseIterable, Codable, Identifiable {
         turbo ? 4...16 : 10...60
     }
 
-    var schrittTipp: String { "Mit Turbo sind 8 richtig, ohne Turbo 30 bis 50." }
-    var textfuehrungTipp: String { "Mit Turbo ist 1 richtig, ohne Turbo 3." }
+    var schrittTipp: String { String(localized: "With Turbo, 8 is right, without Turbo 30 to 50.") }
+    var textfuehrungTipp: String { String(localized: "With Turbo, 1 is right, without Turbo 3.") }
 
     func vorgabe(_ stufe: Stufe) -> ModellEinstellung {
         switch stufe {
@@ -74,6 +74,7 @@ struct ModellEinstellung: Codable, Equatable {
     }
 }
 
+/// Der Rohwert ist gespeichert und bleibt in jeder Sprache gleich, angezeigt wird anzeigeName.
 enum Stufe: String, CaseIterable, Identifiable {
     case schnell = "Schnell"
     case standard = "Standard"
@@ -82,19 +83,30 @@ enum Stufe: String, CaseIterable, Identifiable {
     var id: String { rawValue }
     var laengeSeite: Int { self == .schnell ? 768 : 1024 }
 
-    static let erklaerung = """
-    Stellt Bildgrösse und Rechenart gemeinsam ein.
+    var anzeigeName: String {
+        switch self {
+        case .schnell: String(localized: "Fast")
+        case .standard: String(localized: "Standard")
+        case .beste: String(localized: "Best")
+        }
+    }
 
-    Schnell: 768 Pixel mit Turbo-Modul, 8 Schritte. Für Entwürfe.
+    static var erklaerung: String {
+        String(localized: """
+        Sets image size and calculation mode together.
 
-    Standard: 1024 Pixel mit Turbo-Modul, 8 Schritte. Guter Alltagswert.
+        Fast: 768 pixels with the Turbo module, 8 steps. For drafts.
 
-    Beste: 1024 Pixel ohne Turbo, 30 Schritte. Volle Qualität, dauert deutlich länger.
+        Standard: 1024 pixels with the Turbo module, 8 steps. A good everyday choice.
 
-    Ein Klick überschreibt Bildgrösse, Schritte, Turbo und Textführung. Passen deine Werte zu keiner Stufe, steht hier Eigene Werte.
-    """
+        Best: 1024 pixels without Turbo, 30 steps. Full quality, takes much longer.
+
+        A click overwrites image size, steps, Turbo and guidance. If your values match no level, it says Custom here.
+        """)
+    }
 }
 
+/// Der Rohwert steht in gespeicherten Einstellungen und Bildangaben und bleibt in jeder Sprache gleich.
 enum Bildformat: String, CaseIterable, Identifiable {
     case quadrat = "Quadrat"
     case hoch = "Hochformat 2:3"
@@ -103,6 +115,21 @@ enum Bildformat: String, CaseIterable, Identifiable {
     case schmal = "Hochkant 9:16"
 
     var id: String { rawValue }
+
+    var anzeigeName: String {
+        switch self {
+        case .quadrat: String(localized: "Square")
+        case .hoch: String(localized: "Portrait 2:3")
+        case .quer: String(localized: "Landscape 3:2")
+        case .breit: String(localized: "Widescreen 16:9")
+        case .schmal: String(localized: "Tall 9:16")
+        }
+    }
+
+    /// Ein gespeicherter Name in der Sprache des Mac. Unbekannte Namen erscheinen, wie sie sind.
+    static func anzeige(_ name: String) -> String {
+        Bildformat(rawValue: name)?.anzeigeName ?? name
+    }
 
     private var verhaeltnis: (Double, Double) {
         switch self {
@@ -267,7 +294,9 @@ struct Lauf: Identifiable {
 
     var modelle: [ModellID] { ModellID.allCases.filter { modell in ergebnisse.contains { $0.modell == modell } } }
     var dauer: Double { ergebnisse.map(\.sekunden).reduce(0, +) }
-    var untertitel: String { ergebnisse.count == 1 ? "1 Bild" : "\(ergebnisse.count) Bilder" }
+    var untertitel: String {
+        ergebnisse.count == 1 ? String(localized: "1 image") : String(localized: "\(ergebnisse.count) images")
+    }
 }
 
 /// Die Pfeiltasten in der Grossansicht.

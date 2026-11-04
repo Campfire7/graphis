@@ -25,17 +25,17 @@ enum ReferenzPruefung {
         vorgaben.referenzenHinzufuegen([quer])
         let meldungVoll = vorgaben.referenzMeldung ?? ""
         bericht.pruefen("Hinzufügen nimmt höchstens ein Bild", erstes == [hoch] && vorgaben.referenzen == [hoch]
-                        && meldungMehrere.contains("2 weitere Bilder sind nicht dazugekommen")
-                        && meldungVoll.hasPrefix("Es geht nur ein Referenzbild."), "\(meldungMehrere) | \(meldungVoll)")
+                        && meldungMehrere.contains("2 more images were not added")
+                        && meldungVoll.hasPrefix("Only one reference image is possible."), "\(meldungMehrere) | \(meldungVoll)")
 
         // Dateiauswahl und Ablegen setzen das Bild über vorlageSetzen: Es ersetzt das bisherige.
         vorgaben.vorlageSetzen(quer)
         let ersetzt = vorgaben.referenzen == [quer] && vorgaben.referenzMeldung == nil
         vorgaben.vorlageSetzen(keinBild)
-        let unlesbarGesetzt = vorgaben.referenzen == [quer] && vorgaben.referenzMeldung == "Diese Datei ist kein lesbares Bild."
+        let unlesbarGesetzt = vorgaben.referenzen == [quer] && vorgaben.referenzMeldung == "This file is not a readable image."
         vorgaben.referenzenLeeren()
         vorgaben.referenzenHinzufuegen([keinBild])
-        let unlesbarHinzu = vorgaben.referenzen.isEmpty && vorgaben.referenzMeldung == "Eine Datei ist kein lesbares Bild."
+        let unlesbarHinzu = vorgaben.referenzen.isEmpty && vorgaben.referenzMeldung == "One file is not a readable image."
         vorgaben.referenzenHinzufuegen([URL(string: "https://example.org/bild.png")!])
         let adresse = vorgaben.referenzen.isEmpty
         bericht.pruefen("Anderes Bild ersetzt, Unlesbares und Web-Adressen kommen nicht dazu",
@@ -101,7 +101,7 @@ enum ReferenzPruefung {
         await generator.starten(vorgaben.auftragsliste(), laengeSeite: 1024)
         let kopienNachher = Set((try? FileManager.default.contentsOfDirectory(atPath: Pfade.referenzen.path)) ?? [])
         bericht.pruefen("Fehlendes Referenzbild hält den Start auf",
-                        generator.fehler == "Das Referenzbild liess sich nicht lesen. Liegt es noch am selben Ort?"
+                        generator.fehler == "The reference image could not be read. Is it still in the same place?"
                         && kopienNachher == kopienVorher && generator.warteschlange.isEmpty && !generator.laeuft
                         && Hilfe.aufrufe().count == stand, generator.fehler ?? "kein Fehler")
         generator.fehler = nil
@@ -121,7 +121,7 @@ enum ReferenzPruefung {
         bericht.pruefen("Übernahme nimmt nur das erste Referenzbild", zwei && nurDatei,
                         "zwei gespeichert \(zwei), nur referenzDatei \(nurDatei), Lücken \(vorgaben.uebernahmeLuecken)")
 
-        let fehlt = "Das Referenzbild dieses Bildes liegt nicht mehr vor."
+        let fehlt = "The reference image of this image is no longer available."
         vorgaben.uebernehmen(bild(["fehlt-\(UUID().uuidString).png"], anzahl: 1))
         let fehlend = vorgaben.referenzen.isEmpty && vorgaben.uebernahmeLuecken.contains(fehlt)
         vorgaben.uebernehmen(bild(["../hoch.png"], anzahl: 1))
@@ -133,7 +133,7 @@ enum ReferenzPruefung {
 
         vorgaben.uebernehmen([bild([kopie.lastPathComponent], anzahl: 1, seed: 1), bild([zweite.lastPathComponent], anzahl: 1, seed: 2)])
         bericht.pruefen("Verschiedene Referenzbilder in einer Generierung", vorgaben.referenzen.isEmpty
-                        && vorgaben.uebernahmeLuecken.contains { $0.contains("verschiedene Referenzbilder") }, "\(vorgaben.uebernahmeLuecken)")
+                        && vorgaben.uebernahmeLuecken.contains { $0.contains("different reference images") }, "\(vorgaben.uebernahmeLuecken)")
 
         // Ein ganzer Lauf mit Vorlage kommt mit Kopie, Grösse, Nähe und Serie zurück.
         vorgaben.referenzenLeeren()

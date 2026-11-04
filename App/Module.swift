@@ -11,7 +11,10 @@ struct Modul: Identifiable, Equatable {
     }
 
     let datei: String
+    /// Fester Name, so steht das Modul in Aufträgen und Bildangaben. Er bleibt in jeder Sprache gleich.
     let name: String
+    /// Der Name zur Anzeige, bei Modulen aus dem Katalog in der Sprache des Mac.
+    let anzeigeName: String
     let beschreibung: String
     let standardStaerke: Double
     let ausloeser: String?
@@ -23,13 +26,15 @@ struct Modul: Identifiable, Equatable {
     var hinweis: String? {
         switch format {
         case .passt: nil
-        case .teilweise: "Wirkt in dieser App nur teilweise, das Dateiformat passt nicht ganz."
-        case .unbrauchbar: "Diese Datei passt zu keinem Modell der App und bleibt ausgeschaltet."
+        case .teilweise: String(localized: "Only partly works in this app, the file format does not quite fit.")
+        case .unbrauchbar: String(localized: "This file does not fit any model in the app and stays off.")
         }
     }
 
     static let turboDatei = "turbo-8-schritte.safetensors"
     static let streifenDatei = "streifen-fix.safetensors"
+    /// Feste Kennung der Gruppe mit eigenen Modulen unter Neues Bild, so ist ihr Zustand gespeichert.
+    static let eigeneGruppe = "Eigene Module"
 
     /// Alle Module im Ordner, das Turbo-Modul steuert die App selbst. Liest Dateien, gehört also nicht in den Hauptthread.
     static func vorhandene() -> [Modul] {
@@ -40,14 +45,16 @@ struct Modul: Identifiable, Equatable {
                 angleichen(pfad)
                 let art = dateiformat(pfad) ?? .unbrauchbar
                 if let eintrag = Katalog.eintrag(datei) {
-                    return Modul(datei: datei, name: eintrag.name, beschreibung: eintrag.beschreibung,
-                                 standardStaerke: eintrag.staerke, ausloeser: eintrag.ausloeser, format: art)
+                    return Modul(datei: datei, name: eintrag.name, anzeigeName: eintrag.anzeigeName,
+                                 beschreibung: eintrag.beschreibung, standardStaerke: eintrag.staerke,
+                                 ausloeser: eintrag.ausloeser, format: art)
                 }
                 let name = (datei as NSString).deletingPathExtension.replacingOccurrences(of: "-", with: " ")
-                return Modul(datei: datei, name: name, beschreibung: "Selbst hinzugefügtes Modul.",
+                return Modul(datei: datei, name: name, anzeigeName: name,
+                             beschreibung: String(localized: "Module you added yourself."),
                              standardStaerke: 1, ausloeser: nil, format: art)
             }
-            .sorted { $0.name < $1.name }
+            .sorted { $0.anzeigeName < $1.anzeigeName }
     }
 
     /// Liest den Dateikopf einer safetensors-Datei.
@@ -191,18 +198,18 @@ struct Modul: Identifiable, Equatable {
             let name = quelle.lastPathComponent
             let ziel = Pfade.module.appendingPathComponent(name)
             if FileManager.default.fileExists(atPath: ziel.path) {
-                meldung = "Ein Modul namens \(name) ist schon vorhanden."
+                meldung = String(localized: "A module named \(name) already exists.")
                 continue
             }
             guard (try? FileManager.default.copyItem(at: quelle, to: ziel)) != nil else {
-                meldung = "Das Modul liess sich nicht hinzufügen. Ist die Festplatte voll?"
+                meldung = String(localized: "The module could not be added. Is the disk full?")
                 continue
             }
             angleichen(ziel)
             if let art = dateiformat(ziel), art != .unbrauchbar {
                 neu.append(name)
             } else {
-                meldung = "\(name) passt zu keinem Modell der App und bleibt ausgeschaltet."
+                meldung = String(localized: "\(name) does not fit any model in the app and stays off.")
             }
         }
         return (neu, meldung)

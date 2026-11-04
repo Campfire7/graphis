@@ -14,6 +14,9 @@ let arten: [String: (frist: Double, lauf: @MainActor (Pruefbericht) async -> Voi
     "referenzen": (120, ReferenzPruefung.ausfuehren),
     "module": (120, ModulPruefung.ausfuehren),
     "daten": (60, DatenPruefung.ausfuehren),
+    "updates": (60, VersionenPruefung.ausfuehren),
+    "ansichten": (90, AnsichtenZeichnen.ausfuehren),
+    "screenshots": (120, Bildschirmfotos.ausfuehren),
 ]
 let art = CommandLine.arguments.dropFirst().first ?? ""
 
@@ -47,4 +50,10 @@ if art == "neustart-beginnen" {
 } else {
     Testumgebung.abbrechen("Unbekannte Art \(art). Bekannt: \((arten.keys + ["neustart-beginnen"]).sorted().joined(separator: ", ")).")
 }
-dispatchMain()
+// dispatchMain gibt den Hauptthread auf, die Hauptwarteschlange läuft danach auf einem anderen Thread. Zum Zeichnen
+// braucht AppKit aber den echten Hauptthread, dort läuft dann die Hauptschleife.
+if art == "ansichten" || art == "screenshots" {
+    RunLoop.main.run()
+} else {
+    dispatchMain()
+}

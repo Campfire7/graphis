@@ -45,8 +45,14 @@ MINOS="$(printf '%s\n%s\n' "$MINOS" 26.2 | sort -t. -k1,1n -k2,2n -k3,3n | tail 
 "$PY" $HILFE motor/macho.py pruefen "$MOTOR" > "$ZWISCHEN/macho.txt" || { cat "$ZWISCHEN/macho.txt"; exit 1 }
 
 # Die Quellen kommen relativ und mit neutralem Bauordner hinein, so steht kein Pfad dieses Macs im Programm.
+# Der Compiler legt dabei jeden übersetzbaren Text ab, für die Prüfung der Übersetzung gleich danach.
 swiftc -O -parse-as-library -swift-version 5 -target "arm64-apple-macos$MINOS" -module-name "$NAME" \
-  -file-prefix-map "$PWD=." -o "$APP/Contents/MacOS/$NAME" App/*.swift
+  -file-prefix-map "$PWD=." -emit-localized-strings -emit-localized-strings-path "$ZWISCHEN/texte" \
+  -o "$APP/Contents/MacOS/$NAME" App/*.swift
+# Englisch steht im Code, Deutsch in App/de.lproj. Fehlt dort ein Text oder ist einer veraltet, bricht der Bau ab.
+"$PY" $HILFE werkzeug/texte_pruefen.py "$ZWISCHEN/texte" App/de.lproj/Localizable.strings \
+  App/en.lproj/Localizable.strings > "$ZWISCHEN/texte.txt" \
+  || { grep '^FEHLER' "$ZWISCHEN/texte.txt" >&2; echo "Die deutschen Texte passen nicht zum Code." >&2; exit 1 }
 # Prüfcode gehört nur ins Prüfprogramm von tests/testlauf.sh, nie in die App.
 if strings -a "$APP/Contents/MacOS/$NAME" | grep -q -e GRAPHIS_ -e Testumgebung -e Pruefbericht; then
   echo "Die App enthält Prüfcode. Ist irgendwo TESTLAUF gesetzt?" >&2
@@ -65,13 +71,20 @@ cat > "$APP/Contents/Info.plist" <<PLIST
   <key>CFBundleIconFile</key><string>AppIcon</string>
   <key>CFBundleShortVersionString</key><string>$VERSION</string>
   <key>CFBundleVersion</key><string>$BUILD</string>
-  <key>CFBundleDevelopmentRegion</key><string>de</string>
+  <key>CFBundleDevelopmentRegion</key><string>en</string>
+  <key>CFBundleLocalizations</key><array><string>en</string><string>de</string></array>
   <key>LSMinimumSystemVersion</key><string>$MINOS</string>
   <key>NSHighResolutionCapable</key><true/>
   <key>NSAppSleepDisabled</key><true/>
 </dict></plist>
 PLIST
 cp LICENSE "$APP/Contents/Resources/LICENSE.txt"
+# Die Sprachen der App: Englisch, und Deutsch auf einem Mac mit deutscher Systemsprache. Nur die Textdateien,
+# keine Reste wie .DS_Store.
+for sprache in App/*.lproj; do
+  mkdir -p "$APP/Contents/Resources/${sprache:t}"
+  cp "$sprache"/*.strings(N) "$sprache"/*.stringsdict(N) "$APP/Contents/Resources/${sprache:t}/"
+done
 "$PY" $HILFE motor/lizenzen.py "$MOTOR" "$LAGER/python-lizenzen" > "$APP/Contents/Resources/THIRD_PARTY_NOTICES.txt"
 cp "$APP/Contents/Resources/THIRD_PARTY_NOTICES.txt" THIRD_PARTY_NOTICES.txt
 
@@ -100,5 +113,5 @@ mv "$APP" "$DIST/$NAME.app"
 echo "Gebaut: dist/$NAME.app (macOS ab $MINOS)"
 echo "Paket: dist/$NAME-$VERSION.zip"
 if grep -q "(Platzhalter)" README.md; then
-  echo "Hinweis: Im README fehlen noch die Spendenadressen (Abschnitt Unterstützen)." >&2
+  echo "Hinweis: Im README fehlen noch die Spendenadressen (Abschnitt Donate)." >&2
 fi

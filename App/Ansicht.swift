@@ -1,4 +1,5 @@
 import AppKit
+import Combine
 import SwiftUI
 import UniformTypeIdentifiers
 
@@ -10,8 +11,10 @@ enum Auswahl: Hashable {
 
 struct Hauptansicht: View {
     @EnvironmentObject private var generator: Generator
+    @ObservedObject private var versionen = Versionspruefung.gemeinsam
     @State private var auswahl: Auswahl? = .neu
     @State private var flaeche = CGSize(width: 1180, height: 820)
+    @State private var versionFrage = false
 
     /// Bleibt beim Schliessen stehen, damit das Blatt nicht leer wegfährt.
     @State private var letztesGrossBild: Ergebnis?
@@ -28,6 +31,7 @@ struct Hauptansicht: View {
         } detail: {
             detail
                 .frame(minWidth: 600, maxWidth: .infinity, maxHeight: .infinity)
+                .safeAreaInset(edge: .bottom, spacing: 0) { Fusszeile() }
                 .background(Color(nsColor: .windowBackgroundColor))
         }
         .navigationTitle(Fassung.name)
@@ -54,6 +58,34 @@ struct Hauptansicht: View {
                     .frame(width: max(860, flaeche.width - 40), height: max(600, flaeche.height - 40))
             }
         }
+        .task {
+            // Beim Start, nur wenn erlaubt und höchstens einmal am Tag.
+            versionen.pruefenFallsFaellig()
+        }
+        // Nur der Wechsel zu eingerichtet zählt. Den Fortschritt beim Laden beobachtet das Fenster nicht, sonst würde es
+        // bei jedem Schritt ganz neu gezeichnet.
+        .onReceive(Modellinstallation.gemeinsam.$zustand.map { $0 == .bereit }.removeDuplicates()) { bereit in
+            if bereit { Task { await versionFrageVorbereiten() } }
+        }
+        // Return wählt Nicht suchen: Ein Tastendruck beim Schreiben darf die Suche nie einschalten.
+        .alert("Check for new versions automatically?", isPresented: $versionFrage) {
+            Button("Check Automatically") { versionen.erlauben(true) }
+            Button("Don’t Check", role: .cancel) { versionen.erlauben(false) }
+                .keyboardShortcut(.defaultAction)
+        } message: {
+            Text("At startup, at most once a day, \(Fassung.name) can ask GitHub whether a new version is out. The request contains no prompts, images or personal details. Like any website, GitHub sees your IP address. The app never downloads or installs anything by itself. You can change this anytime in Settings > General.")
+        }
+    }
+
+    /// Die Frage kommt einmal, kurz nachdem das Fenster erschienen ist, und erst wenn das Modell eingerichtet ist. So
+    /// stört sie die Einrichtung beim ersten Start nicht. Bis zur Antwort bleibt die Suche aus.
+    private func versionFrageVorbereiten() async {
+        guard versionen.frageOffen, !versionen.frageGestellt, Modellinstallation.gemeinsam.bereit else { return }
+        versionen.frageGestellt = true
+        try? await Task.sleep(for: .seconds(1.5))
+        // Inzwischen kann der Schalter in den Einstellungen die Frage schon beantwortet haben.
+        guard versionen.frageOffen else { return }
+        versionFrage = true
     }
 
     @ViewBuilder
@@ -73,22 +105,58 @@ struct Hauptansicht: View {
         Button {
             auswahl = .neu
         } label: {
-            Label("Neues Bild", systemImage: "plus")
+            Label("New Image", systemImage: "plus")
         }
         .keyboardShortcut("n", modifiers: .command)
-        .help("Neues Bild (⌘N)")
+        .help("New Image (⌘N)")
 
         Button {
             NSWorkspace.shared.open(Pfade.bilder)
         } label: {
-            Label("Bildordner", systemImage: "folder")
+            Label("Image Folder", systemImage: "folder")
         }
-        .help("Bildordner im Finder öffnen")
+        .help("Open the image folder in Finder")
 
         SettingsLink {
-            Label("Einstellungen", systemImage: "gearshape")
+            Label("Settings", systemImage: "gearshape")
         }
-        .help("Einstellungen (⌘,)")
+        .help("Settings (⌘,)")
+    }
+}
+
+/// Ganz unten rechts im Hauptfenster, in jedem Zustand sichtbar: der Hinweis auf eine neue Version und der Knopf
+/// zum Spenden. Beide öffnen nur den Browser.
+struct Fusszeile: View {
+    @ObservedObject var versionen = Versionspruefung.gemeinsam
+
+    var body: some View {
+        HStack(spacing: 14) {
+            Spacer(minLength: 0)
+            if let neu = versionen.neu {
+                Button {
+                    // Die Seite wurde beim Lesen der Antwort geprüft. Hier nochmals, bevor der Browser sie öffnet.
+                    if Versionspruefung.projektseite(neu.seite) { NSWorkspace.shared.open(neu.seite) }
+                } label: {
+                    Label("Version \(neu.version) available", systemImage: "arrow.down.circle")
+                }
+                .buttonStyle(.borderless)
+                .foregroundStyle(Color.accentColor)
+                .help("Opens the page of the new version on GitHub in the browser. The app downloads nothing itself.")
+            }
+            Button {
+                NSWorkspace.shared.open(Fassung.unterstuetzen)
+            } label: {
+                Label("Donate", systemImage: "heart")
+            }
+            .buttonStyle(.borderless)
+            .foregroundStyle(.secondary)
+            .help("Opens the donation page in the browser.")
+        }
+        .font(.caption)
+        .padding(.horizontal, 14)
+        .padding(.vertical, 5)
+        .background(.bar)
+        .overlay(alignment: .top) { Divider() }
     }
 }
 
@@ -118,15 +186,15 @@ struct Seitenleiste: View {
                     HStack(spacing: 6) {
                         Image(systemName: generator.pausiert ? "pause.circle" : "clock")
                             .foregroundStyle(.blue).font(.caption)
-                        Text(generator.pausiert ? "\(generator.warteschlange.count) angehalten"
-                             : "\(generator.warteschlange.count) in der Warteschlange")
+                        Text(generator.pausiert ? "\(generator.warteschlange.count) paused"
+                             : "\(generator.warteschlange.count) in the queue")
                             .font(.caption).foregroundStyle(.secondary).lineLimit(1)
                         Spacer()
-                        Button("Leeren") { leerenFragen = true }
+                        Button("Clear") { leerenFragen = true }
                             .buttonStyle(.link).font(.caption)
                     }
                     if generator.pausiert {
-                        Button("Weiterrechnen") { generator.weiterrechnen() }
+                        Button("Continue") { generator.weiterrechnen() }
                             .buttonStyle(.borderedProminent).controlSize(.small)
                     }
                 }
@@ -134,10 +202,10 @@ struct Seitenleiste: View {
                 .padding(.vertical, 8)
             }
         }
-        .confirmationDialog("Warteschlange leeren?", isPresented: $leerenFragen) {
-            Button("Leeren", role: .destructive) { generator.warteschlangeLeeren() }
+        .confirmationDialog("Clear the queue?", isPresented: $leerenFragen) {
+            Button("Clear", role: .destructive) { generator.warteschlangeLeeren() }
         } message: {
-            Text("Die Prompts in der Warteschlange gehen dabei verloren.")
+            Text("The prompts in the queue will be lost.")
         }
     }
 
@@ -152,15 +220,15 @@ struct Seitenleiste: View {
     private var eintraege: some View {
         List(selection: $auswahl) {
             Section {
-                SeitenZeile(titel: "Neues Bild", symbol: "sparkles", aktiv: auswahl == .neu).tag(Auswahl.neu)
-                SeitenZeile(titel: "Module", symbol: "puzzlepiece.extension", aktiv: auswahl == .module)
+                SeitenZeile(titel: "New Image", symbol: "sparkles", aktiv: auswahl == .neu).tag(Auswahl.neu)
+                SeitenZeile(titel: "Modules", symbol: "puzzlepiece.extension", aktiv: auswahl == .module)
                     .tag(Auswahl.module)
             }
             if generator.laeufe.isEmpty && generator.aktiveGruppe == nil {
                 Section {
                     VStack(spacing: 6) {
-                        Text("Noch keine Bilder").font(.subheadline).foregroundStyle(.secondary)
-                        Text("Fertige Bilder erscheinen hier.").font(.caption).foregroundStyle(.secondary)
+                        Text("No images yet").font(.subheadline).foregroundStyle(.secondary)
+                        Text("Finished images appear here.").font(.caption).foregroundStyle(.secondary)
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 24)
@@ -177,21 +245,21 @@ struct Seitenleiste: View {
                                     Button {
                                         generator.ausWarteschlangeEntfernen(lauf.id)
                                     } label: {
-                                        Label("Aus Warteschlange entfernen", systemImage: "xmark.circle")
+                                        Label("Remove from Queue", systemImage: "xmark.circle")
                                     }
                                 } else {
                                     Button(role: .destructive) {
                                         if auswahl == .lauf(lauf.id) { auswahl = .neu }
                                         generator.inPapierkorb(lauf)
                                     } label: {
-                                        Label("In den Papierkorb", systemImage: "trash")
+                                        Label("Move to Trash", systemImage: "trash")
                                     }
                                     .disabled(lauf.id == generator.aktiveGruppe)
                                 }
                             }
                     }
                 } header: {
-                    Text("Verlauf").font(.caption2).foregroundStyle(.secondary)
+                    Text("History").font(.caption2).foregroundStyle(.secondary)
                 }
             }
         }
@@ -200,7 +268,7 @@ struct Seitenleiste: View {
 }
 
 private struct SeitenZeile: View {
-    let titel: String
+    let titel: LocalizedStringKey
     let symbol: String
     let aktiv: Bool
 
@@ -231,11 +299,12 @@ private struct LaufZeile: View {
     private var fehlgeschlagen: Bool { generator.fehlerLauf == lauf.id }
 
     private var status: String {
-        if fehlgeschlagen { return "Fehlgeschlagen" }
+        if fehlgeschlagen { return String(localized: "Failed") }
         if let platz {
-            return generator.pausiert ? "Angehalten, Platz \(platz)" : "In Warteschlange, Platz \(platz)"
+            return generator.pausiert ? String(localized: "Paused, position \(platz)")
+                : String(localized: "Queued, position \(platz)")
         }
-        return rechnet ? "Wird erzeugt" : lauf.untertitel
+        return rechnet ? String(localized: "Creating") : lauf.untertitel
     }
 
     var body: some View {
@@ -264,10 +333,10 @@ private struct LaufZeile: View {
                     .lineLimit(1)
                     .foregroundStyle(aktiv ? .primary : .secondary)
                 HStack(spacing: 4) {
-                    Text(status)
+                    Text(verbatim: status)
                         .font(.caption2).foregroundStyle(.secondary)
                     if !rechnet && platz == nil {
-                        Text("• \(dauerText(lauf.dauer))").font(.caption2).foregroundStyle(.secondary)
+                        Text(verbatim: "• \(dauerText(lauf.dauer))").font(.caption2).foregroundStyle(.secondary)
                     }
                 }
             }
@@ -275,7 +344,7 @@ private struct LaufZeile: View {
         }
         .padding(.vertical, 4)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(lauf.prompt), \(status)")
+        .accessibilityLabel(Text(verbatim: "\(lauf.prompt), \(status)"))
     }
 }
 
@@ -343,12 +412,12 @@ struct NeuAnsicht: View {
         let aufruf = Pfade.aufruf(mitReferenz: !vorgaben.referenzen.isEmpty)
         if !installation.bereit {
             // Die Karte oben sagt, was zu tun ist. Hier steht nur, warum der Knopf gesperrt ist.
-            stoerung = "MOSS-Image ist noch nicht eingerichtet. Lade es oben in der Karte."
+            stoerung = String(localized: "MOSS-Image is not set up yet. Download it in the card above.")
         } else if !dateien.isExecutableFile(atPath: aufruf.programm)
                     || aufruf.vorweg.contains(where: { $0.hasSuffix(".py") && !dateien.fileExists(atPath: $0) }) {
-            stoerung = "Der Rechenmotor im App-Paket fehlt oder ist beschädigt. Lade die App neu herunter."
+            stoerung = String(localized: "The engine in the app bundle is missing or damaged. Download the app again.")
         } else if turboNoetig && !dateien.fileExists(atPath: turbo.path) {
-            stoerung = "Das Turbo-Modul fehlt. Wähle die Stufe Beste, dann rechnet die App ohne Turbo."
+            stoerung = String(localized: "The Turbo module is missing. Choose the Best level, then the app works without Turbo.")
         } else {
             stoerung = nil
         }
@@ -358,7 +427,7 @@ struct NeuAnsicht: View {
         HStack(spacing: 8) {
             Image(systemName: "arrow.uturn.backward.circle").foregroundStyle(Color.accentColor)
             VStack(alignment: .leading, spacing: 4) {
-                Text("Die Einstellungen stammen von der gewählten Generierung, auch die Zufallszahl. Ändere eine Sache, der Rest bleibt gleich.")
+                Text("The settings come from the selected generation, including the seed. Change one thing, the rest stays the same.")
                     .font(.caption).foregroundStyle(.secondary)
                 ForEach(vorgaben.uebernahmeLuecken, id: \.self) { luecke in
                     Text(verbatim: luecke).font(.caption).foregroundStyle(.orange)
@@ -372,7 +441,7 @@ struct NeuAnsicht: View {
                 Image(systemName: "xmark")
             }
             .buttonStyle(.plain).foregroundStyle(.secondary)
-            .accessibilityLabel("Hinweis schliessen")
+            .accessibilityLabel("Close hint")
         }
         .padding(.horizontal, 4)
     }
@@ -381,17 +450,17 @@ struct NeuAnsicht: View {
         Karte {
             VStack(alignment: .leading, spacing: 10) {
                 HStack(spacing: 6) {
-                    KartenTitel(text: "Referenzbild (optional)", symbol: "photo.on.rectangle", farbe: .orange)
-                    InfoKnopf(titel: "Referenzbild", beschreibung: Self.referenzInfo)
+                    KartenTitel(text: "Reference image (optional)", symbol: "photo.on.rectangle", farbe: .orange)
+                    InfoKnopf(titel: "Reference image", beschreibung: Self.referenzInfo)
                     Spacer()
                     if !vorgaben.referenzen.isEmpty {
-                        Button("Alle entfernen") { vorgaben.referenzenLeeren() }
+                        Button("Remove All") { vorgaben.referenzenLeeren() }
                             .buttonStyle(.link).font(.caption)
                         // Mit nur einem Platz ersetzt ein neues Bild das alte.
-                        Button("Anderes Bild …", action: referenzWaehlen)
+                        Button("Other Image …", action: referenzWaehlen)
                             .buttonStyle(.link).font(.caption)
                     } else {
-                        Button("Bild hinzufügen …", action: referenzWaehlen)
+                        Button("Add Image …", action: referenzWaehlen)
                             .buttonStyle(.link).font(.caption)
                     }
                 }
@@ -399,7 +468,7 @@ struct NeuAnsicht: View {
                     referenzVorschau(bild)
                     referenzHinweise
                 } else {
-                    Text("Ziehe ein Bild hierher, oder wähle es aus.")
+                    Text("Drag an image here, or choose one.")
                         .font(.caption).foregroundStyle(.secondary)
                 }
                 if let meldung = vorgaben.referenzMeldung {
@@ -416,20 +485,20 @@ struct NeuAnsicht: View {
         }
     }
 
-    private static let referenzInfo = "MOSS-Image baut das neue Bild auf dem Referenzbild auf: Aufbau, Farben und Formen bleiben je nach Nähe zur Vorlage erhalten, das Format kommt vom Referenzbild. Module gehen dazu auch.\n\nDas Bild bleibt auf diesem Mac. Die App merkt sich eine Kopie im Bildordner, damit du die Einstellungen später übernehmen kannst."
+    private static let referenzInfo: LocalizedStringKey = "MOSS-Image builds the new image on the reference image: layout, colors and shapes stay, depending on the closeness to the reference, and the aspect ratio comes from the reference image. Modules work with it too.\n\nThe image stays on this Mac. The app keeps a copy in the image folder so you can reuse the settings later."
 
     private func referenzVorschau(_ bild: URL) -> some View {
         VStack(spacing: 4) {
             Vorschaubild(url: bild, kante: 200, fuellen: true)
                 .frame(width: 72, height: 72)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                .accessibilityLabel("Referenzbild")
-            Text("Vorlage").font(.caption.weight(.medium))
-            vorschauKnopf("xmark", "Referenzbild entfernen") { vorgaben.referenzEntfernen(0) }
+                .accessibilityLabel("Reference image")
+            Text("Reference").font(.caption.weight(.medium))
+            vorschauKnopf("xmark", "Remove reference image") { vorgaben.referenzEntfernen(0) }
         }
     }
 
-    private func vorschauKnopf(_ symbol: String, _ titel: String, _ aktion: @escaping () -> Void) -> some View {
+    private func vorschauKnopf(_ symbol: String, _ titel: LocalizedStringKey, _ aktion: @escaping () -> Void) -> some View {
         Button(action: aktion) {
             Image(systemName: symbol)
                 .font(.system(size: 10, weight: .semibold))
@@ -446,13 +515,13 @@ struct NeuAnsicht: View {
     private var referenzHinweise: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
-                Text("Nähe zur Vorlage").font(.caption).foregroundStyle(.secondary)
+                Text("Closeness to reference").font(.caption).foregroundStyle(.secondary)
                 Slider(value: $vorgaben.referenzStaerke, in: 0.125...0.875, step: 0.125)
-                    .accessibilityLabel("Nähe zur Vorlage")
+                    .accessibilityLabel("Closeness to reference")
                 Text(vorgaben.referenzStaerke, format: .number.precision(.fractionLength(2)))
                     .font(.caption).monospacedDigit().foregroundStyle(.secondary)
             }
-            hinweis("\(ModellID.moss.name) baut auf dem Referenzbild auf. Hoch bleibt nah an der Vorlage, tief lässt mehr Freiheit. Das Format kommt vom Referenzbild.")
+            hinweis(String(localized: "\(ModellID.moss.name) builds on the reference image. High stays close to the reference, low leaves more freedom. The aspect ratio comes from the reference image."))
         }
     }
 
@@ -473,13 +542,13 @@ struct NeuAnsicht: View {
     private var eingabeKarte: some View {
         Karte {
             VStack(alignment: .leading, spacing: 10) {
-                KartenTitel(text: "Was soll auf dem Bild sein?", symbol: "text.quote", farbe: .accentColor)
+                KartenTitel(text: "What should be in the image?", symbol: "text.quote", farbe: .accentColor)
                 eingabeFeld($vorgaben.prompt, hoehe: 96, fokussiert: promptFokus).focused($promptFokus)
                 HStack(spacing: 6) {
-                    KartenTitel(text: "Was soll nicht auf dem Bild sein? (optional)",
+                    KartenTitel(text: "What should not be in the image? (optional)",
                                 symbol: "minus.circle", farbe: .orange)
-                    InfoKnopf(titel: "Negativprompt",
-                              beschreibung: "Hier stehen Dinge, die das Modell vermeiden soll. Das lenkt das Bild, ist aber kein sicheres Verbot.\n\nMit Turbo stellt die App dafür Textführung 2 ein, das Bild dauert dann rund doppelt so lange, und der Negativprompt wirkt nur schwach. Stark wirkt er erst in der Stufe Beste.")
+                    InfoKnopf(titel: "Negative prompt",
+                              beschreibung: "List things here that the model should avoid. This steers the image, but it is not a guaranteed ban.\n\nWith Turbo, the app sets guidance to 2 for this, so the image takes about twice as long, and the negative prompt only has a weak effect. It only works strongly at the Best level.")
                 }
                 .padding(.top, 4)
                 eingabeFeld($vorgaben.negativ, hoehe: 52, fokussiert: negativFokus).focused($negativFokus)
@@ -508,14 +577,14 @@ struct NeuAnsicht: View {
     private var qualitaetKarte: some View {
         Karte {
             HStack(spacing: 6) {
-                KartenTitel(text: "Qualität", symbol: "speedometer", farbe: .accentColor)
-                InfoKnopf(titel: "Qualität", beschreibung: Stufe.erklaerung)
+                KartenTitel(text: "Quality", symbol: "speedometer", farbe: .accentColor)
+                InfoKnopf(titel: "Quality", beschreibung: Stufe.erklaerung)
                 Spacer()
                 if vorgaben.aktuelleStufe == nil {
-                    Text("Eigene Werte").font(.caption).foregroundStyle(.secondary)
+                    Text("Custom").font(.caption).foregroundStyle(.secondary)
                 }
-                Picker("Qualität", selection: stufeWahl) {
-                    ForEach(Stufe.allCases) { Text($0.rawValue).tag(Optional($0)) }
+                Picker("Quality", selection: stufeWahl) {
+                    ForEach(Stufe.allCases) { Text(verbatim: $0.anzeigeName).tag(Optional($0)) }
                 }
                 .labelsHidden()
                 .pickerStyle(.segmented)
@@ -528,11 +597,11 @@ struct NeuAnsicht: View {
         Karte {
             VStack(alignment: .leading, spacing: 10) {
                 HStack(spacing: 6) {
-                    KartenTitel(text: "Module", symbol: "puzzlepiece.extension", farbe: .teal)
-                    InfoKnopf(titel: "Module",
-                              beschreibung: "Module verändern den Stil oder die Stärken eines Modells, zum Beispiel realistischere Haut oder ein Malstil. Du kannst mehrere gleichzeitig nutzen. Die Stärke sagt, wie stark ein Modul wirkt: 1 ist der Normalwert, über 1,5 kippt das Bild oft.\n\nEin Modul passt nur zu dem Modell, für das es gemacht ist, hier zu MOSS-Image. Neue Module findest du links unter Module.")
+                    KartenTitel(text: "Modules", symbol: "puzzlepiece.extension", farbe: .teal)
+                    InfoKnopf(titel: "Modules",
+                              beschreibung: "Modules change the style or strengths of a model, for example more realistic skin or a painting style. You can use several at once. The strength says how much a module does: 1 is normal, above 1.5 the image often tips over.\n\nA module only fits the model it was made for, here MOSS-Image. You find new modules on the left under Modules.")
                     Spacer()
-                    Button("Weitere Module …", action: zeigeModule)
+                    Button("More Modules …", action: zeigeModule)
                         .buttonStyle(.link).font(.caption)
                 }
                 if let meldung = vorgaben.modulMeldung {
@@ -540,19 +609,21 @@ struct NeuAnsicht: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 if modulGruppen.isEmpty {
-                    Text("Noch keine Module für \(ModellID.moss.name) geladen. Du findest sie unter Weitere Module.")
+                    Text("No modules for \(ModellID.moss.name) downloaded yet. You find them under More Modules.")
                         .font(.caption).foregroundStyle(.secondary)
                 }
-                ForEach(modulGruppen, id: \.titel) { gruppe in
-                    let offen = vorgaben.offeneGruppen.contains(gruppe.titel)
+                // Gespeichert wird die feste Kennung einer Gruppe, angezeigt ihr Titel in der Sprache des Mac.
+                ForEach(modulGruppen, id: \.kennung) { gruppe in
+                    let offen = vorgaben.offeneGruppen.contains(gruppe.kennung)
                     let eingeschaltet = gruppe.module.filter { vorgaben.modulAktiv.contains($0.datei) }.count
                     VStack(alignment: .leading, spacing: 10) {
                         AufklappTitel(titel: gruppe.titel, symbol: gruppe.symbol, offen: offen,
-                                      zusatz: eingeschaltet > 0 ? "\(eingeschaltet) von \(gruppe.module.count) an" : "\(gruppe.module.count)") {
+                                      zusatz: eingeschaltet > 0 ? String(localized: "\(eingeschaltet) of \(gruppe.module.count) on")
+                                          : String(gruppe.module.count)) {
                             if offen {
-                                vorgaben.offeneGruppen.remove(gruppe.titel)
+                                vorgaben.offeneGruppen.remove(gruppe.kennung)
                             } else {
-                                vorgaben.offeneGruppen.insert(gruppe.titel)
+                                vorgaben.offeneGruppen.insert(gruppe.kennung)
                             }
                         }
                         .padding(.top, 6)
@@ -568,23 +639,24 @@ struct NeuAnsicht: View {
         }
     }
 
-    /// Dieselben Gruppen wie im Bereich Module, leere Gruppen fallen weg.
-    private var modulGruppen: [(titel: String, symbol: String, module: [Modul])] {
+    /// Dieselben Gruppen wie im Bereich Module, leere Gruppen fallen weg. Die Kennung bleibt in jeder Sprache gleich.
+    private var modulGruppen: [(kennung: String, titel: String, symbol: String, module: [Modul])] {
         let passende = vorgaben.module
         let katalog = Katalogeintrag.Kategorie.allCases.map { kategorie in
-            (kategorie.rawValue, kategorie.symbol, passende.filter { Katalog.eintrag($0.datei)?.kategorie == kategorie })
+            (kategorie.rawValue, kategorie.anzeigeName, kategorie.symbol,
+             passende.filter { Katalog.eintrag($0.datei)?.kategorie == kategorie })
         }
         let eigene = passende.filter { Katalog.eintrag($0.datei) == nil }
-        return (katalog + [("Eigene Module", "folder", eigene)]).filter { !$0.2.isEmpty }
+        return (katalog + [(Modul.eigeneGruppe, String(localized: "Your Modules"), "folder", eigene)]).filter { !$0.3.isEmpty }
     }
 
     private var modellKarte: some View {
         Karte {
             VStack(alignment: .leading, spacing: 10) {
                 HStack(spacing: 6) {
-                    KartenTitel(text: "Modelle", symbol: "cpu", farbe: .accentColor)
-                    InfoKnopf(titel: "Modelle",
-                              beschreibung: "Die Zeit daneben ist die Schätzung für ein Bild. Sie wird mit jedem Bild genauer.\n\nÜber die Regler neben der Zeit stellst du Turbo, Schritte und Textführung ein. Weitere Modelle können später dazukommen.")
+                    KartenTitel(text: "Models", symbol: "cpu", farbe: .accentColor)
+                    InfoKnopf(titel: "Models",
+                              beschreibung: "The time next to it is the estimate for one image. It gets more accurate with every image.\n\nWith the sliders next to the time, you set Turbo, steps and guidance. More models may come later.")
                     Spacer()
                 }
                 ForEach(ModellID.allCases) { modell in
@@ -598,45 +670,46 @@ struct NeuAnsicht: View {
     private var bildKarte: some View {
         Karte {
             VStack(alignment: .leading, spacing: 10) {
-                KartenTitel(text: "Bild", symbol: "photo", farbe: .green)
-                einstellZeile("Längste Seite", info: "So viele Pixel misst die längste Bildkante. Mehr Pixel zeigen mehr Details, kosten aber deutlich mehr Zeit und Speicher: 1024 dauert rund doppelt so lange wie 768. Bei 1280 wird der Arbeitsspeicher knapp, schliesse dann grosse Programme.") {
-                    Picker("Längste Seite", selection: $vorgaben.laengeSeite) {
-                        ForEach([512, 768, 1024, 1280], id: \.self) { Text(verbatim: "\($0) Pixel").tag($0) }
+                KartenTitel(text: "Image", symbol: "photo", farbe: .green)
+                einstellZeile("Longest side", info: "The longest edge of the image has this many pixels. More pixels show more detail, but cost much more time and memory: 1024 takes about twice as long as 768. At 1280, memory gets tight, so close large apps then.") {
+                    Picker("Longest side", selection: $vorgaben.laengeSeite) {
+                        ForEach([512, 768, 1024, 1280], id: \.self) { Text("\(String($0)) pixels").tag($0) }
                     }
                     .labelsHidden()
                     .fixedSize()
                 }
                 Divider()
-                einstellZeile("Format", info: "Das Seitenverhältnis des Bildes. Die längste Seite bleibt gleich, darum sind Hoch- und Querformate kleiner als das Quadrat und schneller fertig.\n\nMit Referenzbild nimmt MOSS-Image das Format des Referenzbildes.") {
-                    Picker("Format", selection: $vorgaben.format) {
-                        ForEach(Bildformat.allCases) { Text($0.rawValue).tag($0) }
+                einstellZeile("Aspect ratio", info: "The shape of the image. The longest side stays the same, so portrait and landscape images are smaller than the square and done sooner.\n\nWith a reference image, MOSS-Image takes the aspect ratio of the reference image.") {
+                    Picker("Aspect ratio", selection: $vorgaben.format) {
+                        ForEach(Bildformat.allCases) { Text(verbatim: $0.anzeigeName).tag($0) }
                     }
                     .labelsHidden()
                     .fixedSize()
                     .disabled(!vorgaben.formatGenutzt)
-                    .help(!vorgaben.formatGenutzt ? "Mit Referenzbild gilt das Format des Referenzbildes." : "")
+                    .help(vorgaben.formatGenutzt ? Text(verbatim: "")
+                          : Text("With a reference image, the aspect ratio of the reference image applies."))
                 }
                 Divider()
-                einstellZeile("Anzahl Bilder", info: "So viele Varianten erzeugt die App mit demselben Prompt. Die Dauer wächst entsprechend: 4 Bilder dauern viermal so lange wie eines.") {
+                einstellZeile("Number of images", info: "The app creates this many variations with the same prompt. The time grows with it: 4 images take four times as long as one.") {
                     Stepper(value: $vorgaben.anzahl, in: 1...20) {
                         Text(verbatim: "\(vorgaben.anzahl)").monospacedDigit()
                     }
-                    .accessibilityLabel("Anzahl Bilder")
+                    .accessibilityLabel("Number of images")
                     .accessibilityValue(Text(verbatim: "\(vorgaben.anzahl)"))
                 }
                 Divider()
                 HStack(spacing: 6) {
-                    Text("Feste Zufallszahl").font(.callout)
-                    InfoKnopf(titel: "Zufallszahl",
-                              beschreibung: "Gleiche Zufallszahl, gleicher Prompt und gleiche Einstellungen ergeben wieder dasselbe Bild. Ohne feste Zufallszahl ist jedes Bild neu.")
+                    Text("Fixed seed").font(.callout)
+                    InfoKnopf(titel: "Seed",
+                              beschreibung: "The same seed, the same prompt and the same settings give the same image again. Without a fixed seed, every image is new.")
                     Spacer()
                     if vorgaben.festerStartwert {
-                        TextField("Zufallszahl", value: $vorgaben.startwert, format: .number.grouping(.never))
+                        TextField("Seed", value: $vorgaben.startwert, format: .number.grouping(.never))
                             .textFieldStyle(.roundedBorder)
                             .frame(width: 120)
                             .labelsHidden()
                     }
-                    Toggle("Feste Zufallszahl", isOn: $vorgaben.festerStartwert)
+                    Toggle("Fixed seed", isOn: $vorgaben.festerStartwert)
                         .toggleStyle(.switch)
                         .controlSize(.small)
                         .labelsHidden()
@@ -652,10 +725,11 @@ struct NeuAnsicht: View {
     private var groessenText: String {
         let masse = vorgaben.modelle.first.map { vorgaben.masse(fuer: $0) }
             ?? vorgaben.format.masse(laengeSeite: vorgaben.laengeSeite)
-        return "Bildgrösse: \(masse.breite) × \(masse.hoehe) Pixel"
+        return String(localized: "Image size: \(String(masse.breite)) × \(String(masse.hoehe)) pixels")
     }
 
-    private func einstellZeile<Regler: View>(_ titel: String, info: String, @ViewBuilder _ regler: () -> Regler) -> some View {
+    private func einstellZeile<Regler: View>(_ titel: LocalizedStringKey, info: LocalizedStringKey,
+                                             @ViewBuilder _ regler: () -> Regler) -> some View {
         HStack(spacing: 6) {
             Text(titel).font(.callout)
             InfoKnopf(titel: titel, beschreibung: info)
@@ -694,7 +768,7 @@ struct NeuAnsicht: View {
                 * Double(vorgaben.anzahl)
             let warten = generator.laeuft || generator.pausiert
             Button(action: erzeugen) {
-                Label(warten ? "In die Warteschlange" : (bilder > 1 ? "\(bilder) Bilder erzeugen" : "Bild erzeugen"),
+                Label(warten ? "Add to Queue" : (bilder > 1 ? "Create \(bilder) Images" : "Create Image"),
                       systemImage: warten ? "text.badge.plus" : "sparkles")
                     .frame(minWidth: 260)
             }
@@ -702,40 +776,40 @@ struct NeuAnsicht: View {
             .controlSize(.large)
             .keyboardShortcut(.return, modifiers: .command)
             .disabled(vorgaben.promptLeer || bilder == 0 || stoerung != nil || klickGesperrt)
-            .help("Bild erzeugen (⌘↩)")
+            .help("Create Image (⌘↩)")
 
             if let stoerung {
                 meldung(stoerung, farbe: .red)
             } else if bilder == 0 {
-                meldung("Schalte mindestens ein Modell ein.")
+                meldung(String(localized: "Turn on at least one model."))
             } else if vorgaben.promptLeer {
-                meldung("Beschreibe oben, was auf dem Bild sein soll.")
+                meldung(String(localized: "Describe above what should be in the image."))
             }
             if generator.pausiert && !generator.laeuft {
-                meldung("Die Warteschlange ist angehalten. Klicke auf Weiterrechnen, dann geht es beim nächsten Bild weiter.")
+                meldung(String(localized: "The queue is paused. Click Continue to go on with the next image."))
                 HStack(spacing: 10) {
-                    Button("Weiterrechnen") { generator.weiterrechnen() }
+                    Button("Continue") { generator.weiterrechnen() }
                         .controlSize(.small)
                     if let lauf = generator.fehlerLauf {
-                        Button("Fehler ansehen") { zeigeLauf(lauf) }
+                        Button("Show Error") { zeigeLauf(lauf) }
                             .buttonStyle(.link).font(.caption)
                     }
                 }
             } else if warten {
-                Text("Startet in etwa \(dauerText(generator.restGesamt)), sobald alles davor fertig ist.")
+                Text("Starts in about \(dauerText(generator.restGesamt)), once everything before it is done.")
                     .font(.caption).foregroundStyle(.secondary).monospacedDigit()
             }
             if let eingereiht {
-                meldung("Zur Warteschlange hinzugefügt, Platz \(eingereiht)")
+                meldung(String(localized: "Added to the queue, position \(eingereiht)"))
             }
             if let fehler = generator.fehler, generator.fehlerLauf == nil {
                 meldung(fehler, farbe: .red).textSelection(.enabled)
             }
             HStack(spacing: 8) {
                 if bilder > 0 {
-                    Text("Geschätzte Dauer: \(dauerText(dauer))")
+                    Text("Estimated time: \(dauerText(dauer))")
                         .font(.caption).foregroundStyle(.secondary).monospacedDigit()
-                    Text("•").font(.caption).foregroundStyle(.secondary).accessibilityHidden(true)
+                    Text(verbatim: "•").font(.caption).foregroundStyle(.secondary).accessibilityHidden(true)
                 }
                 lokalKnopf
             }
@@ -754,7 +828,7 @@ struct NeuAnsicht: View {
         } label: {
             HStack(spacing: 4) {
                 Image(systemName: "lock.shield")
-                Text("100 % lokal, ohne Internet")
+                Text("100 % local, no internet")
             }
             .font(.caption)
         }
@@ -762,8 +836,8 @@ struct NeuAnsicht: View {
         .foregroundStyle(.secondary)
         .popover(isPresented: $lokalInfo, arrowEdge: .top) {
             VStack(alignment: .leading, spacing: 8) {
-                Label("100 % lokal", systemImage: "lock.shield.fill").font(.callout.weight(.semibold))
-                Text("Prompts und Bilder bleiben auf diesem Mac. Die Berechnung läuft ohne Internet, ohne Konto und ohne Cloud. Nur wenn du auf Laden klickst, holt die App das Modell oder ein Modul aus dem Netz.")
+                Label("100 % local", systemImage: "lock.shield.fill").font(.callout.weight(.semibold))
+                Text("Prompts and images stay on this Mac. Images are calculated without internet, without an account and without a cloud. The app only goes online when you click Download, to get the model or a module, and, if you allowed it, at startup once a day to ask GitHub for a new version.")
                     .font(.callout).foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -787,14 +861,14 @@ private struct ModulZeile: View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 10) {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(modul.name).font(.callout.weight(.medium))
-                    Text(modul.beschreibung).font(.caption).foregroundStyle(.secondary)
+                    Text(verbatim: modul.anzeigeName).font(.callout.weight(.medium))
+                    Text(verbatim: modul.beschreibung).font(.caption).foregroundStyle(.secondary)
                     if let hinweis = modul.hinweis {
-                        Text(hinweis).font(.caption).foregroundStyle(.orange)
+                        Text(verbatim: hinweis).font(.caption).foregroundStyle(.orange)
                     }
                 }
                 Spacer(minLength: 8)
-                Toggle(modul.name, isOn: aktiv)
+                Toggle(modul.anzeigeName, isOn: aktiv)
                     .toggleStyle(.switch)
                     .controlSize(.small)
                     .labelsHidden()
@@ -802,9 +876,9 @@ private struct ModulZeile: View {
             }
             if aktiv.wrappedValue {
                 HStack {
-                    Text("Stärke").font(.caption).foregroundStyle(.secondary)
+                    Text("Strength").font(.caption).foregroundStyle(.secondary)
                     Slider(value: staerke, in: 0...2, step: 0.05)
-                        .accessibilityLabel("Stärke von \(modul.name)")
+                        .accessibilityLabel("Strength of \(modul.anzeigeName)")
                     Text(staerke.wrappedValue, format: .number.precision(.fractionLength(2)))
                         .font(.caption).monospacedDigit().foregroundStyle(.secondary)
                 }
@@ -830,10 +904,7 @@ private struct ModellZeile: View {
     }
 
     private var messung: String {
-        let wert = generator.schaetzer.messwert(vorgaben.muster(modell))
-        guard wert.anzahl > 0 else { return "noch nicht gemessen" }
-        let plusMinus = wert.abweichung.map { ", ± \(dauerText($0))" } ?? ""
-        return "\(wert.anzahl) Mal gemessen\(plusMinus)"
+        messText(generator.schaetzer.messwert(vorgaben.muster(modell)))
     }
 
     var body: some View {
@@ -843,14 +914,14 @@ private struct ModellZeile: View {
                 Image(systemName: modell.symbol).foregroundStyle(modell.farbe).font(.system(size: 14))
             }
             VStack(alignment: .leading, spacing: 2) {
-                Text(modell.name).font(.callout.weight(.medium))
-                Text(modell.hinweis).font(.caption).foregroundStyle(.secondary)
+                Text(verbatim: modell.name).font(.callout.weight(.medium))
+                Text(verbatim: modell.hinweis).font(.caption).foregroundStyle(.secondary)
             }
             Spacer(minLength: 8)
             VStack(alignment: .trailing, spacing: 2) {
                 StatusKapsel(text: dauerText(generator.schaetzer.schaetzung(vorgaben.muster(modell))),
                              farbe: aktiv.wrappedValue ? modell.farbe : .secondary)
-                Text(messung).font(.caption2).foregroundStyle(.secondary).monospacedDigit()
+                Text(verbatim: messung).font(.caption2).foregroundStyle(.secondary).monospacedDigit()
             }
             Button {
                 offen.toggle()
@@ -862,7 +933,7 @@ private struct ModellZeile: View {
                     .background(RoundedRectangle(cornerRadius: 8).fill(Color.secondary.opacity(0.08)))
             }
             .buttonStyle(.plain)
-            .accessibilityLabel("\(modell.name) einstellen")
+            .accessibilityLabel("Adjust \(modell.name)")
             .popover(isPresented: $offen, arrowEdge: .trailing) {
                 ModellRegler(modell: modell).frame(width: 340).padding(16)
             }
@@ -898,46 +969,46 @@ struct ModellRegler: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(modell.name).font(.headline)
+            Text(verbatim: modell.name).font(.headline)
             regler
         }
     }
 
     @ViewBuilder
     private var regler: some View {
-            Toggle("Turbo-Modul", isOn: turbo)
+            Toggle("Turbo module", isOn: turbo)
                 .toggleStyle(.switch)
                 .controlSize(.small)
-            Text("Rechnet mit 8 statt 30 Schritten und ohne doppelte Durchgänge, also deutlich schneller. Die Bilder können etwas weniger Feinheit haben.")
+            Text("Works with 8 instead of 30 steps and without double passes, so it is much faster. The images may have a little less fine detail.")
                 .font(.caption).foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
             Divider()
             HStack {
-                Text("Schritte")
+                Text("Steps")
                 Spacer()
                 Stepper(value: wert.schritte, in: modell.schrittBereich(turbo: wert.wrappedValue.turbo)) {
                     Text(verbatim: "\(wert.wrappedValue.schritte)").monospacedDigit()
                 }
-                .accessibilityLabel("Schritte")
+                .accessibilityLabel("Steps")
                 .accessibilityValue(Text(verbatim: "\(wert.wrappedValue.schritte)"))
             }
-            Text("So oft überarbeitet das Modell das Bild. Mehr Schritte heisst mehr Feinheit, aber auch mehr Zeit. \(modell.schrittTipp)")
+            Text("This is how often the model reworks the image. More steps mean more fine detail, but also more time. \(modell.schrittTipp)")
                 .font(.caption).foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
             Divider()
             HStack {
-                Text("Textführung")
+                Text("Guidance")
                 Spacer()
                 Text(wert.wrappedValue.textfuehrung, format: .number.precision(.fractionLength(1)))
                     .monospacedDigit().foregroundStyle(.secondary)
             }
             Slider(value: wert.textfuehrung, in: 1...7, step: 0.5)
-                .accessibilityLabel("Textführung")
-            Text("So streng hält sich das Modell an deinen Text. Über 1 wird jeder Schritt doppelt gerechnet, das Bild dauert also rund doppelt so lange, und erst dann wirkt ein Negativprompt. \(modell.textfuehrungTipp)")
+                .accessibilityLabel("Guidance")
+            Text("How strictly the model follows your text. Above 1, every step is calculated twice, so the image takes about twice as long, and only then does a negative prompt work. \(modell.textfuehrungTipp)")
                 .font(.caption).foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
             if vorgaben.hatNegativ && wert.wrappedValue.textfuehrung <= 1 {
-                Text("Wegen des Negativprompts rechnet das Modell mit Textführung 2.")
+                Text("Because of the negative prompt, the model works with guidance 2.")
                     .font(.caption).foregroundStyle(.secondary)
             }
     }
@@ -1013,10 +1084,10 @@ struct LaufAnsicht: View {
 
     private var pausenHinweis: some View {
         VStack(spacing: 12) {
-            Text("Die Warteschlange ist angehalten. Klicke auf Weiterrechnen, dann geht es beim nächsten Bild weiter.")
+            Text("The queue is paused. Click Continue to go on with the next image.")
                 .font(.callout).foregroundStyle(.secondary).multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
-            Button("Weiterrechnen") { generator.weiterrechnen() }
+            Button("Continue") { generator.weiterrechnen() }
                 .buttonStyle(.borderedProminent).controlSize(.large)
         }
         .frame(maxWidth: .infinity)
@@ -1031,9 +1102,9 @@ struct LaufAnsicht: View {
                     .foregroundStyle(Color.blue.opacity(0.5))
             }
             VStack(spacing: 6) {
-                Text(generator.pausiert ? "Angehalten, Platz \(platz)" : "In der Warteschlange, Platz \(platz)")
+                Text(generator.pausiert ? "Paused, position \(platz)" : "In the queue, position \(platz)")
                     .font(.title3.weight(.semibold))
-                Text(lauf?.prompt ?? "").font(.callout).foregroundStyle(.secondary)
+                Text(verbatim: lauf?.prompt ?? "").font(.callout).foregroundStyle(.secondary)
                     .multilineTextAlignment(.center).lineLimit(3).frame(maxWidth: 420)
             }
             if let laufFehler {
@@ -1045,7 +1116,7 @@ struct LaufAnsicht: View {
                 generator.ausWarteschlangeEntfernen(gruppe)
                 neuBeginnen()
             } label: {
-                Label("Aus Warteschlange entfernen", systemImage: "xmark.circle")
+                Label("Remove from Queue", systemImage: "xmark.circle")
             }
             .buttonStyle(.bordered)
             .controlSize(.small)
@@ -1060,20 +1131,27 @@ struct LaufAnsicht: View {
                 vorgaben.uebernehmen(lauf.ergebnisse)
                 neuBeginnen()
             } label: {
-                Label("Einstellungen übernehmen", systemImage: "arrow.uturn.backward")
+                Label("Use These Settings", systemImage: "arrow.uturn.backward")
             }
             // Solange Bilder fehlen, wären Modelle und Anzahl noch nicht vollständig.
             .disabled(rechnet || generator.platz(gruppe) != nil)
-            .help(rechnet || generator.platz(gruppe) != nil ? "Geht, sobald alle Bilder dieser Generierung fertig sind."
-                  : lauf.modelle.count > 1 ? "Schaltet alle Modelle dieser Generierung ein, jedes mit seinen Werten." : "")
+            .help(uebernahmeHilfe(lauf))
             Spacer()
-            Text(lauf.untertitel).font(.caption).foregroundStyle(.secondary)
-            Text("• \(dauerText(lauf.dauer))").font(.caption).foregroundStyle(.secondary).monospacedDigit()
+            Text(verbatim: lauf.untertitel).font(.caption).foregroundStyle(.secondary)
+            Text(verbatim: "• \(dauerText(lauf.dauer))").font(.caption).foregroundStyle(.secondary).monospacedDigit()
         }
         .padding(.horizontal)
         .padding(.vertical, 8)
         .background(.bar)
         .overlay(alignment: .top) { Divider() }
+    }
+
+    private func uebernahmeHilfe(_ lauf: Lauf) -> Text {
+        if rechnet || generator.platz(gruppe) != nil {
+            return Text("Possible as soon as all images of this generation are done.")
+        }
+        return lauf.modelle.count > 1 ? Text("Turns on all models of this generation, each with its own values.")
+            : Text(verbatim: "")
     }
 
     private func fortschritt(gross: Bool) -> some View {
@@ -1085,18 +1163,18 @@ struct LaufAnsicht: View {
                     .symbolEffect(.variableColor.iterative, options: .repeating)
             }
             VStack(spacing: gross ? 12 : 8) {
-                Text(generator.statusText.isEmpty ? "Wird vorbereitet" : generator.statusText)
+                Text(verbatim: generator.statusText.isEmpty ? String(localized: "Preparing") : generator.statusText)
                     .font(gross ? .title3.weight(.medium) : .callout.weight(.medium))
                 ProgressView(value: generator.fortschritt)
                     .frame(maxWidth: gross ? 300 : .infinity)
                     .animation(.easeInOut(duration: 0.8), value: generator.fortschritt)
-                Text("Noch etwa \(dauerText(generator.restSekunden))")
+                Text("About \(dauerText(generator.restSekunden)) left")
                     .font(.callout).foregroundStyle(.secondary).monospacedDigit()
                     .contentTransition(.numericText())
                 Button(role: .destructive) {
                     generator.abbrechen()
                 } label: {
-                    Label("Abbrechen", systemImage: "xmark.circle")
+                    Label("Cancel", systemImage: "xmark.circle")
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.small)
@@ -1119,14 +1197,14 @@ private struct FehlerKarte: View {
                     .fixedSize(horizontal: false, vertical: true)
                 if generator.pausiert && !generator.laeuft {
                     HStack(spacing: 8) {
-                        Button("Nochmals versuchen") { generator.weiterrechnen() }
+                        Button("Try Again") { generator.weiterrechnen() }
                             .buttonStyle(.borderedProminent).controlSize(.small)
-                        Button("Bild überspringen") { generator.bildUeberspringen() }
+                        Button("Skip Image") { generator.bildUeberspringen() }
                             .buttonStyle(.bordered).controlSize(.small)
                     }
                 }
                 if let details = generator.fehlerDetails, !details.isEmpty {
-                    DisclosureGroup("Technische Angaben") {
+                    DisclosureGroup("Technical details") {
                         Text(verbatim: details)
                             .font(.caption.monospaced()).foregroundStyle(.secondary).textSelection(.enabled)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -1159,13 +1237,13 @@ private struct BildKachel: View {
                     .frame(maxHeight: maxHoehe)
                 HStack(spacing: 4) {
                     Image(systemName: ergebnis.modell.symbol).foregroundStyle(ergebnis.modell.farbe)
-                    Text(ergebnis.modell.name)
-                    Text("• \(dauerText(ergebnis.sekunden))").monospacedDigit()
+                    Text(verbatim: ergebnis.modell.name)
+                    Text(verbatim: "• \(dauerText(ergebnis.sekunden))").monospacedDigit()
                 }
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 if zahlZeigen {
-                    Text(verbatim: "Zufallszahl \(ergebnis.seed)")
+                    Text("Seed \(String(ergebnis.seed))")
                         .font(.caption).foregroundStyle(.secondary).monospacedDigit()
                 }
             }
@@ -1176,18 +1254,18 @@ private struct BildKachel: View {
             Button {
                 NSWorkspace.shared.activateFileViewerSelecting([url])
             } label: {
-                Label("Im Finder zeigen", systemImage: "folder")
+                Label("Show in Finder", systemImage: "folder")
             }
             Button(action: alsVorlage) {
-                Label("Als Vorlage verwenden", systemImage: "photo.on.rectangle")
+                Label("Use as Reference", systemImage: "photo.on.rectangle")
             }
             Divider()
             Button(role: .destructive, action: papierkorb) {
-                Label("In den Papierkorb", systemImage: "trash")
+                Label("Move to Trash", systemImage: "trash")
             }
         }
-        .accessibilityLabel("\(ergebnis.modell.name), \(ergebnis.prompt)")
-        .accessibilityHint("Öffnet das Bild gross")
+        .accessibilityLabel(Text(verbatim: "\(ergebnis.modell.name), \(ergebnis.prompt)"))
+        .accessibilityHint("Opens the image large")
     }
 }
 
@@ -1205,8 +1283,8 @@ private struct BildAngaben: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
-                if let prompt = bilder.first?.prompt { AngabenText(titel: "Prompt", text: prompt) }
-                if let negativ { AngabenText(titel: "Negativprompt", text: negativ) }
+                if let prompt = bilder.first?.prompt { AngabenText(titel: String(localized: "Prompt"), text: prompt) }
+                if let negativ { AngabenText(titel: String(localized: "Negative prompt"), text: negativ) }
                 ForEach(modelle) { modell in
                     let eigene = bilder.filter { $0.modell == modell }
                     if let bild = eigene.first { ModellAngaben(bild: bild, einzeln: eigene.count == 1) }
@@ -1238,8 +1316,8 @@ private struct AngabenText: View {
                 }
                 .buttonStyle(.plain)
                 .foregroundStyle(.secondary)
-                .help("\(titel) kopieren")
-                .accessibilityLabel("\(titel) kopieren")
+                .help("Copy \(titel)")
+                .accessibilityLabel("Copy \(titel)")
             }
             Text(verbatim: text).font(.callout).textSelection(.enabled)
                 .fixedSize(horizontal: false, vertical: true)
@@ -1271,9 +1349,9 @@ private struct ModellAngaben: View {
         Binding(get: { offeneReferenz }, set: { offeneReferenz = $0 })
     }
 
-    private func zeile(_ name: String, _ wert: String) -> some View {
+    private func zeile(_ name: LocalizedStringKey, _ wert: String) -> some View {
         GridRow {
-            Text(verbatim: name).foregroundStyle(.secondary)
+            Text(name).foregroundStyle(.secondary)
             Text(verbatim: wert).textSelection(.enabled)
         }
     }
@@ -1283,22 +1361,26 @@ private struct ModellAngaben: View {
             StatusKapsel(text: bild.modell.name, farbe: bild.modell.farbe)
             moduleAbschnitt
             Grid(alignment: .leadingFirstTextBaseline, horizontalSpacing: 12, verticalSpacing: 4) {
-                // Mit Vorlage bestimmt das Referenzbild das Format, nicht die Einstellung.
-                if let format = bild.referenzen > 0 ? "Wie Referenzbild" : bild.formatName {
-                    zeile("Format", format)
+                // Mit Vorlage bestimmt das Referenzbild das Format, nicht die Einstellung. Gespeichert ist der feste
+                // Name des Formats, angezeigt wird er in der Sprache des Mac.
+                if let format = bild.referenzen > 0 ? String(localized: "Same as reference image")
+                    : bild.formatName.map(Bildformat.anzeige) {
+                    zeile("Aspect ratio", format)
                 }
-                if bild.breite > 0, bild.hoehe > 0 { zeile("Grösse", "\(bild.breite) × \(bild.hoehe) Pixel") }
-                if bild.schritte > 0 { zeile("Schritte", "\(bild.schritte)") }
-                zeile("Textführung", String(format: "%.1f", bild.textfuehrung))
+                if bild.breite > 0, bild.hoehe > 0 {
+                    zeile("Size", String(localized: "\(String(bild.breite)) × \(String(bild.hoehe)) pixels"))
+                }
+                if bild.schritte > 0 { zeile("Steps", "\(bild.schritte)") }
+                zeile("Guidance", bild.textfuehrung.formatted(.number.precision(.fractionLength(1))))
                 if einzeln {
-                    zeile("Zufallszahl", "\(bild.seed)")
-                    zeile("Dauer", dauerText(bild.sekunden))
+                    zeile("Seed", "\(bild.seed)")
+                    zeile("Time", dauerText(bild.sekunden))
                 }
                 if bild.referenzen > 0 {
-                    zeile("Referenzbild", "Ja")
+                    zeile("Reference image", String(localized: "Yes"))
                 }
                 if bild.referenzen > 0, let staerke = bild.referenzStaerke {
-                    zeile("Nähe zur Vorlage", String(format: "%.2f", staerke))
+                    zeile("Closeness to reference", staerke.formatted(.number.precision(.fractionLength(2))))
                 }
             }
             .font(.caption)
@@ -1321,16 +1403,16 @@ private struct ModellAngaben: View {
                     .frame(maxWidth: 120, maxHeight: 120, alignment: .leading)
             }
             .buttonStyle(.plain)
-            .help("Referenzbild gross ansehen")
-            .accessibilityLabel("Referenzbild gross ansehen")
+            .help("View the reference image large")
+            .accessibilityLabel("View the reference image large")
         }
     }
 
     private var moduleAbschnitt: some View {
         VStack(alignment: .leading, spacing: 8) {
-            KartenTitel(text: "Module", symbol: "puzzlepiece.extension", farbe: .teal)
+            KartenTitel(text: "Modules", symbol: "puzzlepiece.extension", farbe: .teal)
             if module.isEmpty {
-                Text(bild.module == nil && bild.modulDaten == nil ? "Nicht gespeichert" : "Keine")
+                Text(bild.module == nil && bild.modulDaten == nil ? "Not saved" : "None")
                     .font(.caption).foregroundStyle(.secondary)
             }
             ForEach(Array(module.enumerated()), id: \.offset) { _, modul in
@@ -1342,7 +1424,7 @@ private struct ModellAngaben: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
             if let ausloeser = bild.ausloeser {
-                Text(verbatim: "Auslöser im Prompt: \(ausloeser)")
+                Text("Trigger words in the prompt: \(ausloeser)")
                     .font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -1364,8 +1446,13 @@ private struct ModulAngabe: View {
 
     private var symbol: String { turbo ? "hare" : eintrag?.kategorie.symbol ?? "folder" }
     private var beschreibung: String {
-        if turbo { return "Rechnet mit 8 statt 30 Schritten, also deutlich schneller." }
-        return eintrag?.beschreibung ?? "Selbst hinzugefügtes Modul."
+        if turbo { return String(localized: "Works with 8 instead of 30 steps, so it is much faster.") }
+        return eintrag?.beschreibung ?? String(localized: "Module you added yourself.")
+    }
+
+    /// Gespeichert ist der feste Name, angezeigt wird der Titel aus dem Katalog in der Sprache des Mac.
+    private var titel: String {
+        turbo ? String(localized: "Turbo module") : eintrag?.anzeigeName ?? name
     }
 
     var body: some View {
@@ -1377,14 +1464,14 @@ private struct ModulAngabe: View {
                     .background(RoundedRectangle(cornerRadius: 7).fill(Color.teal.opacity(0.12)))
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(verbatim: turbo ? "Turbo-Modul" : name).font(.callout.weight(.medium)).textSelection(.enabled)
+                    Text(verbatim: titel).font(.callout.weight(.medium)).textSelection(.enabled)
                     Text(verbatim: beschreibung).font(.caption).foregroundStyle(.secondary)
                 }
                 .fixedSize(horizontal: false, vertical: true)
             }
             if let staerke, !turbo {
                 HStack(spacing: 8) {
-                    Text("Stärke").font(.caption).foregroundStyle(.secondary)
+                    Text("Strength").font(.caption).foregroundStyle(.secondary)
                     GeometryReader { flaeche in
                         ZStack(alignment: .leading) {
                             Capsule().fill(Color.secondary.opacity(0.15))
@@ -1393,11 +1480,11 @@ private struct ModulAngabe: View {
                         }
                     }
                     .frame(height: 4)
-                    Text(verbatim: String(format: "%.2f", staerke))
+                    Text(verbatim: staerke.formatted(.number.precision(.fractionLength(2))))
                         .font(.caption).monospacedDigit().foregroundStyle(.secondary)
                 }
                 .accessibilityElement(children: .ignore)
-                .accessibilityLabel(Text(verbatim: "Stärke \(String(format: "%.2f", staerke))"))
+                .accessibilityLabel(Text("Strength \(staerke.formatted(.number.precision(.fractionLength(2))))"))
             }
         }
         .padding(10)
@@ -1410,7 +1497,7 @@ private struct ModulAngabe: View {
 /// Das Referenzbild einer Generierung gross, zum Hineinzoomen.
 private struct ReferenzAnsicht: View {
     let url: URL
-    var titel = "Referenzbild"
+    var titel: LocalizedStringKey = "Reference image"
     let schliessen: () -> Void
 
     /// Ein Blatt wächst nicht von selbst, darum richtet es sich nach dem Bildschirm.
@@ -1421,14 +1508,15 @@ private struct ReferenzAnsicht: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            Vorschaubild(url: url, kante: 1600, zoombar: true, fehltText: "Dieses Referenzbild liegt nicht mehr im Bildordner.")
+            Vorschaubild(url: url, kante: 1600, zoombar: true,
+                         fehltText: String(localized: "This reference image is no longer in the image folder."))
                 .padding(14)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             Divider()
             HStack {
-                Text(verbatim: titel).font(.callout.weight(.medium))
+                Text(titel).font(.callout.weight(.medium))
                 Spacer()
-                Button("Schliessen", action: schliessen).keyboardShortcut(.cancelAction)
+                Button("Close", action: schliessen).keyboardShortcut(.cancelAction)
             }
             .padding(12)
         }
@@ -1460,15 +1548,16 @@ private struct BildDetail: View {
         let fertige = generator.laeufe.filter { !$0.ergebnisse.isEmpty }
         guard let stelle = fertige.firstIndex(where: { $0.id == ergebnis.gruppe }) else { return "" }
         let bilder = fertige[stelle].ergebnisse
-        let generierung = "↑ ↓ Generierung \(stelle + 1) von \(fertige.count)"
+        let generierung = String(localized: "↑ ↓ Generation \(stelle + 1) of \(fertige.count)")
         guard bilder.count > 1, let nummer = bilder.firstIndex(where: { $0.id == ergebnis.id }) else { return generierung }
-        return "\(generierung)    ← → Bild \(nummer + 1) von \(bilder.count)"
+        return "\(generierung)    " + String(localized: "← → Image \(nummer + 1) of \(bilder.count)")
     }
 
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
-                Vorschaubild(url: url, kante: Self.kante, zoombar: true, fehltText: "Dieses Bild liegt nicht mehr im Bildordner.")
+                Vorschaubild(url: url, kante: Self.kante, zoombar: true,
+                             fehltText: String(localized: "This image is no longer in the image folder."))
                     .padding(14)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 Divider()
@@ -1476,25 +1565,25 @@ private struct BildDetail: View {
             }
             Divider()
             HStack(spacing: 10) {
-                Button("Einstellungen übernehmen") {
+                Button("Use These Settings") {
                     vorgaben.uebernehmen(ergebnis)
                     schliessen()
                     neuBeginnen()
                 }
-                Button("Als Vorlage verwenden") {
+                Button("Use as Reference") {
                     vorgaben.vorlageSetzen(url)
                     schliessen()
                     neuBeginnen()
                 }
-                .help("Setzt das Bild als Referenzbild. MOSS-Image baut das neue Bild darauf auf. Prompt und Einstellungen bleiben, wie sie sind.")
-                Button("Im Finder zeigen") { NSWorkspace.shared.activateFileViewerSelecting([url]) }
-                Button("In den Papierkorb", role: .destructive) {
+                .help("Sets the image as the reference image. MOSS-Image builds the new image on it. Prompt and settings stay as they are.")
+                Button("Show in Finder") { NSWorkspace.shared.activateFileViewerSelecting([url]) }
+                Button("Move to Trash", role: .destructive) {
                     generator.inPapierkorb(ergebnis)
                     schliessen()
                 }
                 Spacer()
                 Text(verbatim: stand).font(.caption).foregroundStyle(.secondary).monospacedDigit()
-                Button("Schliessen", action: schliessen).keyboardShortcut(.cancelAction)
+                Button("Close", action: schliessen).keyboardShortcut(.cancelAction)
             }
             .padding(12)
         }

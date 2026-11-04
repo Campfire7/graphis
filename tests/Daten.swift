@@ -50,7 +50,7 @@ enum DatenPruefung {
         let beiseite = ((try? FileManager.default.contentsOfDirectory(atPath: Pfade.bilder.path)) ?? [])
             .filter { $0.hasPrefix(".warteschlange-unlesbar-") }
         bericht.pruefen("Unlesbare Warteschlange kommt beiseite", unlesbarSchlange.warteschlange.isEmpty && !unlesbarSchlange.pausiert
-                        && unlesbarSchlange.fehler == "Die gespeicherte Warteschlange liess sich nicht lesen. Sie liegt als Sicherung im Bildordner."
+                        && unlesbarSchlange.fehler == "The saved queue could not be read. It is in the image folder as a backup."
                         && beiseite.count == 1
                         && beiseite.first.flatMap { try? Data(contentsOf: Pfade.bilder.appendingPathComponent($0)) } == Data("kein JSON".utf8)
                         && !FileManager.default.fileExists(atPath: Pfade.warteDatei.path),
@@ -66,7 +66,7 @@ enum DatenPruefung {
         let sicherungen = ((try? FileManager.default.contentsOfDirectory(atPath: Pfade.bilder.path)) ?? [])
             .filter { $0.hasPrefix(".warteschlange-nicht-lesbar-") }
         bericht.pruefen("Warteschlange nur mit fremden Einträgen", leer.warteschlange.isEmpty && !leer.pausiert
-                        && (leer.fehler ?? "").hasPrefix("1 Eintrag der gespeicherten Warteschlange liess sich nicht lesen")
+                        && (leer.fehler ?? "").hasPrefix("1 entry of the saved queue could not be read")
                         && sicherungen.count == 1 && !FileManager.default.fileExists(atPath: Pfade.warteDatei.path),
                         "\(leer.fehler ?? "kein Fehler"), Sicherungen \(sicherungen.count)")
 
@@ -120,7 +120,7 @@ enum DatenPruefung {
                    "moss.turbo.gross": ["schrittzeit": 20, "grundzeit": 5, "anzahl": 3]]).write(to: Pfade.messwerte)
         let zeilen = Zeitschaetzer().uebersicht()
         bericht.pruefen("Messwerte mit fremden Schlüsseln", zeilen.count == 4 && zeilen.allSatisfy { $0.id.hasPrefix("moss.") }
-                        && zeilen.first { $0.id == "moss.turbo.gross" }?.wert.contains("3 Mal gemessen") == true,
+                        && zeilen.first { $0.id == "moss.turbo.gross" }?.wert.contains("measured 3 times") == true,
                         "\(zeilen.map(\.id))")
 
         await uebernahme(bericht)
@@ -198,8 +198,47 @@ enum DatenPruefung {
         var ohneStaerken = bild(10, turbo: false)
         ohneStaerken.module = ["Gibt es nicht"]
         vorgaben.uebernehmen(ohneStaerken)
-        bericht.pruefen("Fehlende Module werden genannt", vorgaben.uebernahmeLuecken.contains("Diese Module fehlen jetzt: Gibt es nicht.")
-                        && vorgaben.uebernahmeLuecken.contains("Die Modulstärken dieses Bildes sind nicht gespeichert, es gelten die aktuellen."),
+        bericht.pruefen("Fehlende Module werden genannt", vorgaben.uebernahmeLuecken.contains("These modules are missing now: Gibt es nicht.")
+                        && vorgaben.uebernahmeLuecken.contains("The module strengths of this image are not saved, the current ones apply."),
                         "\(vorgaben.uebernahmeLuecken)")
+
+        // Ein fehlendes Modul aus dem Katalog erscheint mit seinem Titel, gespeichert bleibt der feste Name.
+        var katalogModul = bild(11, turbo: false)
+        katalogModul.module = ["Altes Handy"]
+        vorgaben.uebernehmen(katalogModul)
+        bericht.pruefen("Fehlendes Katalogmodul mit Titel genannt",
+                        vorgaben.uebernahmeLuecken.contains("These modules are missing now: Old Phone."), "\(vorgaben.uebernahmeLuecken)")
+
+        namenPruefen(bericht)
+    }
+
+    /// Gespeichert und verglichen wird mit festen Namen in jeder Sprache, übersetzt wird nur die Anzeige. Sonst liessen
+    /// sich Einstellungen, Warteschlangen und Bildangaben aus früheren Versionen nicht mehr lesen.
+    private static func namenPruefen(_ bericht: Pruefbericht) {
+        let fest = Stufe.allCases.map(\.rawValue) == ["Schnell", "Standard", "Beste"]
+            && Bildformat.allCases.map(\.rawValue) == ["Quadrat", "Hochformat 2:3", "Querformat 3:2", "Breitbild 16:9", "Hochkant 9:16"]
+            && Katalogeintrag.Kategorie.allCases.map(\.rawValue)
+                == ["Foto und Realismus", "Licht und Details", "Malerei und Illustration", "Werkzeuge"]
+            && Modul.eigeneGruppe == "Eigene Module" && ModellID.allCases.map(\.rawValue) == ["moss"]
+            && Katalog.alle.map(\.name) == ["Altes Handy", "Spiegelreflex", "Starkes Filmkorn", "Beauty", "Schärfe",
+                                             "Impressionismus", "Gouache", "Psychedelic Pop", "Seinen-Anime",
+                                             "Animationsfilm", "Streifen-Fix"]
+        bericht.pruefen("Gespeicherte Namen bleiben fest", fest)
+        // Das Prüfprogramm hat keine Übersetzung, es zeigt also die englischen Texte aus dem Code.
+        let anzeige = Stufe.beste.anzeigeName == "Best" && Bildformat.hoch.anzeigeName == "Portrait 2:3"
+            && Bildformat.anzeige("Querformat 3:2") == "Landscape 3:2" && Bildformat.anzeige("Unbekannt 5:4") == "Unbekannt 5:4"
+            && Katalogeintrag.Kategorie.foto.anzeigeName == "Photo and Realism"
+            && Katalog.eintrag(Modul.streifenDatei)?.anzeigeName == "Stripe Fix"
+            && Katalog.eintrag(Modul.streifenDatei)?.name == "Streifen-Fix"
+        bericht.pruefen("Angezeigt wird in der Sprache des Mac", anzeige,
+                        "\(Stufe.beste.anzeigeName), \(Bildformat.hoch.anzeigeName), \(Katalogeintrag.Kategorie.foto.anzeigeName)")
+        let gespeichert = Pfade.speicher
+        gespeichert.set("Hochkant 9:16", forKey: "format")
+        gespeichert.set("Beste", forKey: "stufe")
+        gespeichert.set(["Foto und Realismus", "Eigene Module"], forKey: "offeneGruppen")
+        let gelesen = Vorgaben()
+        bericht.pruefen("Gespeicherte deutsche Werte werden gelesen", gelesen.format == .schmal && gelesen.stufe == .beste
+                        && gelesen.offeneGruppen == ["Foto und Realismus", "Eigene Module"],
+                        "\(gelesen.format), \(gelesen.stufe), \(gelesen.offeneGruppen)")
     }
 }

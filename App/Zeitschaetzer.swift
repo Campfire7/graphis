@@ -81,14 +81,13 @@ final class Zeitschaetzer {
 
     func uebersicht() -> [Zeitzeile] {
         ModellID.allCases.flatMap { modell -> [Zeitzeile] in
-            let fälle = [("turbo.klein", "Turbo, klein"), ("turbo.gross", "Turbo, gross"),
-                         ("klein", "voll, klein"), ("gross", "voll, gross")]
+            let fälle = [("turbo.klein", String(localized: "Turbo, small")), ("turbo.gross", String(localized: "Turbo, large")),
+                         ("klein", String(localized: "full, small")), ("gross", String(localized: "full, large"))]
             return fälle.compactMap { teil, name in
                 guard let wert = werte["\(modell.rawValue).\(teil)"] else { return nil }
-                let basis = wert.anzahl > 0 ? "\(wert.anzahl) Mal gemessen" : "noch nicht gemessen"
-                let genauigkeit = wert.abweichung.map { ", ± \(dauerText($0))" } ?? ""
+                let schritt = String(localized: "\(wert.schrittzeit.formatted(.number.precision(.fractionLength(1)))) s per step")
                 return Zeitzeile(id: "\(modell.rawValue).\(teil)", titel: "\(modell.name), \(name)",
-                                 wert: String(format: "%.1f s je Schritt, ", wert.schrittzeit) + basis + genauigkeit)
+                                 wert: "\(schritt), \(messText(wert))")
             }
         }
     }
@@ -108,9 +107,18 @@ struct Zeitzeile: Identifiable {
     let wert: String
 }
 
+/// Wie oft ein Fall gemessen wurde und wie genau die Schätzung zuletzt lag.
+func messText(_ wert: Messwert) -> String {
+    guard wert.anzahl > 0 else { return String(localized: "not measured yet") }
+    let basis = wert.anzahl == 1 ? String(localized: "measured once") : String(localized: "measured \(wert.anzahl) times")
+    return basis + (wert.abweichung.map { ", ± \(dauerText($0))" } ?? "")
+}
+
+/// Zahlen gehen als fertiger Text hinein, so bleibt die Schreibweise in jeder Sprache gleich.
 func dauerText(_ sekunden: Double) -> String {
     let gerundet = Int(sekunden.rounded())
-    if gerundet < 60 { return "\(gerundet) s" }
-    if gerundet < 3600 { return "\(gerundet / 60) Min \(String(format: "%02d", gerundet % 60)) s" }
-    return "\(gerundet / 3600) Std \(String(format: "%02d", gerundet % 3600 / 60)) Min"
+    let zweistellig = { (zahl: Int) in String(format: "%02d", zahl) }
+    if gerundet < 60 { return String(localized: "\(String(gerundet)) s") }
+    if gerundet < 3600 { return String(localized: "\(String(gerundet / 60)) min \(zweistellig(gerundet % 60)) s") }
+    return String(localized: "\(String(gerundet / 3600)) h \(zweistellig(gerundet % 3600 / 60)) min")
 }

@@ -43,13 +43,13 @@ struct AufklappTitel: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(titel)
-        .accessibilityValue(offen ? "aufgeklappt" : "zugeklappt")
+        .accessibilityLabel(Text(verbatim: titel))
+        .accessibilityValue(offen ? "expanded" : "collapsed")
     }
 }
 
 struct KartenTitel: View {
-    let text: String
+    let text: LocalizedStringKey
     let symbol: String
     let farbe: Color
 
@@ -67,7 +67,7 @@ struct StatusKapsel: View {
     let farbe: Color
 
     var body: some View {
-        Text(text)
+        Text(verbatim: text)
             .font(.caption.bold())
             .monospacedDigit()
             .foregroundStyle(farbe)
@@ -77,10 +77,22 @@ struct StatusKapsel: View {
     }
 }
 
+/// Ein kleines i, das eine Erklärung aufklappt. Texte im Code werden übersetzt, fertige Texte erscheinen, wie sie sind.
 struct InfoKnopf: View {
-    let titel: String
-    let beschreibung: String
+    let titel: LocalizedStringKey
+    let beschreibung: Text
     @State private var offen = false
+
+    init(titel: LocalizedStringKey, beschreibung: LocalizedStringKey) {
+        self.titel = titel
+        self.beschreibung = Text(beschreibung)
+    }
+
+    @_disfavoredOverload
+    init(titel: LocalizedStringKey, beschreibung: String) {
+        self.titel = titel
+        self.beschreibung = Text(verbatim: beschreibung)
+    }
 
     var body: some View {
         Button {
@@ -89,11 +101,11 @@ struct InfoKnopf: View {
             Image(systemName: "info.circle").foregroundStyle(.secondary).font(.callout)
         }
         .buttonStyle(.plain)
-        .accessibilityLabel("Erklärung zu \(titel)")
+        .accessibilityLabel(Text("About \(Text(titel))"))
         .popover(isPresented: $offen) {
             VStack(alignment: .leading, spacing: 8) {
                 Text(titel).font(.headline)
-                Text(beschreibung)
+                beschreibung
                     .font(.callout)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)

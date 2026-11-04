@@ -102,8 +102,8 @@ enum ModulPruefung {
         let ergebnis = Modul.hinzufuegen([passend, fremdA])
         let doppelt = Modul.hinzufuegen([passend])
         bericht.pruefen("Eigene Module hinzufügen", ergebnis.neu == ["passend.safetensors"]
-                        && ergebnis.meldung == "fremd-a.safetensors passt zu keinem Modell der App und bleibt ausgeschaltet."
-                        && doppelt.neu.isEmpty && doppelt.meldung == "Ein Modul namens passend.safetensors ist schon vorhanden."
+                        && ergebnis.meldung == "fremd-a.safetensors does not fit any model in the app and stays off."
+                        && doppelt.neu.isEmpty && doppelt.meldung == "A module named passend.safetensors already exists."
                         && FileManager.default.fileExists(atPath: Pfade.module.appendingPathComponent("fremd-a.safetensors").path),
                         "\(ergebnis.neu), \(ergebnis.meldung ?? "-"), \(doppelt.meldung ?? "-")")
 
@@ -154,10 +154,10 @@ enum ModulPruefung {
                         "\(gut.stand), Format \(format.map { "\($0)" } ?? "fehlt")")
         let falsch = await laden(eintrag("moss-modul.safetensors", datei: "falscher-hash.safetensors",
                                          sha256: String(repeating: "0", count: 64)))
-        bericht.pruefen("Falscher Fingerabdruck wird nicht übernommen", !falsch.vorhanden && falsch.stand.contains("stimmt nicht"),
+        bericht.pruefen("Falscher Fingerabdruck wird nicht übernommen", !falsch.vorhanden && falsch.stand.contains("does not match"),
                         falsch.stand)
         let fremd = await laden(eintrag("fremdes-modul.safetensors", datei: "fremd-geladen.safetensors"))
-        bericht.pruefen("Fremdes Modul wird nicht übernommen", !fremd.vorhanden && fremd.stand.contains("passt zu keinem Modell"),
+        bericht.pruefen("Fremdes Modul wird nicht übernommen", !fremd.vorhanden && fremd.stand.contains("does not fit any model"),
                         fremd.stand)
         let umgeleitet = await laden(eintrag("moss-modul.safetensors", datei: "umgeleitet.safetensors", modus: "umleitung"))
         bericht.pruefen("Modul über eine Umleitung laden", umgeleitet.vorhanden && umgeleitet.stand == "ohne Fehler", umgeleitet.stand)

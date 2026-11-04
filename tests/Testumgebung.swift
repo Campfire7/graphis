@@ -79,11 +79,21 @@ enum Testumgebung {
         return URL(fileURLWithPath: wert)
     }()
 
+    /// Statt GitHub fragt die Suche nach neuen Versionen den lokalen Testserver, nur eine Adresse auf 127.0.0.1 gilt.
+    static let versionenAdresse: URL = {
+        guard let wert = umgebung["GRAPHIS_TESTVERSIONEN"], let url = URL(string: wert),
+              url.scheme == "http", url.host == "127.0.0.1" else {
+            abbrechen("GRAPHIS_TESTVERSIONEN fehlt oder zeigt nicht auf den lokalen Testserver.")
+        }
+        return url
+    }()
+
     /// Ganz am Anfang: alle Angaben prüfen, bevor irgendein Teil der App startet.
     static func pruefen() {
         _ = ordner
         _ = programm
         _ = manifest
         _ = serverLog
+        _ = versionenAdresse
     }
 }

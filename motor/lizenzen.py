@@ -23,13 +23,13 @@ STRICH = "=" * 100
 
 # Modelle und Module lädt die App erst auf Klick des Nutzers. Sie liegen nicht im ZIP, Herkunft und Lizenz stehen hier.
 MODELLE = [
-    ("MOSS-Image SFT, 8 Bit quantisiert für mflux", "mflux-community/moss-image-sft-mflux-q8",
+    ("MOSS-Image SFT, 8-bit quantized for mflux", "mflux-community/moss-image-sft-mflux-q8",
      "c7c9f94ad909beee13d70a9358ed961e86aa35c9", "Apache-2.0",
-     "Quantisierung von OpenMOSS-Team/MOSS-Image-SFT (Apache-2.0) durch mflux-community. Wird beim ersten Start "
-     "nach Klick auf Laden heruntergeladen."),
-    ("Turbo-Modul (8 Schritte, DMD-LoRA)", "lodestones/MOSS-Image-SFT-8-steps-dmd",
+     "Quantization of OpenMOSS-Team/MOSS-Image-SFT (Apache-2.0) by mflux-community. Downloaded on first start, "
+     "only after a click."),
+    ("Turbo module (8 steps, DMD LoRA)", "lodestones/MOSS-Image-SFT-8-steps-dmd",
      "f95df83b5e90ae91ea412434b3f9b7f1c8c6314f", "Apache-2.0",
-     "Datei lora_latest.safetensors, unverändert gespeichert als turbo-8-schritte.safetensors."),
+     "File lora_latest.safetensors, saved unchanged as turbo-8-schritte.safetensors."),
 ]
 KATALOG = [
     ("Danrisi/lenovo_moss", "993996c9bd62a773c54f8c36b3e8da3d15dacf78"),
@@ -91,12 +91,11 @@ def rust_daten() -> dict:
 
 def rust_bibliotheken(daten: dict) -> None:
     pakete = sorted(daten["pakete"].items(), key=lambda p: p[0].lower())
-    abschnitt("Rust-Bibliotheken in " + ", ".join(f"{name} {paket['version']}" for name, paket in pakete))
-    print("Diese Pakete enthalten Programmteile aus Rust, in die Bibliotheken von crates.io und die Rust-Standardbibliothek")
-    print("fest eingebaut sind.")
-    print("Die Liste stammt aus motor/rust-lizenzen.json. Gleiche Lizenztexte stehen unten nur einmal.\n")
+    abschnitt("Rust libraries in " + ", ".join(f"{name} {paket['version']}" for name, paket in pakete))
+    print("These packages contain Rust code with libraries from crates.io and the Rust standard library statically")
+    print("linked in. The list comes from motor/rust-lizenzen.json. Identical license texts appear only once below.\n")
     for name, paket in pakete:
-        print(f"{name} {paket['version']} ({len(paket['crates'])} Bibliotheken, laut {paket['quelle']}):")
+        print(f"{name} {paket['version']} ({len(paket['crates'])} libraries, from {paket['quelle']}):")
         for crate in paket["crates"]:
             print(f"  {crate} – {daten['crates'][crate]['lizenz']}")
         print()
@@ -106,21 +105,21 @@ def rust_bibliotheken(daten: dict) -> None:
         for datei, schluessel in sorted(info["texte"].items()):
             fundorte.setdefault(schluessel, []).append(f"{crate}: {datei}")
     for nummer, (schluessel, orte) in enumerate(sorted(fundorte.items(), key=lambda e: e[1][0]), 1):
-        abschnitt(f"Rust-Lizenztext {nummer} von {len(fundorte)}")
-        print("Steht in:\n" + "\n".join(f"  {ort}" for ort in orte) + "\n")
+        abschnitt(f"Rust license text {nummer} of {len(fundorte)}")
+        print("Found in:\n" + "\n".join(f"  {ort}" for ort in orte) + "\n")
         print(daten["texte"][schluessel])
 
 
 def main() -> None:
     rust = rust_daten()
     print("THIRD_PARTY_NOTICES – Graphis")
-    print("Automatisch erzeugt von motor/lizenzen.py aus den Dateien im App-Paket.")
-    print("Der Code der App selbst steht unter der Lizenz in LICENSE.")
+    print("Generated automatically by motor/lizenzen.py from the files in the app bundle.")
+    print("The app's own code is under the license in LICENSE.")
 
     # Python mit den Bibliotheken, die python-build-standalone in den Interpreter und seine Module einbaut.
     info = json.loads((PBS / "PYTHON.json").read_text())
     abschnitt(f"Python {info['python_version']} (python-build-standalone, {info['target_triple']})")
-    print(f"Lizenz: {' AND '.join(info['licenses'])}")
+    print(f"License: {' AND '.join(info['licenses'])}")
     texte: dict[str, set[str]] = {}
     for name, varianten in sorted(info["build_info"]["extensions"].items()):
         for variante in varianten:
@@ -129,7 +128,7 @@ def main() -> None:
                 continue
             for pfad in variante.get("license_paths", []):
                 texte.setdefault(pfad, set()).add(f"{name} ({', '.join(variante['licenses'])})")
-    print("Eingebaute Bibliotheken:")
+    print("Built-in libraries:")
     for pfad, module in sorted(texte.items()):
         print(f"  {Path(pfad).name}: {', '.join(sorted(module))}")
     for pfad in [info["license_path"], *sorted(texte)]:
@@ -144,11 +143,11 @@ def main() -> None:
         if not lizenz:
             klassen = [k.split("::")[-1].strip() for k in meta.get_all("Classifier", []) if k.startswith("License ::")]
             feld = (meta.get("License") or "").strip()
-            lizenz = ", ".join(klassen) or (feld.splitlines()[0] if feld else "nicht angegeben")
+            lizenz = ", ".join(klassen) or (feld.splitlines()[0] if feld else "not specified")
         abschnitt(f"{meta['Name']} {meta['Version']} – {lizenz}")
         adressen = [meta.get("Home-page")] + [u.split(",", 1)[-1].strip() for u in meta.get_all("Project-URL", [])]
         if quelle := next((a for a in adressen if a), None):
-            print(f"Quelle: {quelle}\n")
+            print(f"Source: {quelle}\n")
         dateien = sorted(p for p in dist.rglob("*") if p.is_file() and p.name.upper().startswith(LIZENZDATEIEN))
         if dateien:
             for datei in dateien:
@@ -157,19 +156,19 @@ def main() -> None:
                     apache = f"{meta['Name']}: {datei.relative_to(dist)}"
                 print(f"--- {datei.relative_to(dist)} ---\n{text}\n")
         elif len((meta.get("License") or "").splitlines()) > 3:
-            print(f"--- Lizenztext aus den Paketangaben ---\n{meta['License'].strip()}\n")
+            print(f"--- License text from the package metadata ---\n{meta['License'].strip()}\n")
         else:
-            print(f"Das Wheel enthält keinen Lizenztext. Es gilt {lizenz}, Volltext von Apache-2.0 siehe {apache or 'oben'}.\n")
+            print(f"The wheel contains no license text. {lizenz} applies; for the full Apache-2.0 text see {apache or 'above'}.\n")
 
     rust_bibliotheken(rust)
 
-    abschnitt("Modelle und Module (nicht im App-Paket, Download nur auf Klick)")
+    abschnitt("Models and modules (not in the app bundle, downloaded only on click)")
     for name, ablage, stand, lizenz, hinweis in MODELLE:
-        print(f"{name}\n  https://huggingface.co/{ablage} (Stand {stand})\n  Lizenz: {lizenz}. {hinweis}\n")
-    print("Katalog der Module, alle laut Modellkarte Apache-2.0 (geprüft am 3.11.2026):")
+        print(f"{name}\n  https://huggingface.co/{ablage} (revision {stand})\n  License: {lizenz}. {hinweis}\n")
+    print("Module catalog, all Apache-2.0 according to their model cards (checked on 2026-11-03):")
     for ablage, stand in KATALOG:
-        print(f"  https://huggingface.co/{ablage} (Stand {stand})")
-    print(f"\nDer Volltext der Apache License 2.0 steht oben beim Paket {apache.split(':')[0] or 'transformers'}.")
+        print(f"  https://huggingface.co/{ablage} (revision {stand})")
+    print(f"\nThe full text of the Apache License 2.0 appears above with the package {apache.split(':')[0] or 'transformers'}.")
 
 
 if __name__ == "__main__":

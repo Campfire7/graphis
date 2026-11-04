@@ -1,67 +1,85 @@
 # Graphis
 
-**English:** Graphis is a native macOS app that turns text prompts into images entirely on your Mac. It runs the open MOSS-Image model (Apache 2.0) through mflux and Apple's MLX. Prompts and images never leave the computer: the app only goes online when you click to download the model or a module. It needs a Mac with Apple Silicon and macOS 26.2 or later. The app and this documentation are in German. Graphis is free software under the MIT licence; the bundled third-party components are listed in `THIRD_PARTY_NOTICES.txt`.
+Graphis turns a text description into an image, entirely on your Mac. It runs the open MOSS-Image model (Apache 2.0) through mflux and Apple's MLX. Your prompts and images never leave the computer. The app speaks English and German and follows your Mac's language.
 
-## Was ist Graphis?
+**Uncensored.** MOSS-Image has no built-in content filter, and Graphis adds none: prompts are not checked and images are not blocked. According to the model's technical report, its training data was not filtered beyond the checks the source datasets already applied.
 
-Graphis (griechisch γραφίς, Griffel, Pinsel) macht aus einer Beschreibung ein Bild, ganz auf deinem Mac. Es rechnet mit dem Modell MOSS-Image, das unter der Lizenz Apache 2.0 frei verfügbar ist. Der Rechenmotor liegt fertig im App-Paket, das Modell lädt die App beim ersten Start auf deinen Klick.
+The name comes from the Greek γραφίς: stylus, brush.
 
-Was die App kann:
+![Graphis with a finished image of corn cobs boiling in a pot](docs/screenshot-result.png)
 
-- Bilder aus Prompt und Negativprompt, in fünf Formaten und bis 1280 Pixel
-- Drei Stufen von Schnell (mit Turbo-Modul) bis Beste, oder eigene Werte für Schritte und Textführung
-- Ein Referenzbild als Vorlage, mit einem Regler für die Nähe zur Vorlage
-- Module (LoRA-Dateien) für Stil, Licht und Details: ein kleiner Katalog geprüfter Module oder eigene Dateien
-- Eine Warteschlange, die nach einem Neustart weiterläuft, und eine Zeitschätzung, die mit jedem Bild genauer wird
-- Die Einstellungen eines fertigen Bildes übernehmen, um gezielt eine Sache zu ändern
+## What it does
 
-## Voraussetzungen
+- Images from a prompt and a negative prompt, in five formats and up to 1280 pixels
+- Three quality levels from Fast (with the turbo module) to Best, or your own values for steps and guidance
+- A reference image as a template, with a slider for how closely to follow it
+- Modules (LoRA files) for style, light and detail: a small catalog of checked modules, or your own files
+- A queue that keeps going after a restart, and a time estimate that gets more accurate with every image
+- Reuse the settings of a finished image to change one thing at a time
 
-- Mac mit Apple Silicon (M1 oder neuer)
-- macOS 26.2 oder neuer. Die Rechenbibliothek MLX verlangt diese Version.
-- Rund 17 GB freier Speicher: 15,2 GB für Modell und Turbo-Modul, dazu eine Reserve
-- Arbeitsspeicher: 24 GB oder mehr empfohlen. Das Modell belegt rund 14 GB, mit 16 GB ist es ungeprüft.
+![Writing a prompt and a negative prompt in Graphis](docs/screenshot-prompt.png)
 
-## Installieren
+## Requirements
 
-1. `Graphis-<Version>.zip` herunterladen und mit Doppelklick entpacken.
-2. `Graphis.app` in den Ordner Programme ziehen.
-3. Graphis ist nur ad hoc signiert und nicht von Apple beglaubigt. Beim ersten Öffnen meldet macOS darum, dass es die App nicht prüfen kann. Öffne dann **Systemeinstellungen > Datenschutz & Sicherheit**, klicke ganz unten bei der Meldung zu Graphis auf **Trotzdem öffnen** und bestätige.
-4. Klappt das nicht, gib im Terminal nur diese eine App frei und öffne sie danach normal:
+- A Mac with Apple Silicon (M1 or newer)
+- macOS 26.2 or later. The MLX compute library requires it.
+- About 17 GB of free disk space: 15.2 GB for the model and the turbo module, plus some headroom
+- Memory: 24 GB or more recommended. The model uses about 14 GB; 16 GB is untested.
+
+## Install
+
+1. Download `Graphis-<version>.zip` from [Releases](https://github.com/Campfire7/graphis/releases) and double-click to unzip it.
+2. Drag `Graphis.app` into your Applications folder.
+3. Graphis is only ad hoc signed and not notarized by Apple. The first time you open it, macOS says it cannot verify the app. Open **System Settings > Privacy & Security**, scroll down to the message about Graphis, click **Open Anyway** and confirm.
+4. If that does not work, allow just this one app in Terminal, then open it normally:
 
    ```bash
    xattr -dr com.apple.quarantine /Applications/Graphis.app
    ```
 
-## Erster Start
+## First start
 
-Unter **Neues Bild** erscheint die Karte «MOSS-Image einrichten» mit der Grösse des Downloads und dem freien Platz. Erst ein Klick auf **Laden** holt das Modell (mflux-community/moss-image-sft-mflux-q8) und das Turbo-Modul (lodestones/MOSS-Image-SFT-8-steps-dmd) von Hugging Face, beide zu einem festen Stand. Jede Datei wird mit ihrem SHA-256 geprüft. Bricht das Laden ab oder schliesst du die App, geht es mit **Fortsetzen** an derselben Stelle weiter. Erst wenn alles stimmt, wird das Modell aktiv. Danach rechnet Graphis ohne Internet.
+Under **New Image** you will see the card **Set Up MOSS-Image** with the download size and your free space. Nothing is downloaded until you click **Download**. Graphis then fetches the model (mflux-community/moss-image-sft-mflux-q8) and the turbo module (lodestones/MOSS-Image-SFT-8-steps-dmd) from Hugging Face, both pinned to a fixed revision, and checks every file against its SHA-256. If the download stops or you quit the app, **Resume** continues where it left off. The model is activated only once everything checks out. After that, Graphis works without the internet.
 
-Unter **Einstellungen > Allgemein** lassen sich die Modelldateien jederzeit neu prüfen. Beschädigte Dateien lädt **Reparieren** unter Neues Bild neu, die guten bleiben.
+Graphis also asks once: **Check for new versions automatically?** See Privacy below.
 
-## Datenschutz
+**Settings > General > Check Model Files** re-checks the model files at any time. **Repair** under New Image downloads damaged files again and keeps the good ones.
 
-- Prompts und Bilder bleiben auf deinem Mac. Es gibt kein Konto, keine Cloud, keine Statistik und keine Protokolle.
-- Ins Netz geht die App nur nach einem Klick: beim Laden des Modells und beim Laden eines Moduls, jeweils genau diese Dateien von Hugging Face. «Projekt unterstützen» öffnet nur den Browser.
-- Der Prompt geht über eine Datei an den Rechenmotor, nicht über die Prozessliste. Die Bilder enthalten keine eingebetteten Angaben zu Prompt oder Einstellungen.
+## Privacy
 
-| Was | Ort |
+- Prompts and images stay on your Mac. There is no account, no cloud, no analytics and no logging.
+- Graphis goes online when you click to download the model or a module (exactly those files, from Hugging Face), and for the update check if you allowed it. The update check asks GitHub at most once a day whether a newer release exists and sends nothing about you or your images. You can change this anytime under **Settings > General > New Versions**. If a new version exists, Graphis shows a note with a link. It never downloads or installs anything by itself.
+- **Donate** only opens your browser.
+- The prompt reaches the compute engine through a file, not through the process list. Images contain no embedded prompt or settings.
+
+| What | Where |
 |---|---|
-| Bilder, ihre Angaben und die Warteschlange | `~/Downloads/Graphis/` |
-| Modell, Module und Messwerte der Zeitschätzung | `~/Library/Application Support/Graphis/` |
-| Lizenzen der mitgelieferten Teile | in der App unter Einstellungen > Allgemein > Lizenzen anzeigen |
+| Images, their details and the queue | `~/Downloads/Graphis/` |
+| Model, modules and time-estimate data | `~/Library/Application Support/Graphis/` |
+| Licenses of the bundled components | in the app under Settings > General > Show Licenses |
 
-## Aus dem Quellcode bauen
+## Donate
 
-Du brauchst einen Mac mit Apple Silicon, die Xcode Command Line Tools (`xcode-select --install`), [uv](https://docs.astral.sh/uv/) und beim ersten Bau Internet.
+Graphis is free software and costs nothing. If you would like to support its development, donations are welcome:
+
+| Currency | Address |
+|---|---|
+| Bitcoin | `bc1qkgj6wl5sv3yel0v34mexalcesms580367slk9h` |
+| Monero | `4AbFvwrC5oEDfZQZoXBMBKia3njagBYeTTbx9sXj7mRCYFxNxnSCDFmVtqRkHvSbUZ8u1xiQDghKv5d7iCd8heu9JcLDc1H` |
+
+Bitcoin payments are publicly visible; Monero keeps sender and amount private.
+
+## Build from source
+
+You need a Mac with Apple Silicon, the Xcode Command Line Tools (`xcode-select --install`), [uv](https://docs.astral.sh/uv/) and an internet connection for the first build.
 
 ```bash
 zsh bauen.sh
 ```
 
-Das baut `dist/Graphis.app` und `dist/Graphis-<Version>.zip`, nie in einen Programmordner. Python (python-build-standalone 3.12.16, Release 20261026) und die 42 Pakete aus `motor/anforderungen-moss.txt` sind mit SHA-256 festgelegt und landen beim ersten Bau in `.build/downloads`. Bewusst weggelassen sind torch, OpenCV und matplotlib, der Weg von MOSS-Image braucht sie nicht. Jede Mach-O-Datei wird einzeln ad hoc signiert, von innen nach aussen. Alle Dateien im Paket bekommen denselben festen Zeitpunkt, und das ZIP enthält keine erweiterten Attribute und keine Benutzernummern. `THIRD_PARTY_NOTICES.txt` entsteht dabei neu aus dem, was tatsächlich im Paket liegt. Eine andere Version setzt `GRAPHIS_VERSION=1.1 zsh bauen.sh`.
+This builds `dist/Graphis.app` and `dist/Graphis-<version>.zip`, never into an Applications folder. Python (python-build-standalone 3.12.16, release 20261026) and the 42 packages in `motor/anforderungen-moss.txt` are pinned with SHA-256 and cached in `.build/downloads` on the first build. torch, OpenCV and matplotlib are left out on purpose; the MOSS-Image path does not need them. Every Mach-O file is ad hoc signed on its own, from the inside out. All files in the bundle get the same fixed timestamp, and the ZIP contains no extended attributes and no user IDs. `THIRD_PARTY_NOTICES.txt` is regenerated from what is actually in the bundle. Set another version with `GRAPHIS_VERSION=1.1 zsh bauen.sh`.
 
-Vier Pakete (hf-xet, hf-transfer, safetensors, tokenizers) enthalten Programmteile aus Rust, in die weitere Bibliotheken und die Rust-Standardbibliothek fest eingebaut sind. Deren Liste und Lizenztexte stehen in `motor/rust-lizenzen.json`, jede Bibliothek mit SHA-256 von crates.io geprüft. Ändert sich eine dieser Programmdateien, bricht der Bau ab, bis die Datei erneuert ist. Das geht mit einem frisch zusammengestellten Motor und braucht Internet und cargo:
+Four packages (hf-xet, hf-transfer, safetensors, tokenizers) contain Rust code with further libraries and the Rust standard library statically linked in. Their list and license texts live in `motor/rust-lizenzen.json`, each library verified with its SHA-256 from crates.io. If one of these binaries changes, the build stops until the file is regenerated. That takes a freshly assembled engine, internet access and cargo:
 
 ```bash
 ARBEIT="$(mktemp -d)" && zsh motor/bereitstellen.sh "$ARBEIT/Motor" "$PWD/.build/downloads" \
@@ -69,52 +87,41 @@ ARBEIT="$(mktemp -d)" && zsh motor/bereitstellen.sh "$ARBEIT/Motor" "$PWD/.build
 [ -n "$ARBEIT" ] && rm -rf "$ARBEIT"
 ```
 
-Aufbau des Projekts:
+Project layout (file and folder names are German):
 
-| Ordner | Inhalt |
+| Folder | Contents |
 |---|---|
-| `App/` | Quellen der App in Swift und SwiftUI, ohne Xcode-Projekt |
-| `motor/` | Startskript und Referenzweg für mflux, Paketliste, Werkzeuge für Bau, Lizenzen und Prüfung des Motors |
-| `tests/` | Prüfprogramm, Testserver, Testdaten und Scheinprogramm |
-| `werkzeug/` | Zeichnet das App-Symbol, falls `App/AppIcon.icns` fehlt |
+| `App/` | The app's Swift and SwiftUI sources, no Xcode project, plus the translations |
+| `motor/` | Launcher and reference path for mflux, package list, tools to build, license and check the engine |
+| `tests/` | Test program, test server, test data and a stand-in for the engine |
+| `werkzeug/` | Draws the app icon if `App/AppIcon.icns` is missing |
 
-## Prüfen
+## Tests
 
 ```bash
 zsh tests/testlauf.sh
 ```
 
-Das baut aus den Quellen der App ein eigenes Prüfprogramm ohne den Einstieg der App und lässt es gegen einen lokalen Testserver laufen. Statt des Rechenmotors ruft es ein Scheinprogramm auf, das die Argumente festhält. Es öffnet kein Fenster, braucht weder Grafikchip noch Internet und arbeitet nur in eigenen Ordnern im Ordner für temporäre Dateien. Geprüft werden die Einrichtung des Modells (19 Fälle wie Fortsetzen, Reparatur, falsche Antworten des Servers und Platzmangel, dazu ein Neustart mitten im Laden), die Warteschlange, das Referenzbild, die Erkennung und das Laden von Modulen sowie gespeicherte Daten mit unbekannten oder fehlenden Werten. Der Exitstatus ist nur 0, wenn alles stimmt. Einzelne Teile prüft etwa `zsh tests/testlauf.sh module`. Der Testserver läuft mit `/usr/bin/python3`, ein anderes Python setzt `PYTHON=…`.
+This builds a separate test program from the app's sources, without the app's entry point, and runs it against a local test server. Instead of the compute engine it calls a stand-in that records the arguments. It opens no window, needs neither GPU nor internet, and works only in its own folders under the temporary directory. It covers model setup (19 cases such as resuming, repair, bad server responses and low disk space, plus a restart in the middle of a download), the queue, the reference image, detecting and loading modules, saved data with unknown or missing values, the update check, and that every text in the app has its German translation. The exit status is 0 only if everything passes. Run single parts with e.g. `zsh tests/testlauf.sh module`. The test server runs with `/usr/bin/python3`; set another Python with `PYTHON=…`.
 
-Die Prüfhaken gibt es nur im Prüfprogramm (Schalter `TESTLAUF`), die App selbst hat keinen Testmodus.
+The test hooks exist only in the test program (flag `TESTLAUF`); the app itself has no test mode. Two kinds run only by hand: `zsh tests/testlauf.sh ansichten` draws the interface in English and German as PNG files, and `GRAPHIS_SCREENSHOT_BILD=<image.png> zsh tests/testlauf.sh screenshots` draws the screenshots in `docs/`.
 
-Den Rechenmotor im fertigen Paket prüft `motor/motorpruefung.py`, ohne ein Bild zu rechnen. Es lädt MLX nur auf dem Prozessor und braucht den Ordner `tokenizer/` des Modells:
+`motor/motorpruefung.py` checks the engine in the finished bundle without generating an image. It loads MLX on the CPU only and needs the model's `tokenizer/` folder:
 
 ```bash
 dist/Graphis.app/Contents/Resources/Motor/python/bin/python3.12 -I -B motor/motorpruefung.py \
-  dist/Graphis.app/Contents/Resources/Motor <Ordner mit tokenizer/ des Modells> <Testbild.png>
+  dist/Graphis.app/Contents/Resources/Motor <folder containing the model's tokenizer/> <test image.png>
 ```
 
-Echte Bilder entstehen nur in der App selbst.
+Real images are only generated in the app itself.
 
-## Lizenzen
+## Licenses
 
-- Der Code von Graphis steht unter der MIT-Lizenz, siehe `LICENSE`.
-- Python und die mitgelieferten Pakete stehen unter ihren eigenen Lizenzen, siehe `THIRD_PARTY_NOTICES.txt`. Das gilt auch für die Rust-Bibliotheken, die in einige Pakete fest eingebaut sind. Die Datei liegt auch im App-Paket.
-- Modell und Module liegen nicht im ZIP. Die App lädt sie erst auf deinen Klick von Hugging Face, alle zu einem festen Stand und laut Modellkarte unter Apache 2.0. Die Liste steht ebenfalls in `THIRD_PARTY_NOTICES.txt`.
-- Für Module, die du selbst hinzufügst, gilt deren eigene Lizenz. Prüfe sie vor der Nutzung.
+- The Graphis code is under the MIT license, see `LICENSE`.
+- Python and the bundled packages are under their own licenses, see `THIRD_PARTY_NOTICES.txt`. This includes the Rust libraries statically linked into some packages. The file is also inside the app bundle.
+- The model and modules are not in the ZIP. The app downloads them only when you click, from Hugging Face, all pinned to a fixed revision and, according to their model cards, under Apache 2.0. They are listed in `THIRD_PARTY_NOTICES.txt` as well.
+- Modules you add yourself come with their own license. Check it before use.
 
-## Unterstützen
+## Responsibility
 
-Graphis ist freie Software und kostet nichts. Wenn du die Entwicklung unterstützen möchtest, freut sich das Projekt über eine Spende:
-
-| Währung | Adresse |
-|---|---|
-| Bitcoin | `bc1qkgj6wl5sv3yel0v34mexalcesms580367slk9h` |
-| Monero | `4AbFvwrC5oEDfZQZoXBMBKia3njagBYeTTbx9sXj7mRCYFxNxnSCDFmVtqRkHvSbUZ8u1xiQDghKv5d7iCd8heu9JcLDc1H` |
-
-Bei Bitcoin sind alle Zahlungen öffentlich einsehbar, Monero hält Absender und Betrag privat.
-
-## Verantwortung
-
-Graphis ist ein Werkzeug. Für die Bilder, die du damit erstellst, und für ihre Verwendung bist du selbst verantwortlich. Achte auf die Rechte anderer, etwa an Personen, Marken und Werken, und auf die Lizenzen der Modelle und Module. Die Software kommt ohne Gewähr, siehe `LICENSE`.
+Graphis is a tool. You are responsible for the images you create with it and for how you use them. Respect the rights of others, for example to people, trademarks and works, and the licenses of models and modules. The software comes without warranty, see `LICENSE`.

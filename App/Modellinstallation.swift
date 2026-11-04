@@ -445,31 +445,31 @@ enum Einrichtungsfehler: Error, Equatable {
         let gb = { (bytes: Int64) in ByteCountFormatter.string(fromByteCount: bytes, countStyle: .file) }
         switch self {
         case .platzUnbekannt:
-            return "Wie viel Platz auf dem Mac frei ist, liess sich nicht feststellen. Nötig sind rund \(gb(Modellmanifest.aktuell.bytes + Modellinstallation.reserve)). Prüfe das im Finder, dann klicke auf Trotzdem laden."
+            return String(localized: "The free space on the Mac could not be determined. About \(gb(Modellmanifest.aktuell.bytes + Modellinstallation.reserve)) is needed. Check this in Finder, then click Download Anyway.")
         case .zuWenigPlatz(let fehlt) where fehlt > 0:
-            return "Auf dem Mac fehlen noch \(gb(fehlt)) Platz. Gib Speicher frei, dann klicke auf Fortsetzen. Was schon geladen ist, bleibt."
+            return String(localized: "The Mac still needs \(gb(fehlt)) more free space. Free up some space, then click Resume. What is already downloaded stays.")
         case .zuWenigPlatz:
-            return "Auf dem Mac ist der Platz ausgegangen. Gib Speicher frei, dann klicke auf Fortsetzen. Was schon geladen ist, bleibt."
+            return String(localized: "The Mac ran out of space. Free up some space, then click Resume. What is already downloaded stays.")
         case .server(let code) where code == 404:
-            return "Hugging Face hat diese Datei nicht mehr an der erwarteten Stelle. Eine neuere Version der App behebt das."
+            return String(localized: "Hugging Face no longer has this file at the expected place. A newer version of the app fixes this.")
         case .server(let code):
-            return "Hugging Face meldet Fehler \(code). Versuche es später nochmals, was schon geladen ist, bleibt."
+            return String(localized: "Hugging Face reports error \(code). Try again later, what is already downloaded stays.")
         case .anmeldeseite:
-            return "Statt der Datei kam eine Webseite zurück. Versuche es später nochmals."
+            return String(localized: "A web page came back instead of the file. Try again later.")
         case .zuGross:
-            return "Eine Datei ist grösser als erwartet. Die App hat das Laden abgebrochen."
+            return String(localized: "A file is larger than expected. The app stopped the download.")
         case .falscheDatei:
-            return "Eine Datei stimmt nicht mit der erwarteten überein und wurde verworfen. Klicke auf Nochmals versuchen."
+            return String(localized: "A file does not match the expected one and was discarded. Click Resume.")
         case .unsicher:
-            return "Die App lädt nur über sichere Verbindungen."
+            return String(localized: "The app only downloads over secure connections.")
         case .neuBeginnen, .nachPruefung:
-            return "Die Dateien liessen sich nicht vollständig prüfen. Klicke auf Nochmals versuchen."
+            return String(localized: "The files could not be fully checked. Click Resume.")
         case .verbindung(let fehler) where fehler.code == .notConnectedToInternet:
-            return "Der Mac ist nicht mit dem Internet verbunden. Was schon geladen ist, bleibt. Klicke danach auf Fortsetzen."
+            return String(localized: "The Mac is not connected to the internet. What is already downloaded stays. Then click Resume.")
         case .verbindung:
-            return "Die Verbindung ist abgebrochen. Was schon geladen ist, bleibt. Klicke auf Fortsetzen."
+            return String(localized: "The connection was lost. What is already downloaded stays. Click Resume.")
         case .schreiben(let text):
-            return "Die Datei liess sich nicht speichern: \(text)"
+            return String(localized: "The file could not be saved: \(text)")
         }
     }
 }
@@ -663,8 +663,8 @@ struct EinrichtungKarte: View {
     var body: some View {
         Karte {
             VStack(alignment: .leading, spacing: 10) {
-                KartenTitel(text: "MOSS-Image einrichten", symbol: "arrow.down.circle", farbe: .accentColor)
-                Text("Für Bilder braucht die App einmalig das Modell MOSS-Image (\(gb(installation.manifest.bytes(.modell)))) und das Turbo-Modul (\(gb(installation.manifest.bytes(.modul)))). Sie lädt beides von Hugging Face, sobald du auf Laden klickst. Danach rechnet sie ohne Internet.")
+                KartenTitel(text: "Set Up MOSS-Image", symbol: "arrow.down.circle", farbe: .accentColor)
+                Text("To make images, the app needs the MOSS-Image model (\(gb(installation.manifest.bytes(.modell)))) and the Turbo module (\(gb(installation.manifest.bytes(.modul)))) once. It downloads both from Hugging Face as soon as you click Download. After that, it works without internet.")
                     .font(.callout).foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 inhalt
@@ -679,44 +679,44 @@ struct EinrichtungKarte: View {
         case .fehlt(let vorhanden):
             platzZeile(vorhanden: vorhanden)
             HStack(spacing: 10) {
-                Button(vorhanden > 0 ? "Fortsetzen (noch \(gb(installation.manifest.bytes - vorhanden)))"
-                       : "Laden (\(gb(installation.manifest.bytes)))") { installation.laden() }
+                Button(vorhanden > 0 ? "Resume (\(gb(installation.manifest.bytes - vorhanden)) left)"
+                       : "Download (\(gb(installation.manifest.bytes)))") { installation.laden() }
                     .buttonStyle(.borderedProminent)
-                Text("Lizenz Apache 2.0").font(.caption).foregroundStyle(.secondary)
+                Text("License Apache 2.0").font(.caption).foregroundStyle(.secondary)
             }
-            hinweis("Du kannst die App dabei schliessen. Beim nächsten Klick auf Fortsetzen geht es dort weiter, wo es aufgehört hat.")
+            hinweis(String(localized: "You can close the app meanwhile. The next time you click Resume, it continues where it stopped."))
         case .laedt(let geladen, let gesamt, let datei, let von):
             ProgressView(value: Double(geladen), total: Double(max(gesamt, 1)))
             HStack {
-                Text("\(gb(geladen)) von \(gb(gesamt)), Datei \(datei) von \(von)")
+                Text("\(gb(geladen)) of \(gb(gesamt)), file \(datei) of \(von)")
                     .font(.caption).foregroundStyle(.secondary).monospacedDigit()
                 Spacer()
-                Button("Anhalten") { installation.anhalten() }.controlSize(.small)
+                Button("Pause") { installation.anhalten() }.controlSize(.small)
             }
         case .prueft(let datei, let von):
             HStack(spacing: 8) {
                 ProgressView().controlSize(.small)
-                Text("Wird geprüft, Datei \(datei) von \(von)").font(.caption).foregroundStyle(.secondary).monospacedDigit()
+                Text("Checking, file \(datei) of \(von)").font(.caption).foregroundStyle(.secondary).monospacedDigit()
             }
         case .ungeprueft:
-            hinweis("Die Modelldateien sind da, aber noch nicht geprüft. Das dauert rund eine Minute und braucht kein Internet.")
-            Button("Prüfen") { installation.pruefen() }.buttonStyle(.borderedProminent)
+            hinweis(String(localized: "The model files are there, but not checked yet. This takes about a minute and needs no internet."))
+            Button("Check") { installation.pruefen() }.buttonStyle(.borderedProminent)
         case .beschaedigt(let anzahl):
-            Text(anzahl == 1 ? "1 Datei fehlt oder ist beschädigt." : "\(anzahl) Dateien fehlen oder sind beschädigt.")
+            Text(anzahl == 1 ? "1 file is missing or damaged." : "\(anzahl) files are missing or damaged.")
                 .font(.caption).foregroundStyle(.orange)
-            Button("Reparieren") { installation.laden() }.buttonStyle(.borderedProminent)
-            hinweis("Die App lädt nur die fehlerhaften Dateien neu, die guten bleiben.")
+            Button("Repair") { installation.laden() }.buttonStyle(.borderedProminent)
+            hinweis(String(localized: "The app only downloads the faulty files again, the good ones stay."))
         case .fehler(let text, let platzUnbekannt):
             Text(verbatim: text).font(.caption).foregroundStyle(.red).fixedSize(horizontal: false, vertical: true)
             HStack(spacing: 10) {
                 if platzUnbekannt {
-                    Button("Trotzdem laden") { installation.laden(trotzUnbekanntemPlatz: true) }.buttonStyle(.borderedProminent)
+                    Button("Download Anyway") { installation.laden(trotzUnbekanntemPlatz: true) }.buttonStyle(.borderedProminent)
                 } else {
-                    Button("Fortsetzen") { installation.laden() }.buttonStyle(.borderedProminent)
+                    Button("Resume") { installation.laden() }.buttonStyle(.borderedProminent)
                 }
             }
         case .bereit:
-            Label("MOSS-Image ist eingerichtet.", systemImage: "checkmark.circle.fill").foregroundStyle(.green)
+            Label("MOSS-Image is set up.", systemImage: "checkmark.circle.fill").foregroundStyle(.green)
         }
     }
 
@@ -724,10 +724,10 @@ struct EinrichtungKarte: View {
     private func platzZeile(vorhanden: Int64) -> some View {
         let noetig = installation.manifest.bytes - vorhanden + Modellinstallation.reserve
         if let frei {
-            Text("Frei auf diesem Mac: \(gb(frei)). Nötig sind rund \(gb(noetig)).")
+            Text("Free on this Mac: \(gb(frei)). About \(gb(noetig)) is needed.")
                 .font(.caption).foregroundStyle(frei < noetig ? .red : .secondary).monospacedDigit()
         } else {
-            Text("Wie viel Platz frei ist, liess sich nicht feststellen. Nötig sind rund \(gb(noetig)).")
+            Text("The free space could not be determined. About \(gb(noetig)) is needed.")
                 .font(.caption).foregroundStyle(.orange)
         }
     }

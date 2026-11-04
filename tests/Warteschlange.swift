@@ -21,7 +21,7 @@ enum WarteschlangePruefung {
         await generator.starten(vorgaben.auftragsliste(), laengeSeite: 768)
         await Hilfe.fertig(generator)
         bericht.pruefen("Ohne eingerichtetes Modell rechnet nichts", generator.pausiert && Hilfe.aufrufe().isEmpty
-                        && (generator.fehler ?? "").contains("nicht vollständig eingerichtet")
+                        && (generator.fehler ?? "").contains("not fully set up")
                         && generator.warteschlange.first?.auftraege.count == 1, generator.fehler ?? "kein Fehler")
         generator.warteschlangeLeeren()
 
@@ -109,7 +109,7 @@ enum WarteschlangePruefung {
             await generator.starten(auftraege, laengeSeite: 768)
             await Hilfe.fertig(generator)
             let angehalten = generator.pausiert && generator.warteschlange.first?.auftraege.count == 3
-                && generator.fehler?.hasPrefix("Das Bild konnte nicht erzeugt werden.") == true
+                && generator.fehler?.hasPrefix("The image could not be created.") == true
                 && generator.fehlerDetails?.contains("absichtlicher Fehler") == true
                 && generator.fehlerLauf == auftraege[0].gruppe && generator.ergebnisse.count == bilderVorher
                 && Hilfe.aufrufe().count == stand + 1
@@ -181,7 +181,7 @@ enum WarteschlangePruefung {
             .flatMap { try? JSONDecoder().decode([Stapel].self, from: $0) }
         let auftraege = zweiter.warteschlange.first?.auftraege ?? []
         bericht.pruefen("Gespeicherte Warteschlange mit unlesbaren Einträgen", zweiter.pausiert && zweiter.warteschlange.count == 1
-                        && auftraege.count == 2 && (zweiter.fehler ?? "").hasPrefix("4 Einträge der gespeicherten Warteschlange")
+                        && auftraege.count == 2 && (zweiter.fehler ?? "").hasPrefix("4 entries of the saved queue")
                         && sicherungen.count == 1 && sicherung.flatMap { try? Data(contentsOf: $0) } == daten
                         && neuGeschrieben?.count == 1 && neuGeschrieben?.first?.auftraege.count == 2,
                         "Stapel \(zweiter.warteschlange.count), Aufträge \(auftraege.count), Fehler \(zweiter.fehler ?? "keiner"), Sicherungen \(sicherungen.count)")
